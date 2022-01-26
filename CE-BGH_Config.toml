@@ -1,4 +1,5 @@
 # Project
+
 project.fullname = "Corpus der Entscheidungen des Bundesgerichtshofs"
 project.shortname = "CE-BGH"
 project.author = "Seán Fobbe"
@@ -6,12 +7,14 @@ project.author = "Seán Fobbe"
 
 
 # License
+
 license.data = "Creative Commons Zero 1.0 Universal"
 license.code = "MIT-0"
 
 
 
 # Digital Object Identifier (DOI)
+
 doi.data.concept = "10.5281/zenodo.3942742"
 doi.data.version = "???"
 
