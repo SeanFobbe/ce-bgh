@@ -309,19 +309,6 @@ setDTthreads(threads = fullCores)
 
 
 
-
-
-#'## Debugging-Modus
-#' Der Debugging-Modus reduziert den Such-Umfang auf den in der Variable "debug.scope" angegebenen Umfang Seiten (jede Seite enthält idR 30 Entscheidungen), den Download-Umfang auf den in der Variable "debug.sample" definierten Umfang zufällig ausgewählter Entscheidungen und löscht im Anschluss fünf zufällig ausgewählte Entscheidungen um den Wiederholungsversuch zu testen. Nur für Test- und Demonstrationszwecke. 
-
-mode.debug <- FALSE
-debug.scope <- 50
-debug.sample <- 500
-
-
-
-
-
 #'## Optionen: Quanteda
 tokens_locale <- "de_DE"
 
@@ -547,8 +534,8 @@ scope[, loc := {
 
 #'## [Debugging Modus] Reduzierung des Such-Umfangs
 
-if (mode.debug == TRUE){
-    scope <- scope[sample(scope[,.N], debug.scope)][order(year, page)]
+if (config$debug$toggle == TRUE){
+    scope <- scope[sample(scope[,.N], config$debug$pages)][order(year, page)]
     }
 
 
@@ -690,7 +677,7 @@ print(missing.N - less30.N)
 #'### Gegenüberstellung: Anzahl Jahre und Anzahl Seiten mit weniger als 30 Entscheidungen
 #' Für jedes Jahr sollte es eine letzte Seite mit weniger als 30 Entscheidungen geben. Falls zufällig die letzte Seite exakt 30 Entscheidungen hat, wäre das Ergebnis negativ. Ein Ergebnis von 0 oder kleiner bedeutet, dass der Test bestanden wurde. Der Test ist nur aussagekräftig wenn der gesamte Such-Umfang abgefragt wurde.
 
-if (mode.debug == FALSE){
+if (config$debug$toggle == FALSE){
     less30[,.N] - uniqueN(scope$year)
     }
 
@@ -1116,9 +1103,9 @@ dt.download$filenames.final <- filenames2
 #+
 #'## [Debugging Modus] Reduzierung des Download-Umfangs
 
-if (mode.debug == TRUE){
+if (config$debug$toggle == TRUE){
     dt.download <- dt.download[sample(.N,
-                                      debug.sample)]
+                                      config$debug$sample)]
     }
 
 
@@ -1160,7 +1147,7 @@ end.download - begin.download
 #'## [Debugging Modus] Löschen zufälliger Dateien
 #' Dient dazu den Wiederholungsversuch zu testen.
 
-if (mode.debug == TRUE){
+if (config$debug$toggle == TRUE){
     files.pdf <- list.files(pattern = "\\.pdf")
     unlink(sample(files.pdf, 5))
     }
