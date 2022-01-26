@@ -32,6 +32,7 @@ knitr::opts_chunk$set(fig.pos = "center",
 
 #+
 
+library(RcppTOML)     # Verarbeitung von TOML-Format
 library(knitr)        # Professionelles Reporting
 library(kableExtra)   # Verbesserte Automatisierte Tabellen
 library(magick)       # Fortgeschrittene Verarbeitung von Grafiken
