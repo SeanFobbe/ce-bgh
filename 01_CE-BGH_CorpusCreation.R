@@ -10,10 +10,10 @@
 #'    number_sections: true
 #'    pandoc_args: --listings
 #'    includes:
-#'      in_header: General_Source_TEX_Preamble_DE.tex
-#'      before_body: [CE-BGH_Source_TEX_Definitions.tex,CE-BGH_Source_TEX_CompilationTitle.tex]
+#'      in_header: tex/Preamble_DE.tex
+#'      before_body: [temp/CE-BVerfG_Definitions.tex, tex/CE-BVerfG_CompilationTitle.tex]
 #'papersize: a4
-#'bibliography: packages.bib
+#'bibliography: temp/packages.bib
 #'nocite: '@*'
 #' ---
 
