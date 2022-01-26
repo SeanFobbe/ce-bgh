@@ -2461,8 +2461,7 @@ names(meta.bgh)
 #+
 #'## CSV mit vollem Datensatz speichern
 
-csvname.full <- paste(config$project$shortname,
-                      datestamp,
+csvname.full <- paste(prefix.files,
                       "DE_CSV_Datensatz.csv",
                       sep = "_")
 
@@ -2476,8 +2475,7 @@ fwrite(txt.bgh,
 #'## CSV mit Metadaten speichern
 #' Diese Datei ist grundsätzlich identisch mit dem eigentlichen Datensatz, nur ohne den Text der Entscheidungen.
 
-csvname.meta <- paste(config$project$shortname,
-                      datestamp,
+csvname.meta <- paste(prefix.files,
                       "DE_CSV_Metadaten.csv",
                       sep = "_")
 
@@ -2497,7 +2495,7 @@ fwrite(meta.bgh,
 #+
 #'### Korpus-Objekt in RAM (MB)
 
-print(object.size(corpus(txt.bgh)),
+print(object.size(txt.bgh),
       standard = "SI",
       humanReadable = TRUE,
       units = "MB")
@@ -2602,10 +2600,13 @@ ggplot(data = dt.plot,
 
 #'## Verpacken der CSV-Dateien
 
+
+#'### Vollständiger Datensatz
+
 #+ results = 'hide'
 csvname.full.zip <- gsub(".csv",
-                    ".zip",
-                    csvname.full)
+                         ".zip",
+                         csvname.full)
 
 zip(csvname.full.zip,
     csvname.full)
@@ -2613,10 +2614,13 @@ zip(csvname.full.zip,
 unlink(csvname.full)
 
 
+#'### Metadaten
+
+
 #+ results = 'hide'
 csvname.meta.zip <- gsub(".csv",
-                    ".zip",
-                    csvname.meta)
+                         ".zip",
+                         csvname.meta)
 
 zip(csvname.meta.zip,
     csvname.meta)
