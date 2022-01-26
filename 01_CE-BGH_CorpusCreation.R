@@ -1134,9 +1134,8 @@ print(missing)
 
 
 
-
 #+
-#'# Text-Extraktion
+#'# Text-Extraktion aus PDF
 
 #+
 #'## Vektor der zu extrahierenden Dateien erstellen
@@ -1149,27 +1148,30 @@ files.pdf <- list.files(pattern = "\\.pdf$",
 length(files.pdf)
 
 
-#'## Seiten zählen: Funktion anzeigen
-#+ results = "asis"
-print(f.dopar.pagenums)
-
-
-#'## Anzahl zu extrahierender Seiten
-f.dopar.pagenums(files.pdf,
-                 sum = TRUE,
-                 threads = fullCores)
-
-
 
 #'## PDF extrahieren: Funktion anzeigen
 #+ results = "asis"
-print(f.dopar.pdfextract)
+print(f.future_pdf_to_txt)
 
 
 #'## Text Extrahieren
-result <- f.dopar.pdfextract(files.pdf,
-                             threads = fullCores)
 
+#+ results = "hide"
+
+if(config$parallel$extractPDF == TRUE){
+
+    plan("multicore",
+         workers = fullCores)
+    
+}else{
+
+    plan("sequential")
+
+}
+
+
+
+f.future_pdf_to_txt(files.pdf)
 
 
 
