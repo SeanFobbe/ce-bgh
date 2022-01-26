@@ -1670,7 +1670,7 @@ print(config$freqtable$ignore)
 
 varlist <- names(txt.bgh)
 varlist <- grep(paste(config$freqtable$ignore,
-                      collapse="|"),
+                      collapse = "|"),
                 varlist,
                 invert = TRUE,
                 value = TRUE)
