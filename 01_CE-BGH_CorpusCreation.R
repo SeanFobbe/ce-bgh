@@ -2066,9 +2066,6 @@ setnames(summary.corpus,
                  "typen",
                  "saetze"))
 
-setnames(txt.bgh,
-         old = "nchars",
-         new = "zeichen")
 
 
 #'## Kennwerte dem Korpus hinzufügen
