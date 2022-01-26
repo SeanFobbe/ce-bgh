@@ -2737,24 +2737,44 @@ zip(paste(prefix.files,
 #'# Kryptographische Hashes
 #' Dieses Modul berechnet für jedes ZIP-Archiv zwei Arten von Hashes: SHA2-256 und SHA3-512. Mit diesen kann die Authentizität der Dateien geprüft werden und es wird dokumentiert, dass sie aus diesem Source Code hervorgegangen sind. Die SHA-2 und SHA-3 Algorithmen sind äußerst resistent gegenüber *collision* und *pre-imaging* Angriffen, sie gelten derzeit als kryptographisch sicher. Ein SHA3-Hash mit 512 bit Länge ist nach Stand von Wissenschaft und Technik auch gegenüber quantenkryptoanalytischen Verfahren unter Einsatz des *Grover-Algorithmus* hinreichend resistent.
 
+
 #+
 #'## Liste der ZIP-Archive erstellen
 files.zip <- list.files(pattern = "\\.zip$",
                         ignore.case = TRUE)
 
 
-#'## Funktion anzeigen
-#+ results = "asis"
-print(f.dopar.multihashes)
+#'## Funktion anzeigen: future_multihashes
+
+print(f.future_multihashes)
 
 
 #'## Hashes berechnen
-multihashes <- f.dopar.multihashes(files.zip)
+
+
+if(config$parallel$multihashes == TRUE){
+
+    plan("multicore",
+         workers = fullCores)
+    
+}else{
+
+    plan("sequential")
+
+     }
+
+
+multihashes <- f.future_multihashes(files.zip)
+
+
 
 
 #'## In Data Table umwandeln
 setDT(multihashes)
 
+setnames(multihashes,
+         old = "x",
+         new = "filename")
 
 
 #'## Index hinzufügen
@@ -2763,10 +2783,10 @@ multihashes$index <- seq_len(multihashes[,.N])
 #'\newpage
 #'## In Datei schreiben
 fwrite(multihashes,
-       paste(config$project$shortname,
-             datestamp,
-             "KryptographischeHashes.csv",
-             sep = "_"),
+       file.path("output",
+                 paste(prefix.files,
+                       "KryptographischeHashes.csv",
+                       sep = "_")),
        na = "NA")
 
 
