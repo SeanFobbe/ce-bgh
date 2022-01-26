@@ -703,7 +703,15 @@ az.out1 <- gsub("1_BGs_29_2009_NA",
 
 #'### Strenge REGEX-Validierung des Aktenzeichens
 
-regex.test1 <- grep("[0-9A-Za]+_[A-Za-zÜ]+_[0-9]+_[0-9]{2}_[A-Za-z]+",
+regex.test1 <- grep(paste0("[0-9A-Za]+", # Senatsnummer
+                           "_",
+                           "[A-Za-zÜ]+", # Registerzeichen
+                           "_",
+                           "[0-9]+", # Eingangsnummer
+                           "_",
+                           "[0-9]{2}", # Eingangsjahr
+                           "_",
+                           "[A-Za-z]+"), # Kollision
                     az.out1,
                     invert = TRUE,
                     value = TRUE)
