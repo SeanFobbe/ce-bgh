@@ -1,5 +1,5 @@
 #'---
-#'title: "Source Code des Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH-Source)"
+#'title: "Compilation Report | Corpus der Entscheidungen des Bundesgerichtshofs"
 #'author: Seán Fobbe
 #'geometry: margin=3cm
 #'fontsize: 11pt
