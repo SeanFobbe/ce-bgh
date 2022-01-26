@@ -1694,7 +1694,7 @@ f.fast.freqtable(txt.bgh,
                  output.list = FALSE,
                  output.kable = TRUE,
                  output.csv = TRUE,
-                 outputdir = outputdir,
+                 outputdir = dir.analysis,
                  prefix = prefix,
                  align = c("p{5cm}",
                            rep("r", 4)))
@@ -1708,9 +1708,9 @@ f.fast.freqtable(txt.bgh,
 
 #'## Präfix erstellen
 
-prefix <- paste0("ANALYSE/",
-                 config$project$shortname,
-                 "_01_Frequenztabelle_var-")
+prefix <- file.path(dir.analysis,
+                    paste0(config$project$shortname,
+                           "_01_Frequenztabelle_var-"))
 
 
 
@@ -1751,7 +1751,7 @@ table.output.vpraesi <- fread(paste0(prefix,
 freqtable <- table.entsch.typ[-.N]
 
 
-#+ CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 5, fig.width = 8
+#+ CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(entscheidung_typ,
                              -N),
@@ -2151,7 +2151,7 @@ kable(dt.stats.ling,
 #'### Zusammenfassungen speichern
 
 fwrite(dt.stats.ling,
-       paste0(outputdir,
+       paste0(dir.analysis,
               config$project$shortname,
               "_00_KorpusStatistik_ZusammenfassungLinguistisch.csv"),
        na = "NA")
@@ -2216,7 +2216,7 @@ kable(dt.stats.docvars,
 #'### Zusammenfassungen speichern
 
 fwrite(dt.stats.docvars,
-       paste0(outputdir,
+       paste0(dir.analysis,
               config$project$shortname,
               "_00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv"),
        na = "NA")
@@ -2621,9 +2621,9 @@ zip(paste0(config$project$shortname,
            "_",
            datestamp,
            "_DE_",
-           basename(outputdir),
+           basename(dir.analysis),
            ".zip"),
-    basename(outputdir))
+    basename(dir.analysis))
 
 
 
