@@ -2028,15 +2028,29 @@ ggplot(data = freqtable) +
 
 #+
 #'### Funktion anzeigen
-print(f.summarize.iterator,
-      threads = fullCores,
-      chunksize = 1)
+print(f.future_lingsummarize)
+
+
 
 
 #'### Berechnung durchführen
-summary.corpus <- f.summarize.iterator(txt.bgh)
+
+if(config$parallel$lingsummarize == TRUE){
+
+    plan("multicore",
+         workers = fullCores)
+    
+}else{
+
+    plan("sequential")
+
+     }
 
 
+
+
+#+ lingsummarize, results = 'hide',  warning = FALSE
+summary.corpus <- f.future_lingsummarize(txt.bverfg)
 
 
 
