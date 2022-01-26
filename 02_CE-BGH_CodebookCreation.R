@@ -1417,49 +1417,11 @@ kable(testresult, format = "latex", booktabs = TRUE,
 
 
 
-#+
-#'# Changelog
-#'
-#'\ra{1.3}
-#'
-#' 
-#'\begin{centering}
-#'\begin{longtable}{p{2.5cm}p{11.5cm}}
-#'\toprule
-#'Version &  Details\\
-#'\midrule
-#'
-#' \version  &
-#'
-#' \begin{itemize}
-#' \item Vollständige Aktualisierung der Daten
-#' \item Veröffentlichung des vollständigen Source Codes
-#' \item Deutliche Erweiterung des inhaltlichen Umfangs des Codebooks
-#' \item Einführung der vollautomatischen Erstellung von Datensatz und Codebook
-#' \item Einführung von Compilation Reports um den Erstellungsprozess exakt zu dokumentieren
-#' \item Einführung von Variablen für Lizenz, Versionsnummer, Concept DOI, Version DOI, ECLI, Typ der Entscheidung, Präsident:in, Vize-Präsident:in, Verfahrensart, Name, Leitsatz, Bemerkungen, Berichtigungen, und linguistische Kennzahlen (Zeichen, Tokens, Typen, Sätze)
-#' \item Einführung von PDF-Varianten für Leitsatzentscheidungen und namentlich gekennzeichneten Entscheidungen.
-#' \item Zusammenfügung von über Zeilengrenzen getrennten Wörtern in der CSV-Variante
-#' \item Automatisierung und Erweiterung der Qualitätskontrolle
-#' \item Einführung von Diagrammen zur Visualisierung von Prüfergebnissen
-#' \item Einführung kryptographischer Signaturen
-#' \item Alle Variablen sind nun in Kleinschreibung und Snake Case gehalten
-#' \item Variable \enquote{Ordinalzahl} in \enquote{eingangsnummer} umbenannt
-#' \end{itemize}\\
-#' 
-#' 
-#'2020-07-09  &
-#'
-#' \begin{itemize}
-#' \item Erstveröffentlichung
-#' \end{itemize}\\
-#' 
-#'\bottomrule
-#'\end{longtable}
-#'\end{centering}
 
 
-
+#+ results = "asis"
+cat(readLines("CHANGELOG.md"),
+    sep = "\n")
 
 
 
