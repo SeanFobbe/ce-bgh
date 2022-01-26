@@ -32,6 +32,290 @@ cat(readLines("README.md"),
 
 
 
+
+
+
+
+#'# Vorbereitung
+
+#'## Datumsstempel
+#' Dieser Datumsstempel wird in alle Dateinamen eingefügt. Er wird am Anfang des Skripts gesetzt, für den den Fall, dass die Laufzeit die Datumsbarriere durchbricht.
+
+datestamp <- Sys.Date()
+print(datestamp)
+
+
+#'## Datum und Uhrzeit (Beginn)
+begin.script <- Sys.time()
+print(begin.script)
+
+
+
+
+
+#+
+#'## Packages Laden
+
+library(fs)           # Verbessertes File Handling
+library(RcppTOML)     # Verarbeitung von TOML-Format
+library(mgsub)        # Mehrfache simultane String-Substitutions
+library(httr)         # HTTP-Werkzeuge
+library(rvest)        # HTML/XML-Extraktion
+library(knitr)        # Professionelles Reporting
+library(kableExtra)   # Verbesserte Kable Tabellen
+library(pdftools)     # Verarbeitung von PDF-Dateien
+#library(doParallel)   # Parallelisierung; to be deprecated
+library(ggplot2)      # Fortgeschrittene Datenvisualisierung
+library(scales)       # Skalierung von Diagrammen
+library(data.table)   # Fortgeschrittene Datenverarbeitung
+library(readtext)     # TXT-Dateien einlesen
+library(quanteda)     # Fortgeschrittene Computerlinguistik
+library(spacyr)       # Linguistische Annotationen
+library(future)       # Parallelisierung mit Futures
+library(future.apply) # Apply-Funtionen für Futures
+
+
+
+#'## Zusätzliche Funktionen einlesen
+#' **Hinweis:** Die hieraus verwendeten Funktionen werden jeweils vor der ersten Benutzung in vollem Umfang angezeigt um den Lesefluss zu verbessern.
+
+
+source("R-fobbe-proto-package/f.remove.specialunderline.R")
+source("R-fobbe-proto-package/f.linkextract.R")
+
+source("R-fobbe-proto-package/f.hyphen.remove.R")
+source("R-fobbe-proto-package/f.year.iso.R")
+source("R-fobbe-proto-package/f.fast.freqtable.R")
+
+#source("R-fobbe-proto-package/f.lingsummarize.iterator.R") # to be deprecated
+#source("R-fobbe-proto-package/f.dopar.spacyparse.R") # to be deprecated
+#source("R-fobbe-proto-package/f.dopar.multihashes.R") # to be deprecated
+#source("R-fobbe-proto-package/f.dopar.pdfextract.R") # to be deprecated
+
+source("R-fobbe-proto-package/f.future_lingsummarize.R")
+source("R-fobbe-proto-package/f.future_multihashes.R")
+source("R-fobbe-proto-package/f.future_pdf_to_txt.R")
+source("R-fobbe-proto-package/f.future_spacyparse.R")
+
+#source("General_Source_Functions.R") # deprecated
+
+
+
+#'## Verzeichnis für Analyse-Ergebnisse und Diagramme definieren
+
+dir.analysis <- paste0(getwd(),
+                    "/analyse") 
+
+
+#'## Weitere Verzeichnisse definieren
+
+dirs <- c("output",
+          "temp")
+
+
+
+#'## Dateien aus vorherigen Runs bereinigen
+
+unlink(dir.analysis,
+       recursive = TRUE)
+
+unlink(dirs,
+       recursive = TRUE)
+
+files.delete <- list.files(pattern = "\\.zip|\\.pdf|\\.txt|\\.html",
+                           ignore.case = TRUE)
+
+unlink(files.delete)
+
+
+
+
+#'## Verzeichnisse anlegen
+
+dir.create(dir.analysis)
+
+lapply(dirs, dir.create)
+
+
+
+
+#'## Vollzitate statistischer Software schreiben
+knitr::write_bib(c(.packages()),
+                 "temp/packages.bib")
+
+
+
+
+
+#'## Allgemeine Konfiguration
+
+#+
+#'### Konfiguration einlesen
+config <- parseTOML("CE-BGH_Config.toml")
+
+#'### Konfiguration anzeigen
+print(config)
+
+
+
+#+
+#'### Knitr Optionen setzen
+knitr::opts_chunk$set(fig.path = paste0(dir.analysis, "/"),
+                      dev = config$fig$format,
+                      dpi = config$fig$dpi,
+                      fig.align = config$fig$align)
+
+
+#'### Download Timeout setzen
+options(timeout = config$download$timeout)
+
+
+
+#'### Quellenangabe für Diagramme definieren
+
+caption <- paste("Fobbe | DOI:",
+                 config$doi$data$version)
+print(caption)
+
+
+#'### Präfix für Dateien definieren
+
+prefix.files <- paste0(config$project$shortname,
+                 "_",
+                 datestamp)
+print(prefix.files)
+
+
+#'### Präfix für Diagramme definieren
+
+prefix.figuretitle <- paste(config$project$shortname,
+                            "| Version",
+                            datestamp)
+
+
+#'### Quanteda-Optionen setzen
+quanteda_options(tokens_locale = config$quanteda$tokens_locale)
+
+
+
+
+#'## LaTeX Konfiguration
+
+#+
+#'### LaTeX Parameter definieren
+
+latexdefs <- c("%===========================\n% Definitionen\n%===========================",
+               "\n% NOTE: Diese Datei wurde während des Kompilierungs-Prozesses automatisch erstellt.\n",
+               "\n%-----Autor-----",
+               paste0("\\newcommand{\\projectauthor}{",
+                      config$project$author,
+                      "}"),
+               "\n%-----Version-----",
+               paste0("\\newcommand{\\version}{",
+                      datestamp,
+                      "}"),
+               "\n%-----Titles-----",
+               paste0("\\newcommand{\\datatitle}{",
+                      config$project$fullname,
+                      "}"),
+               paste0("\\newcommand{\\datashort}{",
+                      config$project$shortname,
+                      "}"),
+               paste0("\\newcommand{\\softwaretitle}{Source Code des \\enquote{",
+                      config$project$fullname,
+                      "}}"),
+               paste0("\\newcommand{\\softwareshort}{",
+                      config$project$shortname,
+                      "-Source}"),
+               "\n%-----Data DOIs-----",
+               paste0("\\newcommand{\\dataconceptdoi}{",
+                      config$doi$data$concept,
+                      "}"),
+               paste0("\\newcommand{\\dataversiondoi}{",
+                      config$doi$data$version,
+                      "}"),
+               paste0("\\newcommand{\\dataconcepturldoi}{https://doi.org/",
+                      config$doi$data$concept,
+                      "}"),
+               paste0("\\newcommand{\\dataversionurldoi}{https://doi.org/",
+                      config$doi$data$version,
+                      "}"),
+               "\n%-----Software DOIs-----",
+               paste0("\\newcommand{\\softwareconceptdoi}{",
+                      config$doi$software$concept,
+                      "}"),
+               paste0("\\newcommand{\\softwareversiondoi}{",
+                      config$doi$software$version,
+                      "}"),
+               paste0("\\newcommand{\\softwareconcepturldoi}{https://doi.org/",
+                      config$doi$software$concept,
+                      "}"),
+               paste0("\\newcommand{\\softwareversionurldoi}{https://doi.org/",
+                      config$doi$software$version,
+                      "}"),
+               "\n%-----Additional DOIs-----",
+               paste0("\\newcommand{\\aktenzeichenurldoi}{https://doi.org/",
+                      config$doi$aktenzeichen,
+                      "}"),
+               paste0("\\newcommand{\\personendatenurldoi}{https://doi.org/",
+                      config$doi$personendaten,
+                      "}"))
+
+
+
+
+#'### LaTeX Parameter schreiben
+
+writeLines(latexdefs,
+           paste0("temp/",
+                  config$project$shortname,
+                  "_Definitions.tex"))
+
+
+
+
+
+
+#'## Parallelisierung aktivieren
+#' Parallelisierung wird zur Beschleunigung der Konvertierung von PDF zu TXT und der Datenanalyse mittels **quanteda** und **data.table** verwendet. Die Anzahl threads wird automatisch auf das verfügbare Maximum des Systems gesetzt, kann aber auch nach Belieben auf das eigene System angepasst werden. Die Parallelisierung kann deaktiviert werden, indem die Variable **fullCores** auf 1 gesetzt wird.
+
+
+
+#+
+#'### Anzahl logischer Kerne festlegen
+
+if (config$cores$max == TRUE){
+    fullCores <- availableCores()
+}
+
+
+if (config$cores$max == FALSE){
+    fullCores <- as.integer(config$cores$number)
+}
+
+
+
+print(fullCores)
+
+#'### Quanteda
+quanteda_options(threads = fullCores) 
+
+#'### Data.table
+setDTthreads(threads = fullCores)  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #'\newpage
 #+
 #'# Parameter
