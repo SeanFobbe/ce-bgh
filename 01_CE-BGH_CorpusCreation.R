@@ -2237,7 +2237,7 @@ fwrite(dt.stats.docvars,
 #'### Diagramm: Verteilung Zeichen
 
 #+ CE-BGH_09_Density_Zeichen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = zeichen),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2266,7 +2266,7 @@ ggplot(data = summary.corpus)+
 #'### Diagramm: Verteilung Tokens
 
 #+ CE-BGH_10_Density_Tokens, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = tokens),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2296,7 +2296,7 @@ ggplot(data = summary.corpus)+
 #'### Diagramm: Verteilung Typen
 
 #+ CE-BGH_11_Density_Typen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = typen),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2325,7 +2325,7 @@ ggplot(data = summary.corpus)+
 #'### Diagramm: Verteilung Sätze
 
 #+ CE-BGH_12_Density_Saetze, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = saetze),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2389,7 +2389,7 @@ csvname.meta <- paste(config$project$shortname,
                       "DE_CSV_Metadaten.csv",
                       sep = "_")
 
-fwrite(summary.corpus,
+fwrite(meta.bgh,
        csvname.meta,
        na = "NA")
 
