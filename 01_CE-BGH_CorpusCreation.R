@@ -2071,12 +2071,14 @@ setnames(txt.bgh,
          new = "zeichen")
 
 
-#'### Kennwerte dem Korpus hinzufügen
+#'## Kennwerte dem Korpus hinzufügen
 
-txt.bgh$zeichen <- summary.corpus$zeichen
-txt.bgh$tokens <- summary.corpus$tokens
-txt.bgh$typen <- summary.corpus$typen
-txt.bgh$saetze <- summary.corpus$saetze
+txt.bgh <- cbind(txt.bgh,
+                    summary.corpus)
+
+
+#'## Variante mit Metadaten erstellen
+meta.bgh <- txt.bgh[, !"text"]
 
 
 
