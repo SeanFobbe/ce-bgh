@@ -1251,7 +1251,8 @@ setorder(txt.bgh,
 #+
 #'### Personaldaten einlesen
 
-praesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+praesi <- fread(file.path("data",
+                          "PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv"))
 praesi <- praesi[court == "BGH", c(1:3, 5:6)]
 
 
@@ -1306,7 +1307,8 @@ txt.bgh$praesi <- unlist(praesi.list)
 #+
 #'### Personaldaten einlesen
 
-vpraesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+vpraesi <- fread(file.path("data",
+                          "PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv"))
 vpraesi <- vpraesi[court == "BGH", c(1:3, 5:6)]
 
 
@@ -1367,7 +1369,8 @@ txt.bgh$v_praesi <- unlist(vpraesi.list)
 
 #+
 #'### Datensatz einlesen
-az.source <- fread("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+az.source <- fread(file.path("data",
+                          "AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv"))
 
 
 
