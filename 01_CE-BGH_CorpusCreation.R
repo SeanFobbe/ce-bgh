@@ -2074,7 +2074,7 @@ setnames(txt.bgh,
 #'## Kennwerte dem Korpus hinzufügen
 
 txt.bgh <- cbind(txt.bgh,
-                    summary.corpus)
+                 summary.corpus)
 
 
 #'## Variante mit Metadaten erstellen
