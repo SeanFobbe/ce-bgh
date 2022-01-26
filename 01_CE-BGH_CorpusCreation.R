@@ -1955,7 +1955,7 @@ ggplot(data = freqtable) +
 
 freqtable <- table.jahr.entscheid[-.N][,lapply(.SD, as.numeric)]
 
-#+ CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 7, fig.width = 11
+#+ CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = entscheidungsjahr,
                  y = N),
@@ -1986,7 +1986,7 @@ freqtable <- table.jahr.eingangISO[-.N][,lapply(.SD, as.numeric)]
 
 
 
-#+ CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 7, fig.width = 11
+#+ CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = eingangsjahr_iso,
                  y = N),
