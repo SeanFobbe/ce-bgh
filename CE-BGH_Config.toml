@@ -70,13 +70,12 @@ fig.align = "center"    	# Ausrichtung von Diagrammen im Compilation Report
 #' **Hinweis:** Nur diese Variablen werden bei der Erstellung der Frequenztabellen berücksichtigt.
 
 freqtable.ignore = ["text",
-		    "eingangsnummer",
-		    "datum",
-		    "doc_id",
-		    "seite",
-		    "name",
-		    "ecli",
-		    "aktenzeichen",
-		    "pressemitteilung",
-		    "zitiervorschlag",
-		    "kurzbeschreibung"]
+               	 "eingangsnummer",
+               	 "datum",
+               	 "doc_id",
+               	 "ecli",
+               	 "aktenzeichen",
+               	 "name",
+               	 "bemerkung"]
+
+
