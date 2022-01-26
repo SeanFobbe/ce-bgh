@@ -4,7 +4,7 @@
 ## Version \version
  
 - Vollständige Aktualisierung der Daten
-- Strenge semantische Kontrolle aller Variablen
+- Strenge Kontrolle und semantische Sortierung aller Variablen (entsprechend der Reihenfolge im Codebook)
 
 
 ## Version 2021-04-27
@@ -21,7 +21,7 @@
 - Einführung von Diagrammen zur Visualisierung von Prüfergebnissen
 - Einführung kryptographischer Signaturen
 - Alle Variablen sind nun in Kleinschreibung und Snake Case gehalten
-- Variable \enquote{Ordinalzahl} in \enquote{eingangsnummer} umbenannt
+- Variable 'Ordinalzahl' in 'eingangsnummer' umbenannt
 
  
  
