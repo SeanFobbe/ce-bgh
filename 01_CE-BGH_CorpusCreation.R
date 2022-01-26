@@ -310,35 +310,6 @@ setDTthreads(threads = fullCores)
 
 
 
-config$project$shortname
-config$doi$data$concept
-config$doi$data$version
-
-#'\newpage
-#+
-#'# Parameter
-
-#+
-#'## Name des Datensatzes
-config$project$shortname <- "CE-BGH"
-
-#'## DOI des Datensatz-Konzeptes
-config$doi$data$concept <- "10.5281/zenodo.3942742" # checked
-
-#'## DOI der konkreten Version
-config$doi$data$version <- "10.5281/zenodo.4705855" # checked
-
-#'## Lizenz
-license <- "Creative Commons Zero 1.0 Universal"
-
-
-#'## Verzeichnis für Analyse-Ergebnisse
-#' Muss mit einem Schrägstrich enden!
-
-outputdir <- paste0(getwd(),
-                    "/ANALYSE/") 
-
-
 
 #'## Debugging-Modus
 #' Der Debugging-Modus reduziert den Such-Umfang auf den in der Variable "debug.scope" angegebenen Umfang Seiten (jede Seite enthält idR 30 Entscheidungen), den Download-Umfang auf den in der Variable "debug.sample" definierten Umfang zufällig ausgewählter Entscheidungen und löscht im Anschluss fünf zufällig ausgewählte Entscheidungen um den Wiederholungsversuch zu testen. Nur für Test- und Demonstrationszwecke. 
@@ -1721,7 +1692,7 @@ txt.bgh$version <- as.character(rep(datestamp,
                                 txt.bgh[,.N]))
 
 #'## Variable "lizenz" hinzufügen
-txt.bgh$lizenz <- as.character(rep(license,
+txt.bgh$lizenz <- as.character(rep(config$license$data,
                                    txt.bgh[,.N]))
 
 
