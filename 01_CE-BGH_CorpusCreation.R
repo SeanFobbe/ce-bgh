@@ -950,10 +950,31 @@ filenames2 <- paste0(filenames1,
 
 #'## Strenge REGEX-Validierung: Gesamter Dateiname
 
-regex.test2 <-grep("BGH_.*_[NALE]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Za-z0-9]*_[A-Za-zÜ]*_[0-9-]*_[0-9]{2}_[A-Za-z]*_.*_[NA0-9]*.pdf",
-     filenames2,
-     value = TRUE,
-     invert = TRUE)
+regex.test2 <- grep(paste0("BGH",
+                           "_",
+                           ".*",
+                           "_",
+                           "[NALE]{2}",
+                           "_",
+                           "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+                           "_",
+                           "[A-Za-z0-9]*",
+                           "_",
+                           "[A-Za-zÜ]*",
+                           "_",
+                           "[0-9-]*",
+                           "_",
+                           "[0-9]{2}",
+                           "_",
+                           "[A-Za-z]*",
+                           "_",
+                           ".*",
+                           "_",
+                           "[NA0-9]*",
+                           "\\.pdf"),
+                    filenames2,
+                    value = TRUE,
+                    invert = TRUE)
 
 
 #'## Ergebnis der REGEX-Validierung
