@@ -2642,8 +2642,7 @@ files.leitsatz <- gsub("\\.txt",
                        txt.bgh[leitsatz == "LE"]$doc_id)
 
 #+ results = 'hide'
-zip(paste(config$project$shortname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_PDF_Leitsatz-Entscheidungen.zip",
           sep = "_"),
     files.leitsatz)
@@ -2656,8 +2655,7 @@ files.benannt <- gsub("\\.txt",
                       txt.bgh[is.na(name) == FALSE]$doc_id)
 
 #+ results = 'hide'
-zip(paste(config$project$shortname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_PDF_Entscheidungen-mit-Namen.zip",
           sep = "_"),
     files.benannt)
@@ -2666,8 +2664,7 @@ zip(paste(config$project$shortname,
 #'### Alle Entscheidungen
 
 #+ results = 'hide'
-zip(paste(config$project$shortname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_PDF_Datensatz.zip",
           sep = "_"),
     files.pdf)
@@ -2685,8 +2682,7 @@ unlink(files.pdf)
 files.txt <- list.files(pattern="\\.txt",
                         ignore.case = TRUE)
 
-zip(paste(config$project$shortname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_TXT_Datensatz.zip",
           sep = "_"),
     files.txt)
