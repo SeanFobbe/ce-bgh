@@ -95,9 +95,7 @@ source("R-fobbe-proto-package/f.fast.freqtable.R")
 source("R-fobbe-proto-package/f.future_lingsummarize.R")
 source("R-fobbe-proto-package/f.future_multihashes.R")
 source("R-fobbe-proto-package/f.future_pdf_to_txt.R")
-source("R-fobbe-proto-package/f.future_spacyparse.R")
 
-#source("General_Source_Functions.R") # deprecated
 
 
 
