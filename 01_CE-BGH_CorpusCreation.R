@@ -2351,14 +2351,108 @@ ggplot(data = meta.bgh)+
 
 
 
-#'## Anzahl Variablen im Korpus
-length(txt.bgh)
+
+#'# Kontrolle der Variablen
+
+#+
+#'## Semantische Sortierung der Variablen
+
+#+
+#'### Variablen sortieren: Hauptdatensatz
 
 
-#'## Namen der Variablen im Korpus
-names(txt.bgh)
+setcolorder(txt.bverfg,
+            c("doc_id",
+              "text",
+              "gericht",
+              "datum",
+              "entscheidung_typ", 
+              "spruchkoerper_typ",
+              "spruchkoerper_az",
+              "registerzeichen",
+              "verfahrensart",
+              "eingangsnummer",
+              "eingangsjahr_az",
+              "eingangsjahr_iso",
+              "entscheidungsjahr",
+              "kollision",
+              "name",
+              "band",
+              "seite",  
+              "aktenzeichen",
+              "aktenzeichen_alle",
+              "ecli",
+              "zitiervorschlag",
+              "kurzbeschreibung",
+              "pressemitteilung",
+              "praesi",
+              "v_praesi",
+              "richter",
+              "zeichen",
+              "tokens",
+              "typen",            
+              "saetze",
+              "version",
+              "doi_concept",      
+              "doi_version",
+              "lizenz"))
 
 
+#'\newpage
+#+
+#'### Variablen sortieren: Metadaten
+
+setcolorder(meta.bverfg,
+            c("doc_id",
+              "gericht",
+              "datum",
+              "entscheidung_typ", 
+              "spruchkoerper_typ",
+              "spruchkoerper_az",
+              "registerzeichen",
+              "verfahrensart",
+              "eingangsnummer",
+              "eingangsjahr_az",
+              "eingangsjahr_iso",
+              "entscheidungsjahr",
+              "kollision",
+              "name",
+              "band",
+              "seite",  
+              "aktenzeichen",
+              "aktenzeichen_alle",
+              "ecli",
+              "zitiervorschlag",
+              "kurzbeschreibung",
+              "pressemitteilung",
+              "praesi",
+              "v_praesi",
+              "richter",
+              "zeichen",
+              "tokens",
+              "typen",            
+              "saetze",
+              "version",
+              "doi_concept",      
+              "doi_version",
+              "lizenz"))
+
+
+#'\newpage
+#'## Anzahl Variablen der Datensätze
+
+length(txt.bverfg)
+length(meta.bverfg)
+length(txt.annotated)
+length(dt.segmented.full)
+
+
+#'## Alle Variablen-Namen der Datensätze
+
+names(txt.bverfg)
+names(meta.bverfg)
+names(txt.annotated)
+names(dt.segmented.full)
 
 
 
