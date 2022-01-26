@@ -2654,6 +2654,9 @@ zip(paste(prefix.files,
 
 #'### Alle Entscheidungen
 
+files.pdf <- list.files(pattern = "\\.pdf")
+
+
 #+ results = 'hide'
 zip(paste(prefix.files,
           "DE_PDF_Datensatz.zip",
@@ -2670,7 +2673,7 @@ unlink(files.pdf)
 #'## Verpacken der TXT-Dateien
 
 #+ results = 'hide'
-files.txt <- list.files(pattern="\\.txt",
+files.txt <- list.files(pattern = "\\.txt",
                         ignore.case = TRUE)
 
 zip(paste(prefix.files,
