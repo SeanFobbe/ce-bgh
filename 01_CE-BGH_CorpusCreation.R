@@ -2361,7 +2361,7 @@ ggplot(data = meta.bgh)+
 #'### Variablen sortieren: Hauptdatensatz
 
 
-setcolorder(txt.bverfg,
+setcolorder(txt.bgh,
             c("doc_id",
               "text",
               "gericht",
@@ -2402,7 +2402,7 @@ setcolorder(txt.bverfg,
 #+
 #'### Variablen sortieren: Metadaten
 
-setcolorder(meta.bverfg,
+setcolorder(meta.bgh,
             c("doc_id",
               "gericht",
               "datum",
@@ -2441,18 +2441,16 @@ setcolorder(meta.bverfg,
 #'\newpage
 #'## Anzahl Variablen der Datensätze
 
-length(txt.bverfg)
-length(meta.bverfg)
-length(txt.annotated)
-length(dt.segmented.full)
+length(txt.bgh)
+length(meta.bgh)
+
 
 
 #'## Alle Variablen-Namen der Datensätze
 
-names(txt.bverfg)
-names(meta.bverfg)
-names(txt.annotated)
-names(dt.segmented.full)
+names(txt.bgh)
+names(meta.bgh)
+
 
 
 
