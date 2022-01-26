@@ -2083,30 +2083,42 @@ meta.bgh <- txt.bgh[, !"text"]
 
 
 
-
-#'\newpage
-#'## Zusammenfasssungen: Linguistische Kennwerte
-#' **Hinweis:** Typen sind definiert als einzigartige Tokens und werden für jedes Dokument gesondert berechnet. Daher ergibt es an dieser Stelle auch keinen Sinn die Typen zu summieren, denn bezogen auf den Korpus wäre der Kennwert ein anderer. Der Wert wird daher manuell auf "NA" gesetzt.
+#'## Linguistische Kennwerte
 
 #+
 #'### Zusammenfassungen berechnen
 
-dt.summary.ling <- summary.corpus[, lapply(.SD,
+dt.summary.ling <- meta.bverfg[, lapply(.SD,
                                            function(x)unclass(summary(x))),
                                   .SDcols = c("zeichen",
                                               "tokens",
-                                              "saetze",
-                                              "typen")]
+                                              "typen",
+                                              "saetze")]
 
 
-dt.sums.ling <- summary.corpus[,
-                               lapply(.SD, sum),
-                               .SDcols = c("zeichen",
-                                           "tokens",
-                                           "saetze",
-                                           "typen")]
+dt.sums.ling <- meta.bverfg[,
+                            lapply(.SD, sum),
+                            .SDcols = c("zeichen",
+                                        "tokens",
+                                        "typen",
+                                        "saetze")]
 
-dt.sums.ling$typen <- NA
+
+
+tokens.temp <- tokens(corpus(txt.bverfg),
+                      what = "word",
+                      remove_punct = FALSE,
+                      remove_symbols = FALSE,
+                      remove_numbers = FALSE,
+                      remove_url = FALSE,
+                      remove_separators = TRUE,
+                      split_hyphens = FALSE,
+                      include_docvars = FALSE,
+                      padding = FALSE
+                      )
+
+
+dt.sums.ling$typen <- nfeat(dfm(tokens.temp))
 
 
 
@@ -2143,9 +2155,9 @@ kable(dt.stats.ling,
 #'### Zusammenfassungen speichern
 
 fwrite(dt.stats.ling,
-       paste0(dir.analysis,
-              config$project$shortname,
-              "_00_KorpusStatistik_ZusammenfassungLinguistisch.csv"),
+       file.path(dir.analysis,
+                 paste0(config$project$shortname,
+                        "_00_KorpusStatistik_ZusammenfassungLinguistisch.csv")),
        na = "NA")
 
 
