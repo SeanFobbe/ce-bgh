@@ -1029,7 +1029,7 @@ kable(table.size,
 #+
 #'## Import: Public Key
 #+ echo = TRUE
-system2("gpg2", "--import GPG-Public-Key_Fobbe-Data.asc",
+system2("gpg2", "--import gpg/PublicKey_Fobbe-Data.asc",
         stdout = TRUE,
         stderr = TRUE)
 
@@ -1082,7 +1082,7 @@ sha3test <- function(filename, sig){
 
 # Ursprüngliche Signaturen importieren
 table.hashes <- fread(hashfile)
-filename <- table.hashes$filename
+filename <- file.path("output", table.hashes$filename)
 sha3.512 <- table.hashes$sha3.512
 
 # Signaturprüfung durchführen 
