@@ -2725,7 +2725,7 @@ files.source <- grep("spin",
                      invert = TRUE)
 
 zip(paste(prefix.files,
-           "Source_Files.zip",
+          "Source_Files.zip",
           sep = "_"),
     files.source)
 
