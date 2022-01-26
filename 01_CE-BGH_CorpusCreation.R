@@ -357,7 +357,7 @@ if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv"
 #'# Links suchen
 
 #'## Maximalen Such-Umfang einlesen
-scope.source <- fread("data/CE-BGH_Source_Scope.csv")
+scope.source <- fread("data/CE-BGH_Scope.csv")
 
 
 
