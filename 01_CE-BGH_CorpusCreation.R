@@ -2050,7 +2050,7 @@ if(config$parallel$lingsummarize == TRUE){
 
 
 #+ lingsummarize, results = 'hide',  warning = FALSE
-summary.corpus <- f.future_lingsummarize(txt.bverfg)
+summary.corpus <- f.future_lingsummarize(txt.bgh)
 
 
 
@@ -2088,7 +2088,7 @@ meta.bgh <- txt.bgh[, !"text"]
 #+
 #'### Zusammenfassungen berechnen
 
-dt.summary.ling <- meta.bverfg[, lapply(.SD,
+dt.summary.ling <- meta.bgh[, lapply(.SD,
                                            function(x)unclass(summary(x))),
                                   .SDcols = c("zeichen",
                                               "tokens",
@@ -2096,7 +2096,7 @@ dt.summary.ling <- meta.bverfg[, lapply(.SD,
                                               "saetze")]
 
 
-dt.sums.ling <- meta.bverfg[,
+dt.sums.ling <- meta.bgh[,
                             lapply(.SD, sum),
                             .SDcols = c("zeichen",
                                         "tokens",
@@ -2105,7 +2105,7 @@ dt.sums.ling <- meta.bverfg[,
 
 
 
-tokens.temp <- tokens(corpus(txt.bverfg),
+tokens.temp <- tokens(corpus(txt.bgh),
                       what = "word",
                       remove_punct = FALSE,
                       remove_symbols = FALSE,
@@ -2170,25 +2170,23 @@ fwrite(dt.stats.ling,
 #+
 #'### Entscheidungsdatum
 
-summary(as.IDate(meta.bverfg$datum))
+summary(as.IDate(meta.bgh$datum))
 
 
 
 #'### Zusammenfassungen berechnen
 
-dt.summary.docvars <- meta.bverfg[,
+dt.summary.docvars <- meta.bgh[,
                                   lapply(.SD, function(x)unclass(summary(na.omit(x)))),
                                   .SDcols = c("entscheidungsjahr",
                                               "eingangsjahr_iso",
-                                              "band",
                                               "eingangsnummer")]
 
 
-dt.unique.docvars <- meta.bverfg[,
+dt.unique.docvars <- meta.bgh[,
                                  lapply(.SD, function(x)length(unique(na.omit(x)))),
                                  .SDcols = c("entscheidungsjahr",
                                              "eingangsjahr_iso",
-                                             "band",
                                              "eingangsnummer")]
 
 
