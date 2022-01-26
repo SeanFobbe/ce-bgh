@@ -319,9 +319,9 @@ setDTthreads(threads = fullCores)
 #'Die Registerzeichen werden im Laufe des Skripts mit ihren detaillierten Bedeutungen aus dem folgenden Datensatz abgeglichen: "Seán Fobbe (2021). Aktenzeichen der Bundesrepublik Deutschland (AZ-BRD). Version 1.0.1. Zenodo. DOI: 10.5281/zenodo.4569564." Das Ergebnis des Abgleichs wird in der Variable "verfahrensart" in den Datensatz eingefügt.
 
 
-if (file.exists("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
+if (file.exists("data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
     download.file("https://zenodo.org/record/4569564/files/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv?download=1",
- "AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+ "data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
     }
 
 
@@ -330,9 +330,9 @@ if (file.exists("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
 #' Die Personendaten stammen aus folgendem Datensatz: \enquote{Seán Fobbe and Tilko Swalve (2021). Presidents and Vice-Presidents of the Federal Courts of Germany (PVP-FCG). Version 2021-04-08. Zenodo. DOI: 10.5281/zenodo.4568682}.
 
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv?download=1",
-                  "PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+                  "data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
 }
 
 
@@ -342,9 +342,9 @@ if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALS
 #' Die Personendaten stammen aus folgendem Datensatz: \enquote{Seán Fobbe and Tilko Swalve (2021). Presidents and Vice-Presidents of the Federal Courts of Germany (PVP-FCG). Version 2021-04-08. Zenodo. DOI: 10.5281/zenodo.4568682}.
 
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv?download=1",
-                  "PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+                  "data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
 }
 
 
@@ -357,7 +357,7 @@ if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == 
 #'# Links suchen
 
 #'## Maximalen Such-Umfang einlesen
-scope.source <- fread("CE-BGH_Source_Scope.csv")
+scope.source <- fread("data/CE-BGH_Source_Scope.csv")
 
 
 
