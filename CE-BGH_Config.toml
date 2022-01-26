@@ -29,7 +29,7 @@ doi.aktenzeichen = "10.5281/zenodo.4569564"
 
 debug.toggle = true   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
 
-debug.scope = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
+debug.pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
 
 debug.sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
 
