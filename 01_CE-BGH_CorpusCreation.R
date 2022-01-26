@@ -2164,30 +2164,32 @@ fwrite(dt.stats.ling,
 
 
 #'\newpage
-#'## Zusammenfassungen: Quantitative Variablen
+#'## Quantitative Variablen
 
 
 #+
 #'### Entscheidungsdatum
 
-summary(as.IDate(summary.corpus$datum))
+summary(as.IDate(meta.bverfg$datum))
 
 
 
 #'### Zusammenfassungen berechnen
 
-dt.summary.docvars <- summary.corpus[,
-                                     lapply(.SD, function(x)unclass(summary(na.omit(x)))),
-                                     .SDcols = c("entscheidungsjahr",
-                                                 "eingangsjahr_iso",
-                                                 "eingangsnummer")]
+dt.summary.docvars <- meta.bverfg[,
+                                  lapply(.SD, function(x)unclass(summary(na.omit(x)))),
+                                  .SDcols = c("entscheidungsjahr",
+                                              "eingangsjahr_iso",
+                                              "band",
+                                              "eingangsnummer")]
 
 
-dt.unique.docvars <- summary.corpus[,
-                                    lapply(.SD, function(x)length(unique(na.omit(x)))),
-                                    .SDcols = c("entscheidungsjahr",
-                                                "eingangsjahr_iso",
-                                                "eingangsnummer")]
+dt.unique.docvars <- meta.bverfg[,
+                                 lapply(.SD, function(x)length(unique(na.omit(x)))),
+                                 .SDcols = c("entscheidungsjahr",
+                                             "eingangsjahr_iso",
+                                             "band",
+                                             "eingangsnummer")]
 
 
 dt.stats.docvars <- rbind(dt.unique.docvars,
@@ -2198,7 +2200,7 @@ dt.stats.docvars <- transpose(dt.stats.docvars,
 
 
 setnames(dt.stats.docvars, c("Variable",
-                             "Einzigartig",
+                             "Anzahl",
                              "Min",
                              "Quart1",
                              "Median",
@@ -2207,7 +2209,7 @@ setnames(dt.stats.docvars, c("Variable",
                              "Max"))
 
 
-
+#'\newpage
 #'### Zusammenfassungen anzeigen
 
 kable(dt.stats.docvars,
@@ -2220,9 +2222,9 @@ kable(dt.stats.docvars,
 #'### Zusammenfassungen speichern
 
 fwrite(dt.stats.docvars,
-       paste0(dir.analysis,
-              config$project$shortname,
-              "_00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv"),
+       file.path(dir.analysis,
+                 paste0(config$project$shortname,
+                        "_00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv")),
        na = "NA")
 
 
