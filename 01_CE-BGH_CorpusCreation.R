@@ -1762,9 +1762,7 @@ ggplot(data = freqtable) +
              width = 0.5) +
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Typ"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -1798,9 +1796,7 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Senat (DB)"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -1836,9 +1832,7 @@ ggplot(data = freqtable) +
              width = 0.5) +
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Senat (Aktenzeichen)"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -1873,9 +1867,7 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Registerzeichen"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -1910,9 +1902,7 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Präsident:in"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -1948,9 +1938,7 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Vize-Präsident:in"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -1981,9 +1969,7 @@ ggplot(data = freqtable) +
              fill = "#7e0731") +
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Entscheidungsjahr"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2015,9 +2001,7 @@ ggplot(data = freqtable) +
              fill = "#7e0731") +
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Eingangsjahr (ISO)"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2242,9 +2226,7 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Zeichen je Dokument"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2274,9 +2256,7 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Tokens je Dokument"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2307,9 +2287,7 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Typen je Dokument"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2339,9 +2317,7 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Sätze je Dokument"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2464,9 +2440,7 @@ ggplot(data = dt.plot,
     annotation_logticks(sides = "b")+
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Dateigrößen (PDF)"),
         caption = paste("DOI:",
                         config$doi$data$version),
@@ -2498,9 +2472,7 @@ ggplot(data = dt.plot,
     annotation_logticks(sides = "b")+
     theme_bw() +
     labs(
-        title = paste(config$project$shortname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Dateigrößen (TXT)"),
         caption = paste("DOI:",
                         config$doi$data$version),
