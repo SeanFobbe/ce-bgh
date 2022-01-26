@@ -11,9 +11,9 @@
 #'    number_sections: true
 #'    pandoc_args: --listings
 #'    includes:
-#'      in_header: General_Source_TEX_Preamble_DE.tex
-#'      before_body: [CE-BGH_Source_TEX_Definitions.tex,CE-BGH_Source_TEX_CodebookTitle.tex]
-#'bibliography: packages.bib
+#'      in_header: tex/Preamble_DE.tex
+#'      before_body: [temp/CE-BGH_Definitions.tex, tex/CE-BGH_CodebookTitle.tex]
+#'bibliography: temp/packages.bib
 #'nocite: '@*'
 #' ---
 
