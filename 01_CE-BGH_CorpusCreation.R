@@ -1634,13 +1634,13 @@ placeholder.pdf <- gsub("\\.txt",
 
 
 #'### Platzhalter PDF/TXT speichern
-dir.create("PlatzhalterDokumente")
+dir.create("output/PlatzhalterDokumente")
 
 file_move(placeholder.txt,
-          "PlatzhalterDokumente")
+          "output/PlatzhalterDokumente")
 
 file_move(placeholder.pdf,
-          "PlatzhalterDokumente")
+          "output/PlatzhalterDokumente")
 
 
 #'### Platzhalter aus Datensatz entfernen
