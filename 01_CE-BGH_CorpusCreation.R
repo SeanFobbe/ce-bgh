@@ -1764,8 +1764,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Typ"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Typ der Entscheidung",
         y = "Entscheidungen"
     )+
@@ -1798,8 +1797,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Senat (DB)"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Senat",
         y = "Entscheidungen"
     )+
@@ -1834,8 +1832,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Senat (Aktenzeichen)"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Senat",
         y = "Entscheidungen"
     )+
@@ -1869,8 +1866,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Registerzeichen"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Registerzeichen",
         y = "Entscheidungen"
     )+
@@ -1904,8 +1900,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Präsident:in"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Präsident:in",
         y = "Entscheidungen"
     )+
@@ -1940,8 +1935,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Vize-Präsident:in"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Vize-Präsident:in",
         y = "Entscheidungen"
     )+
@@ -1971,8 +1965,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Entscheidungsjahr"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Entscheidungsjahr",
         y = "Entscheidungen"
     )+
@@ -2003,8 +1996,7 @@ ggplot(data = freqtable) +
     labs(
         title = paste(prefix.figuretitle,
                       "| Entscheidungen je Eingangsjahr (ISO)"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Eingangsjahr (ISO)",
         y = "Entscheidungen"
     )+
@@ -2228,8 +2220,7 @@ ggplot(data = summary.corpus)+
     labs(
         title = paste(prefix.figuretitle,
                       "| Verteilung der Zeichen je Dokument"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Zeichen",
         y = "Dichte"
     )+
@@ -2258,8 +2249,7 @@ ggplot(data = summary.corpus)+
     labs(
         title = paste(prefix.figuretitle,
                       "| Verteilung der Tokens je Dokument"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Tokens",
         y = "Dichte"
     )+
@@ -2289,8 +2279,7 @@ ggplot(data = summary.corpus)+
     labs(
         title = paste(prefix.figuretitle,
                       "| Verteilung der Typen je Dokument"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Typen",
         y = "Dichte"
     )+
@@ -2319,8 +2308,7 @@ ggplot(data = summary.corpus)+
     labs(
         title = paste(prefix.figuretitle,
                       "| Verteilung der Sätze je Dokument"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Sätze",
         y = "Dichte"
     )+
@@ -2442,8 +2430,7 @@ ggplot(data = dt.plot,
     labs(
         title = paste(prefix.figuretitle,
                       "| Verteilung der Dateigrößen (PDF)"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Dateigröße in MB",
         y = "Dichte"
     )+
@@ -2474,8 +2461,7 @@ ggplot(data = dt.plot,
     labs(
         title = paste(prefix.figuretitle,
                       "| Verteilung der Dateigrößen (TXT)"),
-        caption = paste("DOI:",
-                        config$doi$data$version),
+        caption = caption,
         x = "Dateigröße in MB",
         y = "Dichte"
     )+
