@@ -950,31 +950,32 @@ filenames2 <- paste0(filenames1,
 
 #'## Strenge REGEX-Validierung: Gesamter Dateiname
 
-regex.test2 <- grep(paste0("BGH",
+regex.test2 <- grep(paste0("BGH", # gericht
                            "_",
-                           ".*",
+                           ".*", # spruchkoerper_db
                            "_",
-                           "[NALE]{2}",
+                           "[NALE]{2}", # leitsatz
                            "_",
-                           "[0-9]{4}-[0-9]{2}-[0-9]{2}",
+                           "[0-9]{4}-[0-9]{2}-[0-9]{2}", # datum
                            "_",
-                           "[A-Za-z0-9]*",
+                           "[A-Za-z0-9]*",# spruchkoerper_az
                            "_",
-                           "[A-Za-zÜ]*",
+                           "[A-Za-zÜ]*", # registerzeichen
                            "_",
-                           "[0-9-]*",
+                           "[0-9-]*", # eingangsnummer
                            "_",
-                           "[0-9]{2}",
+                           "[0-9]{2}", # eingangsjahr_az
                            "_",
-                           "[A-Za-z]*",
+                           "[A-Za-z]*", # zusatz_az
                            "_",
-                           ".*",
+                           ".*", # name 
                            "_",
-                           "[NA0-9]*",
-                           "\\.pdf"),
+                           "[NA0-9]*", # kollision
+                           "\\.pdf"), # Dateiendung
                     filenames2,
                     value = TRUE,
                     invert = TRUE)
+
 
 
 #'## Ergebnis der REGEX-Validierung
