@@ -307,29 +307,7 @@ setDTthreads(threads = fullCores)
 
 
 
-
-
-#'## Optionen: Quanteda
-tokens_locale <- "de_DE"
-
-
-
-#'## Optionen: Knitr
-
-#+
-#'### Ausgabe-Format
-dev <- c("pdf",
-         "png")
-
-
-#'### DPI für Raster-Grafiken
-dpi <- 300
-
-
-#'### Ausrichtung von Grafiken im Compilation Report
-fig.align <- "center"
-
-
+config$freqtable$ignore
 
 
 
@@ -337,7 +315,7 @@ fig.align <- "center"
 
 #' Diese Variablen werden bei der Erstellung der Frequenztabellen nicht berücksichtigt.
 
-varremove <- c("text",
+config$freqtable$ignore <- c("text",
                "eingangsnummer",
                "datum",
                "doc_id",
@@ -1754,14 +1732,14 @@ print(f.fast.freqtable)
 
 
 #'## Ignorierte Variablen
-print(varremove)
+print(config$freqtable$ignore)
 
 
 
 #'## Liste zu prüfender Variablen
 
 varlist <- names(txt.bgh)
-varlist <- grep(paste(varremove,
+varlist <- grep(paste(config$freqtable$ignore,
                       collapse="|"),
                 varlist,
                 invert = TRUE,
