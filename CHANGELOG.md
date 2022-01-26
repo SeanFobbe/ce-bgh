@@ -4,6 +4,7 @@
 ## Version \version
  
 - Vollständige Aktualisierung der Daten
+- Strenge semantische Kontrolle aller Variablen
 
 
 ## Version 2021-04-27
