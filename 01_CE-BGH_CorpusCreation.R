@@ -1,5 +1,5 @@
 #'---
-#'title: "Compilation Report | Corpus der Entscheidungen des Bundesgerichtshofs"
+#'title: "Compilation Report | Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH)"
 #'author: Seán Fobbe
 #'geometry: margin=3cm
 #'fontsize: 11pt
@@ -11,7 +11,7 @@
 #'    pandoc_args: --listings
 #'    includes:
 #'      in_header: tex/Preamble_DE.tex
-#'      before_body: [temp/CE-BVerfG_Definitions.tex, tex/CE-BVerfG_CompilationTitle.tex]
+#'      before_body: [temp/CE-BGH_Definitions.tex, tex/CE-BGH_CompilationTitle.tex]
 #'papersize: a4
 #'bibliography: temp/packages.bib
 #'nocite: '@*'
