@@ -1574,17 +1574,17 @@ txt.bgh$name <- dt.download[targetindices]$name
 
 #'## Variable "doi_concept" hinzufügen
 txt.bgh$doi_concept <- rep(config$doi$data$concept,
-                       txt.bgh[,.N])
+                           txt.bgh[,.N])
 
 
 #'## Variable "doi_version" hinzufügen
 txt.bgh$doi_version <- rep(config$doi$data$version,
-                       txt.bgh[,.N])
+                           txt.bgh[,.N])
 
 
 #'## Variable "version" hinzufügen
 txt.bgh$version <- as.character(rep(datestamp,
-                                txt.bgh[,.N]))
+                                    txt.bgh[,.N]))
 
 #'## Variable "lizenz" hinzufügen
 txt.bgh$lizenz <- as.character(rep(config$license$data,
