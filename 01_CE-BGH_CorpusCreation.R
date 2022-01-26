@@ -64,7 +64,6 @@ library(rvest)        # HTML/XML-Extraktion
 library(knitr)        # Professionelles Reporting
 library(kableExtra)   # Verbesserte Kable Tabellen
 library(pdftools)     # Verarbeitung von PDF-Dateien
-#library(doParallel)   # Parallelisierung; to be deprecated
 library(ggplot2)      # Fortgeschrittene Datenvisualisierung
 library(scales)       # Skalierung von Diagrammen
 library(data.table)   # Fortgeschrittene Datenverarbeitung
@@ -87,10 +86,6 @@ source("R-fobbe-proto-package/f.hyphen.remove.R")
 source("R-fobbe-proto-package/f.year.iso.R")
 source("R-fobbe-proto-package/f.fast.freqtable.R")
 
-#source("R-fobbe-proto-package/f.lingsummarize.iterator.R") # to be deprecated
-#source("R-fobbe-proto-package/f.dopar.spacyparse.R") # to be deprecated
-#source("R-fobbe-proto-package/f.dopar.multihashes.R") # to be deprecated
-#source("R-fobbe-proto-package/f.dopar.pdfextract.R") # to be deprecated
 
 source("R-fobbe-proto-package/f.future_lingsummarize.R")
 source("R-fobbe-proto-package/f.future_multihashes.R")
