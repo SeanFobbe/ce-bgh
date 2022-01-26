@@ -726,122 +726,26 @@ kable(stats.ling,
 #+
 #'## Verteilung Zeichen
 
-#+ CE-BGH_09_Density_Zeichen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = zeichen),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Zeichen je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Zeichen",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_09_Density_Zeichen-1.pdf)
 
-
+#+
 #'## Verteilung Tokens
 
-#+ CE-BGH_10_Density_Tokens, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = tokens),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Tokens je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Tokens",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_10_Density_Tokens-1.pdf)
 
+
+#+
 #'## Verteilung Typen
 
-
-#+ CE-BGH_11_Density_Typen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = typen),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Typen je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Typen",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_11_Density_Typen-1.pdf)
 
 
+
+#+
 #'## Verteilung Sätze
 
-#+ CE-BGH_12_Density_Saetze, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = saetze),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Sätze je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Sätze",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_12_Density_Saetze-1.pdf)
+
 
 
 
@@ -881,41 +785,12 @@ kable(stats.docvars,
 
 #'## Nach Typ der Entscheidung
 
-freqtable <- table.entsch.typ[-.N]
-
 #'\vspace{0.5cm}
 
-#+ CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(entscheidung_typ,
-                             -N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black",
-             width = 0.5) +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Typ"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Typ der Entscheidung",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#' ![](analyse/CE-BGH_02_Barplot_Entscheidungstyp-1.pdf)
 
 #'\vspace{1cm}
+
 
 kable(table.entsch.typ,
       format = "latex",
@@ -936,40 +811,11 @@ kable(table.entsch.typ,
 
 
 #'\vspace{0.5cm}
-freqtable <- table.spruch.az[-.N]
 
-
-#+ CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(spruchkoerper_az,
-                             -N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black",
-             width = 0.5) +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Senat (Aktenzeichen)"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Senat",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#' ![](analyse/CE-BGH_03_Barplot_Spruchkoerper_AZ-1.pdf)
 
 #'\vspace{1cm}
+
 
 kable(table.spruch.az,
       format = "latex",
@@ -986,37 +832,7 @@ kable(table.spruch.az,
 #+
 #'## Nach Spruchkörper (Datenbank)
 
-freqtable <- table.spruch.db[-.N]
-
-
-#+ CE-BGH_03_Barplot_Spruchkoerper_DB, fig.height = 12, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(spruchkoerper_db,
-                            N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black",
-             width = 0.5) +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Senat (DB)"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Senat",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_03_Barplot_Spruchkoerper_DB-1.pdf)
 
 #'\newpage
 
@@ -1038,38 +854,10 @@ kable(table.spruch.db,
 
 
 #'## Nach Registerzeichen
-
+#'
 #'\vspace{0.5cm}
-freqtable <- table.regz[-.N]
-
-#+ CE-BGH_04_Barplot_Registerzeichen, fig.height = 14, fig.width = 10
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(registerzeichen,
-                             N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black") +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Registerzeichen"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Registerzeichen",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
+#'
+#' ![](analyse/CE-BGH_04_Barplot_Registerzeichen_DB-1.pdf)
 
 #'\newpage
 
@@ -1088,39 +876,11 @@ kable(table.regz,
 #'## Nach Präsident:in
 
 #'\vspace{0.5cm}
-freqtable <- table.output.praesi[-.N]
-
-#+ CE-BGH_05_Barplot_PraesidentIn, fig.height = 5.5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(praesi,
-                             N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black") +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Präsident:in"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Präsident:in",
-        y = "Entscheidungen"
-    )+
-    theme(
-        axis.title.y = element_blank(),
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#'
+#' ![](analyse/CE-BGH_05_Barplot_PraesidentIn-1.pdf)
+#'
 #'\vspace{0.5cm}
+
 
 kable(table.output.praesi,
       format = "latex",
@@ -1140,39 +900,9 @@ kable(table.output.praesi,
 #'## Nach Vize-Präsident:in
 
 #'\vspace{0.5cm}
-freqtable <- table.output.vpraesi[-.N]
-
-
-#+ CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 5.5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(v_praesi,
-                             N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black") +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Vize-Präsident:in"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Vize-Präsident:in",
-        y = "Entscheidungen"
-    )+
-    theme(
-        axis.title.y = element_blank(),
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#' 
+#' ![](analyse/CE-BGH_06_Barplot_VizePraesidentIn-1.pdf)
+#'
 #'\vspace{0.5cm}
 
 kable(table.output.vpraesi,
@@ -1195,33 +925,9 @@ kable(table.output.vpraesi,
 #'## Nach Entscheidungsjahr
 
 #'\vspace{0.5cm}
-freqtable <- table.jahr.entscheid[-.N][,lapply(.SD, as.numeric)]
-
-#+ CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 7, fig.width = 11
-ggplot(data = freqtable) +
-    geom_bar(aes(x = entscheidungsjahr,
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731") +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Entscheidungsjahr"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Entscheidungsjahr",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 16),
-        plot.title = element_text(size = 16,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
+#' 
+#' ![](analyse/CE-BGH_07_Barplot_Entscheidungsjahr-1.pdf)
+#'
 #'\vspace{1cm}
 
 kable(table.jahr.entscheid,
@@ -1243,36 +949,10 @@ kable(table.jahr.entscheid,
 
 
 #'\vspace{0.5cm}
-
-
-freqtable <- table.jahr.eingangISO[-.N][,lapply(.SD, as.numeric)]
-
-
-#+ CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 7, fig.width = 11
-ggplot(data = freqtable) +
-    geom_bar(aes(x = eingangsjahr_iso,
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731") +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Eingangsjahr (ISO)"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Eingangsjahr (ISO)",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 16),
-        plot.title = element_text(size = 16,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
+#'
+#' ![](analyse/CE-BGH_08_Barplot_EingangsjahrISO-1.pdf)
+#'
+#'
 #'\vspace{1cm}
 
 kable(table.jahr.eingangISO,
@@ -1294,13 +974,13 @@ kable(table.jahr.eingangISO,
 #+
 #'## Verteilung PDF-Dateigrößen
 
-#' ![](ANALYSE/CE-BGH_13_Density_Dateigroessen_PDF-1.pdf)
+#' ![](analyse/CE-BGH_13_Density_Dateigroessen_PDF-1.pdf)
 
 
 #+
 #'## Verteilung TXT-Dateigrößen
 
-#' ![](ANALYSE/CE-BGH_14_Density_Dateigroessen_TXT-1.pdf)
+#' ![](analyse/CE-BGH_14_Density_Dateigroessen_TXT-1.pdf)
 
 #'\newpage
 
