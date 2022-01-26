@@ -2694,12 +2694,8 @@ unlink(files.txt)
 
 #'## Verpacken der Analyse-Dateien
 
-zip(paste0(config$project$shortname,
-           "_",
-           datestamp,
-           "_DE_",
-           basename(dir.analysis),
-           ".zip"),
+zip(paste0(prefix.files,
+           "_DE_ANALYSE.zip"),
     basename(dir.analysis))
 
 
