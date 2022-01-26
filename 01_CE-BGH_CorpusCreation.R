@@ -1819,7 +1819,7 @@ ggplot(data = freqtable) +
 freqtable <- table.spruch.az[-.N]
 
 
-#+ CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 5, fig.width = 8
+#+ CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(spruchkoerper_az,
                              -N),
@@ -1887,7 +1887,7 @@ ggplot(data = freqtable) +
 
 freqtable <- table.output.praesi[-.N]
 
-#+ CE-BGH_05_Barplot_PraesidentIn, fig.height = 5.5, fig.width = 8
+#+ CE-BGH_05_Barplot_PraesidentIn, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(praesi,
                              N),
@@ -1922,7 +1922,7 @@ ggplot(data = freqtable) +
 
 freqtable <- table.output.vpraesi[-.N]
 
-#+ CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 5.5, fig.width = 8
+#+ CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(v_praesi,
                              N),
