@@ -2637,7 +2637,6 @@ unlink(csvname.meta)
 #+
 #'### Nur Leitsatz-Entscheidungen
 
-
 files.leitsatz <- gsub("\\.txt",
                        "\\.pdf",
                        txt.bgh[leitsatz == "LE"]$doc_id)
