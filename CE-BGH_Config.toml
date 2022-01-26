@@ -27,9 +27,13 @@ doi.aktenzeichen = "10.5281/zenodo.4569564"
 
 # Debugging
 
-debug.toggle = true   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"; Der Debugging-Modus reduziert den Such-Umfang auf den in der Variable "debug.scope" angegebenen Umfang Seiten
-debug.sample = 10      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 10 Entscheidungen). Muss mindestens 10 betragen.
+debug.toggle = true   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
 
+debug.scope = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
+
+debug.sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
+
+# Im Anschluss werden fünf zufällig ausgewählte Entscheidungen gelöscht um den Wiederholungsversuch zu testen. Nur für Test- und Demonstrationszwecke. 
 
 
 
