@@ -667,26 +667,11 @@ az.out1 <- gsub("_\\+_48", "", az.out1)
 az.out1 <- gsub("u\\._25_", "", az.out1)
 az.out1 <- gsub("_-_28_07", "", az.out1)
 
-
-
 az.out1 <- gsub("-[0-9]*_", "_", az.out1)
 
 az.out1 <- gsub("_\\(a\\)", "_a", az.out1)
 
 
-# test
-
-
-
-
-
-gsub("AnwZ\\(Brfg\\)", "NA_AnwZBrfg", regex.test1)
-
-gsub("AnwZ\\(Brfg\\)_10_21_NA", "NA_AnwZBrfg", regex.test1)
-
-grep("AnwZ\\(Brfg\\)", az.out)
-
-az.out  <- grep("AK", az.out, value =TRUE)[305]
 
 
 
