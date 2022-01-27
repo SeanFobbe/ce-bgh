@@ -211,11 +211,11 @@ summary.corpus <- fread(cmd = paste("unzip -cq",
 
 
 ### Datensatz
-data.zip <- paste0(prefix.date,
-                      "DE_CSV_Datensatz.zip")
+#data.zip <- paste0(prefix.date,
+#                      "DE_CSV_Datensatz.zip")
 
-data.corpus <- fread(cmd = paste("unzip -cq",
-                                 data.zip))
+#data.corpus <- fread(cmd = paste("unzip -cq",
+#                                 data.zip))
 
 
 ################################
@@ -454,26 +454,9 @@ df.bgh <- readtext("./*.txt",
 #+
 #'# Variablen
 
-#+
-#'## Datenstruktur 
-
-#str(data.corpus)
 
 
-#'\vspace{1cm}
 
-#+
-#'## Hinweise
-
-#'\begin{itemize}
-#' \item \textbf{Doppelte Codierung der Spruchkörper} --- Für viele Urteile sind die Spruchkörper doppelt enthalten, einmal aus der Datenbank in menschenlesbarer Form (Variable \enquote{spruchkoerper\_db}), einmal durch das Aktenzeichen (Variable \enquote{spruchkoerper\_az}). Nicht wenige Aktenzeichen enthalten keine separate und einheitliche Angabe des Spruchkörpers, weil sich diese schon aus dem Registerzeichen ergibt, z.B. für Aktenkontrollen in Haftprüfungsverfahren oder Kartellsachen. Die Variable \enquote{spruchkoerper\_db} ermöglicht hier eine einfache Selektion bestimmter Spruchkörper anhand einer einheitlichen Variable, ohne im Detail erst jedes passende Registerzeichen suchen zu müssen.
-#' \item \textbf{Abweichende Codierung der Registerzeichen} --- Die Registerzeichen wurden gekürzt und Sonderzeichen entfernt um die Arbeit mit ihnen zu vereinfachen. Beachten Sie bitte die Gegenüberstellungstabelle unter Punkt \ref{register}.
-#'\item Fehlende Werte sind immer mit \enquote{NA} codiert.
-#'\item Strings können grundsätzlich alle in UTF-8 definierten Zeichen (insbesondere Buchstaben, Zahlen und Sonderzeichen) enthalten.
-#'\end{itemize}
-
-
-#'\newpage
 #+
 #'## Erläuterungen zu den einzelnen Variablen
 
@@ -528,6 +511,15 @@ df.bgh <- readtext("./*.txt",
 #'\end{longtable}
 #'\end{centering}
 
+#+
+#'## Hinweise
+
+#'\begin{itemize}
+#' \item \textbf{Doppelte Codierung der Spruchkörper} --- Für viele Urteile sind die Spruchkörper doppelt enthalten, einmal aus der Datenbank in menschenlesbarer Form (Variable \enquote{spruchkoerper\_db}), einmal durch das Aktenzeichen (Variable \enquote{spruchkoerper\_az}). Nicht wenige Aktenzeichen enthalten keine separate und einheitliche Angabe des Spruchkörpers, weil sich diese schon aus dem Registerzeichen ergibt, z.B. für Aktenkontrollen in Haftprüfungsverfahren oder Kartellsachen. Die Variable \enquote{spruchkoerper\_db} ermöglicht hier eine einfache Selektion bestimmter Spruchkörper anhand einer einheitlichen Variable, ohne im Detail erst jedes passende Registerzeichen suchen zu müssen.
+#' \item \textbf{Abweichende Codierung der Registerzeichen} --- Die Registerzeichen wurden gekürzt und Sonderzeichen entfernt um die Arbeit mit ihnen zu vereinfachen. Beachten Sie bitte die Gegenüberstellungstabelle unter Punkt \ref{register}.
+#'\item Fehlende Werte sind immer mit \enquote{NA} codiert.
+#'\item Strings können grundsätzlich alle in UTF-8 definierten Zeichen (insbesondere Buchstaben, Zahlen und Sonderzeichen) enthalten.
+#'\end{itemize}
 
 
 
