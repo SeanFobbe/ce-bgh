@@ -719,7 +719,7 @@ print(regex.test1)
 #'### Skript stoppen falls REGEX-Validierung gescheitert
 
 if (length(regex.test1) != 0){
-    stop("REGEX VALIDIERUNG GESCHEITERT: AKTENZEICHEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
+    stop("REGEX VALIDIERUNG 1 GESCHEITERT: AKTENZEICHEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
     }
 
 
@@ -980,7 +980,7 @@ print(regex.test2)
 #'## Skript stoppen falls REGEX-Validierung gescheitert
 
 if (length(regex.test2) != 0){
-    stop("REGEX VALIDIERUNG GESCHEITERT: DATEINAMEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
+    stop("REGEX VALIDIERUNG 2 GESCHEITERT: DATEINAMEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
     }
 
 
