@@ -84,14 +84,14 @@ prefix.date <- file.path("output",
 
 ## Datensatz herunterladen
 
-if (file.exists("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
+if (file.exists("data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
     download.file("https://zenodo.org/record/4569564/files/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv?download=1",
- "AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+ "data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
     }
 
 
 ## Datensatz einlesen
-az.source <- fread("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+az.source <- fread("data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
 
 ## Datensatz auf relevante Daten reduzieren
 table.registerzeichen <- az.source[stelle == "BGH" & position == "hauptzeichen"]
@@ -145,16 +145,16 @@ table.output.vpraesi <- fread(paste0(prefix,
 #+
 ## Personaldaten herunterladen
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv?download=1",
- "PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+ "data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
     }
 
 
 #+
 ## Personaldaten einlesen
 
-table.praesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+table.praesi <- fread("data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
 
 table.praesi.daten <- table.praesi[court == "BGH", c(2:3, 5:8)]
 table.praesi.alter <- table.praesi[court == "BGH", c(2:3, 13:15)]
@@ -163,9 +163,9 @@ table.praesi.alter <- table.praesi[court == "BGH", c(2:3, 13:15)]
 #+
 ## Personaldaten herunterladen
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv?download=1",
- "PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+ "data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
     }
 
 
@@ -173,7 +173,7 @@ if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == 
 #+
 ## Personaldaten einlesen
 
-table.vpraesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+table.vpraesi <- fread("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
 
 table.vpraesi.daten <- table.vpraesi[court == "BGH", c(2:3, 5:8)]
 table.vpraesi.alter <- table.vpraesi[court == "BGH", c(2:3, 13:15)]
