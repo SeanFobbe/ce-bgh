@@ -64,9 +64,15 @@ datestamp <- unique(tstrsplit(files.zip,
 
 
 ## Präfixe erstellen
-prefix <- paste0("ANALYSE/",
-                 datasetname,
-                 "_")
+prefix.analysis <- paste0("analyse/",
+                          config$project$shortname,
+                          "_")
+
+prefix.date <- file.path("output",
+                         paste0(config$project$shortname,
+                                "_",
+                                datestamp,
+                                "_"))
 
 
 ############################
