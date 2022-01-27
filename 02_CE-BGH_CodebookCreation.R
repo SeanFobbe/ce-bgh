@@ -853,7 +853,7 @@ kable(table.spruch.db,
 #'
 #'\vspace{0.5cm}
 #'
-#' ![](analyse/CE-BGH_04_Barplot_Registerzeichen_DB-1.pdf)
+#' ![](analyse/CE-BGH_04_Barplot_Registerzeichen-1.pdf)
 
 #'\newpage
 
