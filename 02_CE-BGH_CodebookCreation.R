@@ -222,13 +222,11 @@ data.corpus <- fread(cmd = paste("unzip -cq",
 ### Einlesen: Signaturen
 ################################
 
-hashfile <- paste(datasetname,
-                  datestamp,
-                  "KryptographischeHashes.csv", sep = "_")
+hashfile <- paste0(prefix.date,
+                  "KryptographischeHashes.csv")
 
-signaturefile <- paste(datasetname,
-                       datestamp,
-                       "FobbeSignaturGPG_Hashes.gpg", sep = "_")
+signaturefile <- paste0(prefix.date,
+                        "FobbeSignaturGPG_Hashes.gpg")
 
 
 
