@@ -457,7 +457,7 @@ df.bgh <- readtext("./*.txt",
 #+
 #'## Datenstruktur 
 
-str(data.corpus)
+#str(data.corpus)
 
 
 #'\vspace{1cm}
