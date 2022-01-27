@@ -598,7 +598,7 @@ az.out1 <- gsub("StbSt_\\(B\\)", "NA_StbStB", az.out1)
 
 az.out1 <- gsub("PatAnwZ_", "NA_PatAnwZ_", az.out1)
 
-az.out1 <- gsub("AnwZ_\\(Brf[gG]\\)", "NA_AnwZBrfg", az.out1)
+az.out1 <- gsub("AnwZ_?\\(Brf[gG]\\)", "NA_AnwZBrfg", az.out1)
 az.out1 <- gsub("AK", "NA_AK", az.out1)
 az.out1 <- gsub("ARAnw_", "NA_ARAnw_", az.out1)
 az.out1 <- gsub("ARs_\\(Voll[zZ]\\)_", "ARsVollz_", az.out1)
@@ -640,9 +640,8 @@ az.out1 <- gsub("NotSt_\\(Brfg\\)", "NA_NotStBrfg", az.out1)
 az.out1 <- gsub("NotZ_\\(Brfg\\)", "NA_NotZBrfg", az.out1)
 az.out1 <- gsub("NotZ_", "NA_NotZ_", az.out1)
 
-az.out1 <- gsub("RiZ_\\(R\\)", "NA_RiZR", az.out1)
-az.out1 <- gsub("RiZ\\(R\\)", "NA_RiZR", az.out1)
-az.out1 <- gsub("RiZ_\\(B\\)", "NA_RiZB", az.out1)
+az.out1 <- gsub("RiZ_?\\(R\\)", "NA_RiZR", az.out1)
+az.out1 <- gsub("RiZ_?\\(B\\)", "NA_RiZB", az.out1)
 az.out1 <- gsub("RiZ_", "NA_RiZ_", az.out1)
 az.out1 <- gsub("RiSt_\\(R\\)_", "NA_RiStR_", az.out1)
 az.out1 <- gsub("RiSt_\\(B\\)_", "NA_RiStB_", az.out1)
@@ -668,6 +667,21 @@ az.out1 <- gsub("_-_28_07", "", az.out1)
 az.out1 <- gsub("-[0-9]*_", "_", az.out1)
 
 az.out1 <- gsub("_\\(a\\)", "_a", az.out1)
+
+
+# test
+
+
+
+
+
+gsub("AnwZ\\(Brfg\\)", "NA_AnwZBrfg", regex.test1)
+
+gsub("AnwZ\\(Brfg\\)_10_21_NA", "NA_AnwZBrfg", regex.test1)
+
+grep("AnwZ\\(Brfg\\)", az.out)
+
+grep("AK", az.out, value =TRUE)
 
 
 
