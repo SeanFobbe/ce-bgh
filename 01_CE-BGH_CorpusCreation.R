@@ -589,6 +589,8 @@ az.out1 <- gsub(" ", "_", az.out)
 
 #+ echo = TRUE
 az.out1 <- gsub("AK_34_und_35/21", "AK_34/21", az.out1)
+az.out1 <- gsub("StB_25_und_26/21", "StB_25/21", az.out1)
+
 
 az.out1 <- gsub("\\/", "_", az.out1)
 
