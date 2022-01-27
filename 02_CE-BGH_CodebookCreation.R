@@ -53,7 +53,7 @@ setDTthreads(threads = detectCores())
 ############################
 
 ## Konfiguration einlesen
-config <- parseTOML("CE-BVerfG_Config.toml")
+config <- parseTOML("CE-BGH_Config.toml")
 
 ## ZIP-Archive bestimmen
 files.zip <- list.files(pattern = "\\.zip")
