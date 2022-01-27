@@ -48,21 +48,9 @@ setDTthreads(threads = detectCores())
 
 
 
-###################################
-### Zusätzliche Funktionen einlesen
-###################################
-
-source("General_Source_Functions.R")
-
-
-
 ############################
 ### Vorbereitung
 ############################
-
-datasetname <- "CE-BGH"
-doi.concept <- "10.5281/zenodo.3942742"  # checked
-doi.version <- "10.5281/zenodo.4705855"  # checked
 
 
 files.zip <- list.files(pattern = "\\.zip")
