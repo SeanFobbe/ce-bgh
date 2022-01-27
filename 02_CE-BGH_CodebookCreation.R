@@ -201,20 +201,18 @@ stats.docvars <- fread(paste0(prefix.analysis,
 ### Einlesen: Datensatz
 ######################################
 
-summary.zip <- paste(datasetname,
-                     datestamp,
-                     "DE_CSV_Metadaten.zip",
-                     sep = "_")
+### Metadaten
+summary.zip <- paste0(prefix.date,
+                      "DE_CSV_Metadaten.zip")
 
 summary.corpus <- fread(cmd = paste("unzip -cq",
                                     summary.zip))
 
 
 
-data.zip <- paste(datasetname,
-                     datestamp,
-                     "DE_CSV_Datensatz.zip",
-                     sep = "_")
+### Datensatz
+data.zip <- paste0(prefix.date,
+                      "DE_CSV_Datensatz.zip")
 
 data.corpus <- fread(cmd = paste("unzip -cq",
                                  data.zip))
