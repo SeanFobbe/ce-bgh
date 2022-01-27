@@ -104,35 +104,35 @@ table.registerzeichen <- az.source[stelle == "BGH" & position == "hauptzeichen"]
 ################################
 
 
-table.entsch.typ <- fread(paste0(prefix,
+table.entsch.typ <- fread(paste0(prefix.analysis,
                                  "01_Frequenztabelle_var-entscheidung_typ.csv"),
                           drop = 3)
 
-table.spruch.az <- fread(paste0(prefix,
+table.spruch.az <- fread(paste0(prefix.analysis,
                                 "01_Frequenztabelle_var-spruchkoerper_az.csv"),
                          drop = 3)
 
-table.spruch.db <- fread(paste0(prefix,
+table.spruch.db <- fread(paste0(prefix.analysis,
                                 "01_Frequenztabelle_var-spruchkoerper_db.csv"),
                          drop = 3)
 
-table.regz <- fread(paste0(prefix,
+table.regz <- fread(paste0(prefix.analysis,
                            "01_Frequenztabelle_var-registerzeichen.csv"),
                     drop = 3)
 
-table.jahr.eingangISO <- fread(paste0(prefix,
+table.jahr.eingangISO <- fread(paste0(prefix.analysis,
                                       "01_Frequenztabelle_var-eingangsjahr_iso.csv"),
                                drop = 3)
 
-table.jahr.entscheid <- fread(paste0(prefix,
+table.jahr.entscheid <- fread(paste0(prefix.analysis,
                                      "01_Frequenztabelle_var-entscheidungsjahr.csv"),
                               drop = 3)
 
-table.output.praesi <- fread(paste0(prefix,
+table.output.praesi <- fread(paste0(prefix.analysis,
                                     "01_Frequenztabelle_var-praesi.csv"),
                              drop = 3)
 
-table.output.vpraesi <- fread(paste0(prefix,
+table.output.vpraesi <- fread(paste0(prefix.analysis,
                                      "01_Frequenztabelle_var-v_praesi.csv"),
                               drop = 3)
 
@@ -186,10 +186,10 @@ table.vpraesi.alter <- table.vpraesi[court == "BGH", c(2:3, 13:15)]
 ######################################
 
 
-stats.ling <-  fread(paste0(prefix,
+stats.ling <-  fread(paste0(prefix.analysis,
                             "00_KorpusStatistik_ZusammenfassungLinguistisch.csv"))
 
-stats.docvars <- fread(paste0(prefix,
+stats.docvars <- fread(paste0(prefix.analysis,
                               "00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv"))
 
 
