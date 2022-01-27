@@ -5,6 +5,14 @@
  
 - Vollständige Aktualisierung der Daten
 - Strenge Kontrolle und semantische Sortierung aller Variablen (entsprechend der Reihenfolge im Codebook)
+- Datenstruktur wird nicht mehr im Codebook angezeigt um Fehler mit der UTF8-Kodierung und *listings* für \LaTeX\ zu vermeiden
+- Strenge Versionskontrolle aller R packages mit *renv*
+- Der Prozess der Kompilierung ist jetzt detailliert konfigurierbar, insbesondere die Parallelisierung
+- Parallelisierung nun vollständig mit *future* statt mit *foreach* und *doParallel*
+- Fehlerhafte Kompilierungen werden beim vor der nächsten Kompilierung vollautomatisch aufgeräumt
+- Alle Ergebnisse werden automatisch fertig verpackt in den Ordner 'output' sortiert
+- README und CHANGELOG sind jetzt externe Markdown-Dateien, die bei der Kompilierung automatisiert eingebunden werden
+- Source Code des Changelogs zu Markdown konvertiert
 
 
 ## Version 2021-04-27
