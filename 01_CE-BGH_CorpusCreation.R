@@ -588,6 +588,8 @@ az.out1 <- gsub(" ", "_", az.out)
 
 
 #+ echo = TRUE
+az.out1 <- gsub("AK_34_und_35/21", "AK_34/21", az.out1)
+
 az.out1 <- gsub("\\/", "_", az.out1)
 
 az.out1 <- gsub("_und.*$", "", az.out1)
@@ -599,6 +601,7 @@ az.out1 <- gsub("StbSt_\\(B\\)", "NA_StbStB", az.out1)
 az.out1 <- gsub("PatAnwZ_", "NA_PatAnwZ_", az.out1)
 
 az.out1 <- gsub("AnwZ_?\\(Brf[gG]\\)", "NA_AnwZBrfg", az.out1)
+
 az.out1 <- gsub("AK", "NA_AK", az.out1)
 az.out1 <- gsub("ARAnw_", "NA_ARAnw_", az.out1)
 az.out1 <- gsub("ARs_\\(Voll[zZ]\\)_", "ARsVollz_", az.out1)
@@ -681,7 +684,7 @@ gsub("AnwZ\\(Brfg\\)_10_21_NA", "NA_AnwZBrfg", regex.test1)
 
 grep("AnwZ\\(Brfg\\)", az.out)
 
-grep("AK", az.out, value =TRUE)
+az.out  <- grep("AK", az.out, value =TRUE)[305]
 
 
 
