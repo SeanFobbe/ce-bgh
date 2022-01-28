@@ -22,7 +22,7 @@ EPUB/
 *.html
 *.htm
 
-
+.RData
 
 # Random files
 
