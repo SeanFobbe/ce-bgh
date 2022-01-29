@@ -1,0 +1,3 @@
+[submodule "R-fobbe-proto-package"]
+	path = R-fobbe-proto-package
+	url = https://github.com/seanfobbe/R-fobbe-proto-package

@@ -1,5 +1,5 @@
 #'---
-#'title: "Source Code des Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH-Source)"
+#'title: "Compilation Report | Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH)"
 #'author: Seán Fobbe
 #'geometry: margin=3cm
 #'fontsize: 11pt
@@ -10,10 +10,10 @@
 #'    number_sections: true
 #'    pandoc_args: --listings
 #'    includes:
-#'      in_header: General_Source_TEX_Preamble_DE.tex
-#'      before_body: [CE-BGH_Source_TEX_Definitions.tex,CE-BGH_Source_TEX_CompilationTitle.tex]
+#'      in_header: tex/Preamble_DE.tex
+#'      before_body: [temp/CE-BGH_Definitions.tex, tex/CE-BGH_CompilationTitle.tex]
 #'papersize: a4
-#'bibliography: packages.bib
+#'bibliography: temp/packages.bib
 #'nocite: '@*'
 #' ---
 
@@ -25,154 +25,12 @@ knitr::opts_chunk$set(echo = TRUE,
 
 
 #'\newpage
-#+
-#'# Einleitung
-#'
-#+
-#'## Überblick
-#' Dieses R-Skript lädt alle in der amtlichen Datenbank des Bundesgerichtshofs\footnote{\url{https://www.bundesgerichtshof.de}} veröffentlichten Entscheidungen des Bundesgerichtshofs (BGH) herunter und kompiliert sie in einen reichhaltigen menschen- und maschinenlesbaren Korpus. Es ist die Basis für den \textbf{\datatitle\ (\datashort )}.
-#'
-#' Alle mit diesem Skript erstellten Datensätze werden dauerhaft kostenlos und urheberrechtsfrei auf Zenodo, dem wissenschaftlichen Archiv des CERN, veröffentlicht. Alle Versionen sind mit einem persistenten Digital Object Identifier (DOI) versehen. Die neueste Version des Datensatzes ist immer über diesen Link erreichbar: \dataconcepturldoi
 
-#+
-#'## Funktionsweise
-
-#' Primäre Endprodukte des Skripts sind folgende ZIP-Archive:
-#' \begin{enumerate}
-#' \item Der volle Datensatz im CSV-Format (mit zusätzlichen Metadaten)
-#' \item Die reinen Metadaten im CSV-Format (wie unter 1, nur ohne Entscheidungsinhalte)
-#' \item Alle Entscheidungen im TXT-Format
-#' \item Alle Entscheidungen im PDF-Format
-#' \item Nur Leitsatz-Entscheidungen im PDF-Format
-#' \item Nur benannte Entscheidungen im PDF-Format
-#' \item Alle Analyse-Ergebnisse (Tabellen als CSV, Grafiken als PDF und PNG)
-#' \end{enumerate}
-#'
-#' Zusätzlich werden für alle ZIP-Archive kryptographische Signaturen (SHA2-256 und SHA3-512) berechnet und in einer CSV-Datei hinterlegt. Weiterhin kann optional ein PDF-Bericht erstellt werden (siehe unter "Kompilierung").
+#+ results = "asis", echo = FALSE
+cat(readLines("README.md"),
+    sep = "\n")
 
 
-#+
-#'## Systemanforderungen
-#' Das Skript in seiner veröffentlichten Form kann nur unter Linux ausgeführt werden, da es Linux-spezifische Optimierungen (z.B. Fork Cluster) und Shell-Kommandos (z.B. OpenSSL) nutzt. Das Skript wurde unter Fedora Linux entwickelt und getestet. Die zur Kompilierung benutzte Version entnehmen Sie bitte dem **sessionInfo()**-Ausdruck am Ende dieses Berichts.
-#'
-#' In der Standard-Einstellung wird das Skript vollautomatisch versuchen die maximale Anzahl an Rechenkernen/Threads auf dem System zu nutzen. Wenn die Anzahl Threads (Variable "fullCores") auf 1 gesetzt wird, ist die Parallelisierung deaktiviert.
-#'
-#' Auf der Festplatte sollten 20 GB Speicherplatz vorhanden sein.
-#' 
-#' Um die PDF-Berichte kompilieren zu können benötigen Sie das R package **rmarkdown**, eine vollständige Installation von \LaTeX\ und alle in der Präambel-TEX-Datei angegebenen \LaTeX\ Packages.
-
-
-#+
-#'## Kompilierung
-#' Mit der Funktion **render()** von **rmarkdown** können der **vollständige Datensatz** und das **Codebook** kompiliert und die Skripte mitsamt ihrer Rechenergebnisse in ein gut lesbares PDF-Format überführt werden.
-#'
-#' Alle Kommentare sind im roxygen2-Stil gehalten. Die beiden Skripte können daher auch **ohne render()** regulär als R-Skripte ausgeführt werden. Es wird in diesem Fall kein PDF-Bericht erstellt und Diagramme werden nicht abgespeichert.
-
-#+
-#'### Datensatz 
-#' 
-#' Um den **vollständigen Datensatz** zu kompilieren und einen PDF-Bericht zu erstellen, kopieren Sie bitte alle im Source-Archiv bereitgestellten Dateien in einen leeren Ordner und führen mit R diesen Befehl aus:
-
-#+ eval = FALSE
-
-rmarkdown::render(input = "CE-BGH_Source_CorpusCreation.R",
-                  output_file = paste0("CE-BGH_",
-                                       Sys.Date(),
-                                       "_CompilationReport.pdf"),
-                  envir = new.env())
-
-
-#'### Codebook
-#' Um das **Codebook** zu kompilieren und einen PDF-Bericht zu erstellen führen Sie bitte im Anschluss an die Kompilierung des Datensatzes untenstehenden Befehl mit R aus.
-#'
-#' Bei der Prüfung der GPG-Signatur wird ein Fehler auftreten und im Codebook dokumentiert, weil die Daten nicht mit meiner Original-Signatur versehen sind. Dieser Fehler hat jedoch keine Auswirkungen auf die Funktionalität und hindert die Kompilierung nicht.
-
-#+ eval = FALSE
-
-rmarkdown::render(input = "CE-BGH_Source_CodebookCreation.R",
-                  output_file = paste0("CE-BGH_",
-                                       Sys.Date(),
-                                       "_Codebook.pdf"),
-                  envir = new.env())
-
-
-
-
-
-
-#'\newpage
-#+
-#'# Parameter
-
-#+
-#'## Name des Datensatzes
-datasetname <- "CE-BGH"
-
-#'## DOI des Datensatz-Konzeptes
-doi.concept <- "10.5281/zenodo.3942742" # checked
-
-#'## DOI der konkreten Version
-doi.version <- "10.5281/zenodo.4705855" # checked
-
-#'## Lizenz
-license <- "Creative Commons Zero 1.0 Universal"
-
-
-#'## Verzeichnis für Analyse-Ergebnisse
-#' Muss mit einem Schrägstrich enden!
-
-outputdir <- paste0(getwd(),
-                    "/ANALYSE/") 
-
-
-
-#'## Debugging-Modus
-#' Der Debugging-Modus reduziert den Such-Umfang auf den in der Variable "debug.scope" angegebenen Umfang Seiten (jede Seite enthält idR 30 Entscheidungen), den Download-Umfang auf den in der Variable "debug.sample" definierten Umfang zufällig ausgewählter Entscheidungen und löscht im Anschluss fünf zufällig ausgewählte Entscheidungen um den Wiederholungsversuch zu testen. Nur für Test- und Demonstrationszwecke. 
-
-mode.debug <- FALSE
-debug.scope <- 50
-debug.sample <- 500
-
-
-
-
-
-#'## Optionen: Quanteda
-tokens_locale <- "de_DE"
-
-
-
-#'## Optionen: Knitr
-
-#+
-#'### Ausgabe-Format
-dev <- c("pdf",
-         "png")
-
-
-#'### DPI für Raster-Grafiken
-dpi <- 300
-
-
-#'### Ausrichtung von Grafiken im Compilation Report
-fig.align <- "center"
-
-
-
-
-
-#'## Frequenztabellen: Ignorierte Variablen
-
-#' Diese Variablen werden bei der Erstellung der Frequenztabellen nicht berücksichtigt.
-
-varremove <- c("text",
-               "eingangsnummer",
-               "datum",
-               "doc_id",
-               "ecli",
-               "aktenzeichen",
-               "name",
-               "bemerkung")
 
 
 
@@ -181,80 +39,262 @@ varremove <- c("text",
 #'# Vorbereitung
 
 #'## Datumsstempel
-#' Dieser Datumsstempel wird in alle Dateinamen eingefügt. Er wird am Anfang des Skripts gesetzt, für den Fall, dass die Laufzeit die Datumsbarriere durchbricht.
+#' Dieser Datumsstempel wird in alle Dateinamen eingefügt. Er wird am Anfang des Skripts gesetzt, für den den Fall, dass die Laufzeit die Datumsbarriere durchbricht.
+
 datestamp <- Sys.Date()
 print(datestamp)
+
 
 #'## Datum und Uhrzeit (Beginn)
 begin.script <- Sys.time()
 print(begin.script)
 
-#'## Ordner für Analyse-Ergebnisse erstellen
-dir.create(outputdir)
+
+
 
 
 #+
 #'## Packages Laden
 
 library(fs)           # Verbessertes File Handling
-library(mgsub)        # Vektorisiertes Gsub
+library(RcppTOML)     # Verarbeitung von TOML-Format
+library(mgsub)        # Mehrfache simultane String-Substitutions
 library(httr)         # HTTP-Werkzeuge
 library(rvest)        # HTML/XML-Extraktion
 library(knitr)        # Professionelles Reporting
 library(kableExtra)   # Verbesserte Kable Tabellen
 library(pdftools)     # Verarbeitung von PDF-Dateien
-library(doParallel)   # Parallelisierung
 library(ggplot2)      # Fortgeschrittene Datenvisualisierung
 library(scales)       # Skalierung von Diagrammen
 library(data.table)   # Fortgeschrittene Datenverarbeitung
 library(readtext)     # TXT-Dateien einlesen
 library(quanteda)     # Fortgeschrittene Computerlinguistik
+library(spacyr)       # Linguistische Annotationen
+library(future)       # Parallelisierung mit Futures
+library(future.apply) # Apply-Funtionen für Futures
 
 
 
 #'## Zusätzliche Funktionen einlesen
 #' **Hinweis:** Die hieraus verwendeten Funktionen werden jeweils vor der ersten Benutzung in vollem Umfang angezeigt um den Lesefluss zu verbessern.
 
-source("General_Source_Functions.R")
+
+source("R-fobbe-proto-package/f.remove.specialunderline.R")
+source("R-fobbe-proto-package/f.linkextract.R")
+
+source("R-fobbe-proto-package/f.hyphen.remove.R")
+source("R-fobbe-proto-package/f.year.iso.R")
+source("R-fobbe-proto-package/f.fast.freqtable.R")
 
 
-#'## Quanteda-Optionen setzen
-quanteda_options(tokens_locale = tokens_locale)
-
-
-#'## Knitr Optionen setzen
-knitr::opts_chunk$set(fig.path = outputdir,
-                      dev = dev,
-                      dpi = dpi,
-                      fig.align = fig.align)
+source("R-fobbe-proto-package/f.future_lingsummarize.R")
+source("R-fobbe-proto-package/f.future_multihashes.R")
+source("R-fobbe-proto-package/f.future_pdf_to_txt.R")
 
 
 
-#'## Vollzitate statistischer Software
+
+#'## Verzeichnis für Analyse-Ergebnisse und Diagramme definieren
+
+dir.analysis <- paste0(getwd(),
+                    "/analyse") 
+
+
+#'## Weitere Verzeichnisse definieren
+
+dirs <- c("output",
+          "temp")
+
+
+
+#'## Dateien aus vorherigen Runs bereinigen
+
+unlink(dir.analysis,
+       recursive = TRUE)
+
+unlink(dirs,
+       recursive = TRUE)
+
+files.delete <- list.files(pattern = "\\.zip|\\.pdf|\\.txt|\\.html",
+                           ignore.case = TRUE)
+
+unlink(files.delete)
+
+
+
+
+#'## Verzeichnisse anlegen
+
+dir.create(dir.analysis)
+
+lapply(dirs, dir.create)
+
+
+
+
+#'## Vollzitate statistischer Software schreiben
 knitr::write_bib(c(.packages()),
-                 "packages.bib")
+                 "temp/packages.bib")
+
+
+
+
+
+#'## Allgemeine Konfiguration
+
+#+
+#'### Konfiguration einlesen
+config <- parseTOML("CE-BGH_Config.toml")
+
+#'### Konfiguration anzeigen
+print(config)
+
+
+
+#+
+#'### Knitr Optionen setzen
+knitr::opts_chunk$set(fig.path = paste0(dir.analysis, "/"),
+                      dev = config$fig$format,
+                      dpi = config$fig$dpi,
+                      fig.align = config$fig$align)
+
+
+#'### Download Timeout setzen
+options(timeout = config$download$timeout)
+
+
+
+#'### Quellenangabe für Diagramme definieren
+
+caption <- paste("Fobbe | DOI:",
+                 config$doi$data$version)
+print(caption)
+
+
+#'### Präfix für Dateien definieren
+
+prefix.files <- paste0(config$project$shortname,
+                 "_",
+                 datestamp)
+print(prefix.files)
+
+
+#'### Präfix für Diagramme definieren
+
+prefix.figuretitle <- paste(config$project$shortname,
+                            "| Version",
+                            datestamp)
+
+
+#'### Quanteda-Optionen setzen
+quanteda_options(tokens_locale = config$quanteda$tokens_locale)
+
+
+
+
+#'## LaTeX Konfiguration
+
+#+
+#'### LaTeX Parameter definieren
+
+latexdefs <- c("%===========================\n% Definitionen\n%===========================",
+               "\n% NOTE: Diese Datei wurde während des Kompilierungs-Prozesses automatisch erstellt.\n",
+               "\n%-----Autor-----",
+               paste0("\\newcommand{\\projectauthor}{",
+                      config$project$author,
+                      "}"),
+               "\n%-----Version-----",
+               paste0("\\newcommand{\\version}{",
+                      datestamp,
+                      "}"),
+               "\n%-----Titles-----",
+               paste0("\\newcommand{\\datatitle}{",
+                      config$project$fullname,
+                      "}"),
+               paste0("\\newcommand{\\datashort}{",
+                      config$project$shortname,
+                      "}"),
+               paste0("\\newcommand{\\softwaretitle}{Source Code des \\enquote{",
+                      config$project$fullname,
+                      "}}"),
+               paste0("\\newcommand{\\softwareshort}{",
+                      config$project$shortname,
+                      "-Source}"),
+               "\n%-----Data DOIs-----",
+               paste0("\\newcommand{\\dataconceptdoi}{",
+                      config$doi$data$concept,
+                      "}"),
+               paste0("\\newcommand{\\dataversiondoi}{",
+                      config$doi$data$version,
+                      "}"),
+               paste0("\\newcommand{\\dataconcepturldoi}{https://doi.org/",
+                      config$doi$data$concept,
+                      "}"),
+               paste0("\\newcommand{\\dataversionurldoi}{https://doi.org/",
+                      config$doi$data$version,
+                      "}"),
+               "\n%-----Software DOIs-----",
+               paste0("\\newcommand{\\softwareconceptdoi}{",
+                      config$doi$software$concept,
+                      "}"),
+               paste0("\\newcommand{\\softwareversiondoi}{",
+                      config$doi$software$version,
+                      "}"),
+               paste0("\\newcommand{\\softwareconcepturldoi}{https://doi.org/",
+                      config$doi$software$concept,
+                      "}"),
+               paste0("\\newcommand{\\softwareversionurldoi}{https://doi.org/",
+                      config$doi$software$version,
+                      "}"),
+               "\n%-----Additional DOIs-----",
+               paste0("\\newcommand{\\aktenzeichenurldoi}{https://doi.org/",
+                      config$doi$aktenzeichen,
+                      "}"),
+               paste0("\\newcommand{\\personendatenurldoi}{https://doi.org/",
+                      config$doi$personendaten,
+                      "}"))
+
+
+
+
+#'### LaTeX Parameter schreiben
+
+writeLines(latexdefs,
+           paste0("temp/",
+                  config$project$shortname,
+                  "_Definitions.tex"))
+
+
+
+
 
 
 #'## Parallelisierung aktivieren
 #' Parallelisierung wird zur Beschleunigung der Konvertierung von PDF zu TXT und der Datenanalyse mittels **quanteda** und **data.table** verwendet. Die Anzahl threads wird automatisch auf das verfügbare Maximum des Systems gesetzt, kann aber auch nach Belieben auf das eigene System angepasst werden. Die Parallelisierung kann deaktiviert werden, indem die Variable **fullCores** auf 1 gesetzt wird.
-#'
-#' Der Download der Daten ist bewusst nicht parallelisiert, damit das Skript nicht versehentlich als DoS-Tool verwendet wird.
-#'
-#' Die hier verwendete Funktion **makeForkCluster()** ist viel schneller als die Alternativen, funktioniert aber nur auf Unix-basierten Systemen (Linux, MacOS).
+
+
 
 #+
-#'### Logische Kerne (Anzahl)
+#'### Anzahl logischer Kerne festlegen
 
-fullCores <- detectCores()
+if (config$cores$max == TRUE){
+    fullCores <- availableCores()
+}
+
+
+if (config$cores$max == FALSE){
+    fullCores <- as.integer(config$cores$number)
+}
+
+
+
 print(fullCores)
 
 #'### Quanteda
 quanteda_options(threads = fullCores) 
 
-#+
 #'### Data.table
 setDTthreads(threads = fullCores)  
-
 
 
 
@@ -274,9 +314,9 @@ setDTthreads(threads = fullCores)
 #'Die Registerzeichen werden im Laufe des Skripts mit ihren detaillierten Bedeutungen aus dem folgenden Datensatz abgeglichen: "Seán Fobbe (2021). Aktenzeichen der Bundesrepublik Deutschland (AZ-BRD). Version 1.0.1. Zenodo. DOI: 10.5281/zenodo.4569564." Das Ergebnis des Abgleichs wird in der Variable "verfahrensart" in den Datensatz eingefügt.
 
 
-if (file.exists("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
+if (file.exists("data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
     download.file("https://zenodo.org/record/4569564/files/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv?download=1",
- "AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+ "data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
     }
 
 
@@ -285,9 +325,9 @@ if (file.exists("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
 #' Die Personendaten stammen aus folgendem Datensatz: \enquote{Seán Fobbe and Tilko Swalve (2021). Presidents and Vice-Presidents of the Federal Courts of Germany (PVP-FCG). Version 2021-04-08. Zenodo. DOI: 10.5281/zenodo.4568682}.
 
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv?download=1",
-                  "PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+                  "data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
 }
 
 
@@ -297,9 +337,9 @@ if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALS
 #' Die Personendaten stammen aus folgendem Datensatz: \enquote{Seán Fobbe and Tilko Swalve (2021). Presidents and Vice-Presidents of the Federal Courts of Germany (PVP-FCG). Version 2021-04-08. Zenodo. DOI: 10.5281/zenodo.4568682}.
 
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv?download=1",
-                  "PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+                  "data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
 }
 
 
@@ -312,7 +352,7 @@ if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == 
 #'# Links suchen
 
 #'## Maximalen Such-Umfang einlesen
-scope.source <- fread("CE-BGH_Source_Scope.csv")
+scope.source <- fread("data/CE-BGH_Scope.csv")
 
 
 
@@ -362,8 +402,8 @@ scope[, loc := {
 
 #'## [Debugging Modus] Reduzierung des Such-Umfangs
 
-if (mode.debug == TRUE){
-    scope <- scope[sample(scope[,.N], debug.scope)][order(year, page)]
+if (config$debug$toggle == TRUE){
+    scope <- scope[sample(scope[,.N], config$debug$pages)][order(year, page)]
     }
 
 
@@ -505,7 +545,7 @@ print(missing.N - less30.N)
 #'### Gegenüberstellung: Anzahl Jahre und Anzahl Seiten mit weniger als 30 Entscheidungen
 #' Für jedes Jahr sollte es eine letzte Seite mit weniger als 30 Entscheidungen geben. Falls zufällig die letzte Seite exakt 30 Entscheidungen hat, wäre das Ergebnis negativ. Ein Ergebnis von 0 oder kleiner bedeutet, dass der Test bestanden wurde. Der Test ist nur aussagekräftig wenn der gesamte Such-Umfang abgefragt wurde.
 
-if (mode.debug == FALSE){
+if (config$debug$toggle == FALSE){
     less30[,.N] - uniqueN(scope$year)
     }
 
@@ -548,6 +588,10 @@ az.out1 <- gsub(" ", "_", az.out)
 
 
 #+ echo = TRUE
+az.out1 <- gsub("AK_34_und_35/21", "AK_34/21", az.out1)
+az.out1 <- gsub("StB_25_und_26/21", "StB_25/21", az.out1)
+
+
 az.out1 <- gsub("\\/", "_", az.out1)
 
 az.out1 <- gsub("_und.*$", "", az.out1)
@@ -558,7 +602,8 @@ az.out1 <- gsub("StbSt_\\(B\\)", "NA_StbStB", az.out1)
 
 az.out1 <- gsub("PatAnwZ_", "NA_PatAnwZ_", az.out1)
 
-az.out1 <- gsub("AnwZ_\\(Brf[gG]\\)", "NA_AnwZBrfg", az.out1)
+az.out1 <- gsub("AnwZ_?\\(Brf[gG]\\)", "NA_AnwZBrfg", az.out1)
+
 az.out1 <- gsub("AK", "NA_AK", az.out1)
 az.out1 <- gsub("ARAnw_", "NA_ARAnw_", az.out1)
 az.out1 <- gsub("ARs_\\(Voll[zZ]\\)_", "ARsVollz_", az.out1)
@@ -600,9 +645,8 @@ az.out1 <- gsub("NotSt_\\(Brfg\\)", "NA_NotStBrfg", az.out1)
 az.out1 <- gsub("NotZ_\\(Brfg\\)", "NA_NotZBrfg", az.out1)
 az.out1 <- gsub("NotZ_", "NA_NotZ_", az.out1)
 
-az.out1 <- gsub("RiZ_\\(R\\)", "NA_RiZR", az.out1)
-az.out1 <- gsub("RiZ\\(R\\)", "NA_RiZR", az.out1)
-az.out1 <- gsub("RiZ_\\(B\\)", "NA_RiZB", az.out1)
+az.out1 <- gsub("RiZ_?\\(R\\)", "NA_RiZR", az.out1)
+az.out1 <- gsub("RiZ_?\\(B\\)", "NA_RiZB", az.out1)
 az.out1 <- gsub("RiZ_", "NA_RiZ_", az.out1)
 az.out1 <- gsub("RiSt_\\(R\\)_", "NA_RiStR_", az.out1)
 az.out1 <- gsub("RiSt_\\(B\\)_", "NA_RiStB_", az.out1)
@@ -623,11 +667,11 @@ az.out1 <- gsub("_\\+_48", "", az.out1)
 az.out1 <- gsub("u\\._25_", "", az.out1)
 az.out1 <- gsub("_-_28_07", "", az.out1)
 
-
-
 az.out1 <- gsub("-[0-9]*_", "_", az.out1)
 
 az.out1 <- gsub("_\\(a\\)", "_a", az.out1)
+
+
 
 
 
@@ -658,7 +702,15 @@ az.out1 <- gsub("1_BGs_29_2009_NA",
 
 #'### Strenge REGEX-Validierung des Aktenzeichens
 
-regex.test1 <- grep("[0-9A-Za]+_[A-Za-zÜ]+_[0-9]+_[0-9]{2}_[A-Za-z]+",
+regex.test1 <- grep(paste0("[0-9A-Za]+", # Senatsnummer
+                           "_",
+                           "[A-Za-zÜ]+", # Registerzeichen
+                           "_",
+                           "[0-9]+", # Eingangsnummer
+                           "_",
+                           "[0-9]{2}", # Eingangsjahr
+                           "_",
+                           "[A-Za-z]+"), # Kollision
                     az.out1,
                     invert = TRUE,
                     value = TRUE)
@@ -671,7 +723,7 @@ print(regex.test1)
 #'### Skript stoppen falls REGEX-Validierung gescheitert
 
 if (length(regex.test1) != 0){
-    stop("REGEX VALIDIERUNG GESCHEITERT: AKTENZEICHEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
+    stop("REGEX VALIDIERUNG 1 GESCHEITERT: AKTENZEICHEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
     }
 
 
@@ -897,10 +949,32 @@ filenames2 <- paste0(filenames1,
 
 #'## Strenge REGEX-Validierung: Gesamter Dateiname
 
-regex.test2 <-grep("BGH_.*_[NALE]{2}_[0-9]{4}-[0-9]{2}-[0-9]{2}_[A-Za-z0-9]*_[A-Za-zÜ]*_[0-9-]*_[0-9]{2}_[A-Za-z]*_.*_[NA0-9]*.pdf",
-     filenames2,
-     value = TRUE,
-     invert = TRUE)
+regex.test2 <- grep(paste0("BGH", # gericht
+                           "_",
+                           ".*", # spruchkoerper_db
+                           "_",
+                           "[NALE]{2}", # leitsatz
+                           "_",
+                           "[0-9]{4}-[0-9]{2}-[0-9]{2}", # datum
+                           "_",
+                           "[A-Za-z0-9]*",# spruchkoerper_az
+                           "_",
+                           "[A-Za-zÜ]*", # registerzeichen
+                           "_",
+                           "[0-9-]*", # eingangsnummer
+                           "_",
+                           "[0-9]{2}", # eingangsjahr_az
+                           "_",
+                           "[A-Za-z]*", # zusatz_az
+                           "_",
+                           ".*", # name 
+                           "_",
+                           "[NA0-9]*", # kollision
+                           "\\.pdf"), # Dateiendung
+                    filenames2,
+                    value = TRUE,
+                    invert = TRUE)
+
 
 
 #'## Ergebnis der REGEX-Validierung
@@ -910,7 +984,7 @@ print(regex.test2)
 #'## Skript stoppen falls REGEX-Validierung gescheitert
 
 if (length(regex.test2) != 0){
-    stop("REGEX VALIDIERUNG GESCHEITERT: DATEINAMEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
+    stop("REGEX VALIDIERUNG 2 GESCHEITERT: DATEINAMEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
     }
 
 
@@ -931,9 +1005,9 @@ dt.download$filenames.final <- filenames2
 #+
 #'## [Debugging Modus] Reduzierung des Download-Umfangs
 
-if (mode.debug == TRUE){
+if (config$debug$toggle == TRUE){
     dt.download <- dt.download[sample(.N,
-                                      debug.sample)]
+                                      config$debug$sample)]
     }
 
 
@@ -975,7 +1049,7 @@ end.download - begin.download
 #'## [Debugging Modus] Löschen zufälliger Dateien
 #' Dient dazu den Wiederholungsversuch zu testen.
 
-if (mode.debug == TRUE){
+if (config$debug$toggle == TRUE){
     files.pdf <- list.files(pattern = "\\.pdf")
     unlink(sample(files.pdf, 5))
     }
@@ -1059,9 +1133,8 @@ print(missing)
 
 
 
-
 #+
-#'# Text-Extraktion
+#'# Text-Extraktion aus PDF
 
 #+
 #'## Vektor der zu extrahierenden Dateien erstellen
@@ -1074,27 +1147,30 @@ files.pdf <- list.files(pattern = "\\.pdf$",
 length(files.pdf)
 
 
-#'## Seiten zählen: Funktion anzeigen
-#+ results = "asis"
-print(f.dopar.pagenums)
-
-
-#'## Anzahl zu extrahierender Seiten
-f.dopar.pagenums(files.pdf,
-                 sum = TRUE,
-                 threads = fullCores)
-
-
 
 #'## PDF extrahieren: Funktion anzeigen
 #+ results = "asis"
-print(f.dopar.pdfextract)
+print(f.future_pdf_to_txt)
 
 
 #'## Text Extrahieren
-result <- f.dopar.pdfextract(files.pdf,
-                             threads = fullCores)
 
+#+ results = "hide"
+
+if(config$parallel$extractPDF == TRUE){
+
+    plan("multicore",
+         workers = fullCores)
+    
+}else{
+
+    plan("sequential")
+
+}
+
+
+
+f.future_pdf_to_txt(files.pdf)
 
 
 
@@ -1174,7 +1250,8 @@ setorder(txt.bgh,
 #+
 #'### Personaldaten einlesen
 
-praesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+praesi <- fread(file.path("data",
+                          "PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv"))
 praesi <- praesi[court == "BGH", c(1:3, 5:6)]
 
 
@@ -1229,7 +1306,8 @@ txt.bgh$praesi <- unlist(praesi.list)
 #+
 #'### Personaldaten einlesen
 
-vpraesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+vpraesi <- fread(file.path("data",
+                          "PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv"))
 vpraesi <- vpraesi[court == "BGH", c(1:3, 5:6)]
 
 
@@ -1290,7 +1368,8 @@ txt.bgh$v_praesi <- unlist(vpraesi.list)
 
 #+
 #'### Datensatz einlesen
-az.source <- fread("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+az.source <- fread(file.path("data",
+                             "AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv"))
 
 
 
@@ -1493,21 +1572,21 @@ txt.bgh$name <- dt.download[targetindices]$name
 
 
 #'## Variable "doi_concept" hinzufügen
-txt.bgh$doi_concept <- rep(doi.concept,
-                       txt.bgh[,.N])
+txt.bgh$doi_concept <- rep(config$doi$data$concept,
+                           txt.bgh[,.N])
 
 
 #'## Variable "doi_version" hinzufügen
-txt.bgh$doi_version <- rep(doi.version,
-                       txt.bgh[,.N])
+txt.bgh$doi_version <- rep(config$doi$data$version,
+                           txt.bgh[,.N])
 
 
 #'## Variable "version" hinzufügen
 txt.bgh$version <- as.character(rep(datestamp,
-                                txt.bgh[,.N]))
+                                    txt.bgh[,.N]))
 
 #'## Variable "lizenz" hinzufügen
-txt.bgh$lizenz <- as.character(rep(license,
+txt.bgh$lizenz <- as.character(rep(config$license$data,
                                    txt.bgh[,.N]))
 
 
@@ -1554,13 +1633,13 @@ placeholder.pdf <- gsub("\\.txt",
 
 
 #'### Platzhalter PDF/TXT speichern
-dir.create("PlatzhalterDokumente")
+dir.create("output/PlatzhalterDokumente")
 
 file_move(placeholder.txt,
-          "PlatzhalterDokumente")
+          "output/PlatzhalterDokumente")
 
 file_move(placeholder.pdf,
-          "PlatzhalterDokumente")
+          "output/PlatzhalterDokumente")
 
 
 #'### Platzhalter aus Datensatz entfernen
@@ -1582,15 +1661,15 @@ print(f.fast.freqtable)
 
 
 #'## Ignorierte Variablen
-print(varremove)
+print(config$freqtable$ignore)
 
 
 
 #'## Liste zu prüfender Variablen
 
 varlist <- names(txt.bgh)
-varlist <- grep(paste(varremove,
-                      collapse="|"),
+varlist <- grep(paste(config$freqtable$ignore,
+                      collapse = "|"),
                 varlist,
                 invert = TRUE,
                 value = TRUE)
@@ -1599,7 +1678,7 @@ print(varlist)
 
 #'## Präfix definieren
 
-prefix <- paste0(datasetname,
+prefix <- paste0(config$project$shortname,
                  "_01_Frequenztabelle_var-")
 
 
@@ -1614,7 +1693,7 @@ f.fast.freqtable(txt.bgh,
                  output.list = FALSE,
                  output.kable = TRUE,
                  output.csv = TRUE,
-                 outputdir = outputdir,
+                 outputdir = dir.analysis,
                  prefix = prefix,
                  align = c("p{5cm}",
                            rep("r", 4)))
@@ -1628,9 +1707,9 @@ f.fast.freqtable(txt.bgh,
 
 #'## Präfix erstellen
 
-prefix <- paste0("ANALYSE/",
-                 datasetname,
-                 "_01_Frequenztabelle_var-")
+prefix <- file.path(dir.analysis,
+                    paste0(config$project$shortname,
+                           "_01_Frequenztabelle_var-"))
 
 
 
@@ -1671,7 +1750,7 @@ table.output.vpraesi <- fread(paste0(prefix,
 freqtable <- table.entsch.typ[-.N]
 
 
-#+ CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 5, fig.width = 8
+#+ CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(entscheidung_typ,
                              -N),
@@ -1682,12 +1761,9 @@ ggplot(data = freqtable) +
              width = 0.5) +
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Typ"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Typ der Entscheidung",
         y = "Entscheidungen"
     )+
@@ -1718,12 +1794,9 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Senat (DB)"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Senat",
         y = "Entscheidungen"
     )+
@@ -1745,7 +1818,7 @@ ggplot(data = freqtable) +
 freqtable <- table.spruch.az[-.N]
 
 
-#+ CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 5, fig.width = 8
+#+ CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(spruchkoerper_az,
                              -N),
@@ -1756,12 +1829,9 @@ ggplot(data = freqtable) +
              width = 0.5) +
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Senat (Aktenzeichen)"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Senat",
         y = "Entscheidungen"
     )+
@@ -1793,12 +1863,9 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Registerzeichen"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Registerzeichen",
         y = "Entscheidungen"
     )+
@@ -1819,7 +1886,7 @@ ggplot(data = freqtable) +
 
 freqtable <- table.output.praesi[-.N]
 
-#+ CE-BGH_05_Barplot_PraesidentIn, fig.height = 5.5, fig.width = 8
+#+ CE-BGH_05_Barplot_PraesidentIn, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(praesi,
                              N),
@@ -1830,12 +1897,9 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Präsident:in"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Präsident:in",
         y = "Entscheidungen"
     )+
@@ -1857,7 +1921,7 @@ ggplot(data = freqtable) +
 
 freqtable <- table.output.vpraesi[-.N]
 
-#+ CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 5.5, fig.width = 8
+#+ CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = reorder(v_praesi,
                              N),
@@ -1868,12 +1932,9 @@ ggplot(data = freqtable) +
     coord_flip()+
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Vize-Präsident:in"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Vize-Präsident:in",
         y = "Entscheidungen"
     )+
@@ -1893,7 +1954,7 @@ ggplot(data = freqtable) +
 
 freqtable <- table.jahr.entscheid[-.N][,lapply(.SD, as.numeric)]
 
-#+ CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 7, fig.width = 11
+#+ CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = entscheidungsjahr,
                  y = N),
@@ -1901,12 +1962,9 @@ ggplot(data = freqtable) +
              fill = "#7e0731") +
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Entscheidungsjahr"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Entscheidungsjahr",
         y = "Entscheidungen"
     )+
@@ -1927,7 +1985,7 @@ freqtable <- table.jahr.eingangISO[-.N][,lapply(.SD, as.numeric)]
 
 
 
-#+ CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 7, fig.width = 11
+#+ CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9
 ggplot(data = freqtable) +
     geom_bar(aes(x = eingangsjahr_iso,
                  y = N),
@@ -1935,12 +1993,9 @@ ggplot(data = freqtable) +
              fill = "#7e0731") +
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Entscheidungen je Eingangsjahr (ISO)"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Eingangsjahr (ISO)",
         y = "Entscheidungen"
     )+
@@ -1972,15 +2027,29 @@ ggplot(data = freqtable) +
 
 #+
 #'### Funktion anzeigen
-print(f.summarize.iterator,
-      threads = fullCores,
-      chunksize = 1)
+print(f.future_lingsummarize)
+
+
 
 
 #'### Berechnung durchführen
-summary.corpus <- f.summarize.iterator(txt.bgh)
+
+if(config$parallel$lingsummarize == TRUE){
+
+    plan("multicore",
+         workers = fullCores)
+    
+}else{
+
+    plan("sequential")
+
+     }
 
 
+
+
+#+ lingsummarize, results = 'hide',  warning = FALSE
+summary.corpus <- f.future_lingsummarize(txt.bgh)
 
 
 
@@ -1996,45 +2065,56 @@ setnames(summary.corpus,
                  "typen",
                  "saetze"))
 
-setnames(txt.bgh,
-         old = "nchars",
-         new = "zeichen")
 
 
-#'### Kennwerte dem Korpus hinzufügen
+#'## Kennwerte dem Korpus hinzufügen
 
-txt.bgh$zeichen <- summary.corpus$zeichen
-txt.bgh$tokens <- summary.corpus$tokens
-txt.bgh$typen <- summary.corpus$typen
-txt.bgh$saetze <- summary.corpus$saetze
+txt.bgh <- cbind(txt.bgh,
+                 summary.corpus)
 
+
+#'## Variante mit Metadaten erstellen
+meta.bgh <- txt.bgh[, !"text"]
 
 
 
 
-#'\newpage
-#'## Zusammenfasssungen: Linguistische Kennwerte
-#' **Hinweis:** Typen sind definiert als einzigartige Tokens und werden für jedes Dokument gesondert berechnet. Daher ergibt es an dieser Stelle auch keinen Sinn die Typen zu summieren, denn bezogen auf den Korpus wäre der Kennwert ein anderer. Der Wert wird daher manuell auf "NA" gesetzt.
+#'## Linguistische Kennwerte
 
 #+
 #'### Zusammenfassungen berechnen
 
-dt.summary.ling <- summary.corpus[, lapply(.SD,
+dt.summary.ling <- meta.bgh[, lapply(.SD,
                                            function(x)unclass(summary(x))),
                                   .SDcols = c("zeichen",
                                               "tokens",
-                                              "saetze",
-                                              "typen")]
+                                              "typen",
+                                              "saetze")]
 
 
-dt.sums.ling <- summary.corpus[,
-                               lapply(.SD, sum),
-                               .SDcols = c("zeichen",
-                                           "tokens",
-                                           "saetze",
-                                           "typen")]
+dt.sums.ling <- meta.bgh[,
+                            lapply(.SD, sum),
+                            .SDcols = c("zeichen",
+                                        "tokens",
+                                        "typen",
+                                        "saetze")]
 
-dt.sums.ling$typen <- NA
+
+
+tokens.temp <- tokens(corpus(txt.bgh),
+                      what = "word",
+                      remove_punct = FALSE,
+                      remove_symbols = FALSE,
+                      remove_numbers = FALSE,
+                      remove_url = FALSE,
+                      remove_separators = TRUE,
+                      split_hyphens = FALSE,
+                      include_docvars = FALSE,
+                      padding = FALSE
+                      )
+
+
+dt.sums.ling$typen <- nfeat(dfm(tokens.temp))
 
 
 
@@ -2071,39 +2151,39 @@ kable(dt.stats.ling,
 #'### Zusammenfassungen speichern
 
 fwrite(dt.stats.ling,
-       paste0(outputdir,
-              datasetname,
-              "_00_KorpusStatistik_ZusammenfassungLinguistisch.csv"),
+       file.path(dir.analysis,
+                 paste0(config$project$shortname,
+                        "_00_KorpusStatistik_ZusammenfassungLinguistisch.csv")),
        na = "NA")
 
 
 
 
 #'\newpage
-#'## Zusammenfassungen: Quantitative Variablen
+#'## Quantitative Variablen
 
 
 #+
 #'### Entscheidungsdatum
 
-summary(as.IDate(summary.corpus$datum))
+summary(as.IDate(meta.bgh$datum))
 
 
 
 #'### Zusammenfassungen berechnen
 
-dt.summary.docvars <- summary.corpus[,
-                                     lapply(.SD, function(x)unclass(summary(na.omit(x)))),
-                                     .SDcols = c("entscheidungsjahr",
-                                                 "eingangsjahr_iso",
-                                                 "eingangsnummer")]
+dt.summary.docvars <- meta.bgh[,
+                                  lapply(.SD, function(x)unclass(summary(na.omit(x)))),
+                                  .SDcols = c("entscheidungsjahr",
+                                              "eingangsjahr_iso",
+                                              "eingangsnummer")]
 
 
-dt.unique.docvars <- summary.corpus[,
-                                    lapply(.SD, function(x)length(unique(na.omit(x)))),
-                                    .SDcols = c("entscheidungsjahr",
-                                                "eingangsjahr_iso",
-                                                "eingangsnummer")]
+dt.unique.docvars <- meta.bgh[,
+                                 lapply(.SD, function(x)length(unique(na.omit(x)))),
+                                 .SDcols = c("entscheidungsjahr",
+                                             "eingangsjahr_iso",
+                                             "eingangsnummer")]
 
 
 dt.stats.docvars <- rbind(dt.unique.docvars,
@@ -2114,7 +2194,7 @@ dt.stats.docvars <- transpose(dt.stats.docvars,
 
 
 setnames(dt.stats.docvars, c("Variable",
-                             "Einzigartig",
+                             "Anzahl",
                              "Min",
                              "Quart1",
                              "Median",
@@ -2123,7 +2203,7 @@ setnames(dt.stats.docvars, c("Variable",
                              "Max"))
 
 
-
+#'\newpage
 #'### Zusammenfassungen anzeigen
 
 kable(dt.stats.docvars,
@@ -2136,9 +2216,9 @@ kable(dt.stats.docvars,
 #'### Zusammenfassungen speichern
 
 fwrite(dt.stats.docvars,
-       paste0(outputdir,
-              datasetname,
-              "_00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv"),
+       file.path(dir.analysis,
+                 paste0(config$project$shortname,
+                        "_00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv")),
        na = "NA")
 
 
@@ -2153,7 +2233,7 @@ fwrite(dt.stats.docvars,
 #'### Diagramm: Verteilung Zeichen
 
 #+ CE-BGH_09_Density_Zeichen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = zeichen),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2162,12 +2242,9 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Zeichen je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Zeichen",
         y = "Dichte"
     )+
@@ -2185,7 +2262,7 @@ ggplot(data = summary.corpus)+
 #'### Diagramm: Verteilung Tokens
 
 #+ CE-BGH_10_Density_Tokens, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = tokens),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2194,12 +2271,9 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Tokens je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Tokens",
         y = "Dichte"
     )+
@@ -2218,7 +2292,7 @@ ggplot(data = summary.corpus)+
 #'### Diagramm: Verteilung Typen
 
 #+ CE-BGH_11_Density_Typen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = typen),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2227,12 +2301,9 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Typen je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Typen",
         y = "Dichte"
     )+
@@ -2250,7 +2321,7 @@ ggplot(data = summary.corpus)+
 #'### Diagramm: Verteilung Sätze
 
 #+ CE-BGH_12_Density_Saetze, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
+ggplot(data = meta.bgh)+
     geom_density(aes(x = saetze),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -2259,12 +2330,9 @@ ggplot(data = summary.corpus)+
     coord_cartesian(xlim = c(1, 10^6))+
     theme_bw()+
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Sätze je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Sätze",
         y = "Dichte"
     )+
@@ -2279,13 +2347,99 @@ ggplot(data = summary.corpus)+
 
 
 
-#'## Anzahl Variablen im Korpus
+
+#'# Kontrolle der Variablen
+
+#+
+#'## Semantische Sortierung der Variablen
+
+#+
+#'### Variablen sortieren: Hauptdatensatz
+
+
+setcolorder(txt.bgh,
+            c("doc_id",
+              "text",
+              "gericht",
+              "datum",
+              "entscheidung_typ",
+              "leitsatz",
+              "spruchkoerper_db",
+              "spruchkoerper_az",
+              "registerzeichen",
+              "verfahrensart",
+              "eingangsnummer",
+              "eingangsjahr_az",
+              "eingangsjahr_iso",
+              "entscheidungsjahr",
+              "zusatz_az",
+              "name",
+              "kollision",
+              "praesi",
+              "v_praesi",
+              "aktenzeichen",
+              "bemerkung",
+              "berichtigung",
+              "ecli",
+              "zeichen",
+              "tokens",
+              "typen",            
+              "saetze",
+              "version",
+              "doi_concept",      
+              "doi_version",
+              "lizenz"))
+
+
+#'\newpage
+#+
+#'### Variablen sortieren: Metadaten
+
+setcolorder(txt.bgh,
+            c("doc_id",
+              "gericht",
+              "datum",
+              "entscheidung_typ",
+              "leitsatz",
+              "spruchkoerper_db",
+              "spruchkoerper_az",
+              "registerzeichen",
+              "verfahrensart",
+              "eingangsnummer",
+              "eingangsjahr_az",
+              "eingangsjahr_iso",
+              "entscheidungsjahr",
+              "zusatz_az",
+              "name",
+              "kollision",
+              "praesi",
+              "v_praesi",
+              "aktenzeichen",
+              "bemerkung",
+              "berichtigung",
+              "ecli",
+              "zeichen",
+              "tokens",
+              "typen",            
+              "saetze",
+              "version",
+              "doi_concept",      
+              "doi_version",
+              "lizenz"))
+
+
+#'\newpage
+#'## Anzahl Variablen der Datensätze
+
 length(txt.bgh)
+length(meta.bgh)
 
 
-#'## Namen der Variablen im Korpus
+
+#'## Alle Variablen-Namen der Datensätze
+
 names(txt.bgh)
-
+names(meta.bgh)
 
 
 
@@ -2297,8 +2451,7 @@ names(txt.bgh)
 #+
 #'## CSV mit vollem Datensatz speichern
 
-csvname.full <- paste(datasetname,
-                      datestamp,
+csvname.full <- paste(prefix.files,
                       "DE_CSV_Datensatz.csv",
                       sep = "_")
 
@@ -2312,12 +2465,11 @@ fwrite(txt.bgh,
 #'## CSV mit Metadaten speichern
 #' Diese Datei ist grundsätzlich identisch mit dem eigentlichen Datensatz, nur ohne den Text der Entscheidungen.
 
-csvname.meta <- paste(datasetname,
-                      datestamp,
+csvname.meta <- paste(prefix.files,
                       "DE_CSV_Metadaten.csv",
                       sep = "_")
 
-fwrite(summary.corpus,
+fwrite(meta.bgh,
        csvname.meta,
        na = "NA")
 
@@ -2333,7 +2485,7 @@ fwrite(summary.corpus,
 #+
 #'### Korpus-Objekt in RAM (MB)
 
-print(object.size(corpus(txt.bgh)),
+print(object.size(txt.bgh),
       standard = "SI",
       humanReadable = TRUE,
       units = "MB")
@@ -2384,12 +2536,9 @@ ggplot(data = dt.plot,
     annotation_logticks(sides = "b")+
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Dateigrößen (PDF)"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Dateigröße in MB",
         y = "Dichte"
     )+
@@ -2418,12 +2567,9 @@ ggplot(data = dt.plot,
     annotation_logticks(sides = "b")+
     theme_bw() +
     labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
+        title = paste(prefix.figuretitle,
                       "| Verteilung der Dateigrößen (TXT)"),
-        caption = paste("DOI:",
-                        doi.version),
+        caption = caption,
         x = "Dateigröße in MB",
         y = "Dichte"
     )+
@@ -2444,10 +2590,13 @@ ggplot(data = dt.plot,
 
 #'## Verpacken der CSV-Dateien
 
+
+#'### Vollständiger Datensatz
+
 #+ results = 'hide'
 csvname.full.zip <- gsub(".csv",
-                    ".zip",
-                    csvname.full)
+                         ".zip",
+                         csvname.full)
 
 zip(csvname.full.zip,
     csvname.full)
@@ -2455,10 +2604,13 @@ zip(csvname.full.zip,
 unlink(csvname.full)
 
 
+#'### Metadaten
+
+
 #+ results = 'hide'
 csvname.meta.zip <- gsub(".csv",
-                    ".zip",
-                    csvname.meta)
+                         ".zip",
+                         csvname.meta)
 
 zip(csvname.meta.zip,
     csvname.meta)
@@ -2475,14 +2627,12 @@ unlink(csvname.meta)
 #+
 #'### Nur Leitsatz-Entscheidungen
 
-
 files.leitsatz <- gsub("\\.txt",
                        "\\.pdf",
                        txt.bgh[leitsatz == "LE"]$doc_id)
 
 #+ results = 'hide'
-zip(paste(datasetname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_PDF_Leitsatz-Entscheidungen.zip",
           sep = "_"),
     files.leitsatz)
@@ -2495,8 +2645,7 @@ files.benannt <- gsub("\\.txt",
                       txt.bgh[is.na(name) == FALSE]$doc_id)
 
 #+ results = 'hide'
-zip(paste(datasetname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_PDF_Entscheidungen-mit-Namen.zip",
           sep = "_"),
     files.benannt)
@@ -2504,9 +2653,11 @@ zip(paste(datasetname,
 
 #'### Alle Entscheidungen
 
+files.pdf <- list.files(pattern = "\\.pdf")
+
+
 #+ results = 'hide'
-zip(paste(datasetname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_PDF_Datensatz.zip",
           sep = "_"),
     files.pdf)
@@ -2521,11 +2672,10 @@ unlink(files.pdf)
 #'## Verpacken der TXT-Dateien
 
 #+ results = 'hide'
-files.txt <- list.files(pattern="\\.txt",
+files.txt <- list.files(pattern = "\\.txt",
                         ignore.case = TRUE)
 
-zip(paste(datasetname,
-          datestamp,
+zip(paste(prefix.files,
           "DE_TXT_Datensatz.zip",
           sep = "_"),
     files.txt)
@@ -2537,21 +2687,28 @@ unlink(files.txt)
 
 #'## Verpacken der Analyse-Dateien
 
-zip(paste0(datasetname,
-           "_",
-           datestamp,
-           "_DE_",
-           basename(outputdir),
-           ".zip"),
-    basename(outputdir))
+zip(paste0(prefix.files,
+           "_DE_ANALYSE.zip"),
+    basename(dir.analysis))
 
 
 
 
 #'## Verpacken der Source-Dateien
 
-files.source <- c(list.files(pattern = "Source"),
-                  "buttons")
+files.source <- c(list.files(pattern = "\\.R$|\\.toml$"),
+                  "CHANGELOG.md",
+                  "README.md",
+                  "R-fobbe-proto-package",
+                  "buttons",
+                  "data",
+                  "tex",
+                  "gpg",
+                  list.files(pattern = "renv\\.lock|\\.Rprofile",
+                             all.files = TRUE),
+                  list.files("renv",
+                             pattern = "activate\\.R",
+                             full.names = TRUE))
 
 
 files.source <- grep("spin",
@@ -2560,10 +2717,9 @@ files.source <- grep("spin",
                      ignore.case = TRUE,
                      invert = TRUE)
 
-zip(paste(datasetname,
-           datestamp,
-           "Source_Files.zip",
-           sep = "_"),
+zip(paste(prefix.files,
+          "Source_Files.zip",
+          sep = "_"),
     files.source)
 
 
@@ -2574,24 +2730,44 @@ zip(paste(datasetname,
 #'# Kryptographische Hashes
 #' Dieses Modul berechnet für jedes ZIP-Archiv zwei Arten von Hashes: SHA2-256 und SHA3-512. Mit diesen kann die Authentizität der Dateien geprüft werden und es wird dokumentiert, dass sie aus diesem Source Code hervorgegangen sind. Die SHA-2 und SHA-3 Algorithmen sind äußerst resistent gegenüber *collision* und *pre-imaging* Angriffen, sie gelten derzeit als kryptographisch sicher. Ein SHA3-Hash mit 512 bit Länge ist nach Stand von Wissenschaft und Technik auch gegenüber quantenkryptoanalytischen Verfahren unter Einsatz des *Grover-Algorithmus* hinreichend resistent.
 
+
 #+
 #'## Liste der ZIP-Archive erstellen
 files.zip <- list.files(pattern = "\\.zip$",
                         ignore.case = TRUE)
 
 
-#'## Funktion anzeigen
-#+ results = "asis"
-print(f.dopar.multihashes)
+#'## Funktion anzeigen: future_multihashes
+
+print(f.future_multihashes)
 
 
 #'## Hashes berechnen
-multihashes <- f.dopar.multihashes(files.zip)
+
+
+if(config$parallel$multihashes == TRUE){
+
+    plan("multicore",
+         workers = fullCores)
+    
+}else{
+
+    plan("sequential")
+
+     }
+
+
+multihashes <- f.future_multihashes(files.zip)
+
+
 
 
 #'## In Data Table umwandeln
 setDT(multihashes)
 
+setnames(multihashes,
+         old = "x",
+         new = "filename")
 
 
 #'## Index hinzufügen
@@ -2600,10 +2776,10 @@ multihashes$index <- seq_len(multihashes[,.N])
 #'\newpage
 #'## In Datei schreiben
 fwrite(multihashes,
-       paste(datasetname,
-             datestamp,
-             "KryptographischeHashes.csv",
-             sep = "_"),
+       file.path("output",
+                 paste(prefix.files,
+                       "KryptographischeHashes.csv",
+                       sep = "_")),
        na = "NA")
 
 
@@ -2642,6 +2818,21 @@ kable(multihashes[,.(index,sha3.512)],
                 "p{13cm}"),
       booktabs = TRUE,
       longtable = TRUE)
+
+
+
+
+#'# Aufräumen
+
+files.output <- list.files(pattern = "\\.zip")
+
+output.destination <- file.path("output",
+                                 files.output)
+
+print(files.output)
+
+file.rename(files.output,
+            output.destination)
 
 
 

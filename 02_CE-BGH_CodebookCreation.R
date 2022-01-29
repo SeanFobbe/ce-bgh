@@ -11,9 +11,9 @@
 #'    number_sections: true
 #'    pandoc_args: --listings
 #'    includes:
-#'      in_header: General_Source_TEX_Preamble_DE.tex
-#'      before_body: [CE-BGH_Source_TEX_Definitions.tex,CE-BGH_Source_TEX_CodebookTitle.tex]
-#'bibliography: packages.bib
+#'      in_header: tex/Preamble_DE.tex
+#'      before_body: [temp/CE-BGH_Definitions.tex, tex/CE-BGH_CodebookTitle.tex]
+#'bibliography: temp/packages.bib
 #'nocite: '@*'
 #' ---
 
@@ -32,6 +32,7 @@ knitr::opts_chunk$set(fig.pos = "center",
 
 #+
 
+library(RcppTOML)     # Verarbeitung von TOML-Format
 library(knitr)        # Professionelles Reporting
 library(kableExtra)   # Verbesserte Automatisierte Tabellen
 library(magick)       # Fortgeschrittene Verarbeitung von Grafiken
@@ -47,33 +48,33 @@ setDTthreads(threads = detectCores())
 
 
 
-###################################
-### Zusätzliche Funktionen einlesen
-###################################
-
-source("General_Source_Functions.R")
-
-
-
 ############################
 ### Vorbereitung
 ############################
 
-datasetname <- "CE-BGH"
-doi.concept <- "10.5281/zenodo.3942742"  # checked
-doi.version <- "10.5281/zenodo.4705855"  # checked
+## Konfiguration einlesen
+config <- parseTOML("CE-BGH_Config.toml")
+
+## ZIP-Archive bestimmen
+files.zip <- list.files("output",
+                        pattern = "\\.zip")
 
 
-files.zip <- list.files(pattern = "\\.zip")
-
+## Datumsstempel einlesen
 datestamp <- unique(tstrsplit(files.zip,
                               split = "_")[[2]])
 
 
+## Präfixe erstellen
+prefix.analysis <- paste0("analyse/",
+                          config$project$shortname,
+                          "_")
 
-prefix <- paste0("ANALYSE/",
-                 datasetname,
-                 "_")
+prefix.date <- file.path("output",
+                         paste0(config$project$shortname,
+                                "_",
+                                datestamp,
+                                "_"))
 
 
 ############################
@@ -85,14 +86,14 @@ prefix <- paste0("ANALYSE/",
 
 ## Datensatz herunterladen
 
-if (file.exists("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
+if (file.exists("data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv") == FALSE){
     download.file("https://zenodo.org/record/4569564/files/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv?download=1",
- "AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+ "data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
     }
 
 
 ## Datensatz einlesen
-az.source <- fread("AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
+az.source <- fread("data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv")
 
 ## Datensatz auf relevante Daten reduzieren
 table.registerzeichen <- az.source[stelle == "BGH" & position == "hauptzeichen"]
@@ -105,35 +106,35 @@ table.registerzeichen <- az.source[stelle == "BGH" & position == "hauptzeichen"]
 ################################
 
 
-table.entsch.typ <- fread(paste0(prefix,
+table.entsch.typ <- fread(paste0(prefix.analysis,
                                  "01_Frequenztabelle_var-entscheidung_typ.csv"),
                           drop = 3)
 
-table.spruch.az <- fread(paste0(prefix,
+table.spruch.az <- fread(paste0(prefix.analysis,
                                 "01_Frequenztabelle_var-spruchkoerper_az.csv"),
                          drop = 3)
 
-table.spruch.db <- fread(paste0(prefix,
+table.spruch.db <- fread(paste0(prefix.analysis,
                                 "01_Frequenztabelle_var-spruchkoerper_db.csv"),
                          drop = 3)
 
-table.regz <- fread(paste0(prefix,
+table.regz <- fread(paste0(prefix.analysis,
                            "01_Frequenztabelle_var-registerzeichen.csv"),
                     drop = 3)
 
-table.jahr.eingangISO <- fread(paste0(prefix,
+table.jahr.eingangISO <- fread(paste0(prefix.analysis,
                                       "01_Frequenztabelle_var-eingangsjahr_iso.csv"),
                                drop = 3)
 
-table.jahr.entscheid <- fread(paste0(prefix,
+table.jahr.entscheid <- fread(paste0(prefix.analysis,
                                      "01_Frequenztabelle_var-entscheidungsjahr.csv"),
                               drop = 3)
 
-table.output.praesi <- fread(paste0(prefix,
+table.output.praesi <- fread(paste0(prefix.analysis,
                                     "01_Frequenztabelle_var-praesi.csv"),
                              drop = 3)
 
-table.output.vpraesi <- fread(paste0(prefix,
+table.output.vpraesi <- fread(paste0(prefix.analysis,
                                      "01_Frequenztabelle_var-v_praesi.csv"),
                               drop = 3)
 
@@ -146,16 +147,16 @@ table.output.vpraesi <- fread(paste0(prefix,
 #+
 ## Personaldaten herunterladen
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv?download=1",
- "PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+ "data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
     }
 
 
 #+
 ## Personaldaten einlesen
 
-table.praesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
+table.praesi <- fread("data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv")
 
 table.praesi.daten <- table.praesi[court == "BGH", c(2:3, 5:8)]
 table.praesi.alter <- table.praesi[court == "BGH", c(2:3, 13:15)]
@@ -164,9 +165,9 @@ table.praesi.alter <- table.praesi[court == "BGH", c(2:3, 13:15)]
 #+
 ## Personaldaten herunterladen
 
-if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
+if (file.exists("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == FALSE){
     download.file("https://zenodo.org/record/4568682/files/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv?download=1",
- "PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+ "data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
     }
 
 
@@ -174,7 +175,7 @@ if (file.exists("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv") == 
 #+
 ## Personaldaten einlesen
 
-table.vpraesi <- fread("PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
+table.vpraesi <- fread("data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv")
 
 table.vpraesi.daten <- table.vpraesi[court == "BGH", c(2:3, 5:8)]
 table.vpraesi.alter <- table.vpraesi[court == "BGH", c(2:3, 13:15)]
@@ -187,10 +188,10 @@ table.vpraesi.alter <- table.vpraesi[court == "BGH", c(2:3, 13:15)]
 ######################################
 
 
-stats.ling <-  fread(paste0(prefix,
+stats.ling <-  fread(paste0(prefix.analysis,
                             "00_KorpusStatistik_ZusammenfassungLinguistisch.csv"))
 
-stats.docvars <- fread(paste0(prefix,
+stats.docvars <- fread(paste0(prefix.analysis,
                               "00_KorpusStatistik_ZusammenfassungDocvarsQuantitativ.csv"))
 
 
@@ -200,36 +201,32 @@ stats.docvars <- fread(paste0(prefix,
 ### Einlesen: Datensatz
 ######################################
 
-summary.zip <- paste(datasetname,
-                     datestamp,
-                     "DE_CSV_Metadaten.zip",
-                     sep = "_")
+### Metadaten
+summary.zip <- paste0(prefix.date,
+                      "DE_CSV_Metadaten.zip")
 
 summary.corpus <- fread(cmd = paste("unzip -cq",
                                     summary.zip))
 
 
 
-data.zip <- paste(datasetname,
-                     datestamp,
-                     "DE_CSV_Datensatz.zip",
-                     sep = "_")
+### Datensatz
+#data.zip <- paste0(prefix.date,
+#                      "DE_CSV_Datensatz.zip")
 
-data.corpus <- fread(cmd = paste("unzip -cq",
-                                 data.zip))
+#data.corpus <- fread(cmd = paste("unzip -cq",
+#                                 data.zip))
 
 
 ################################
 ### Einlesen: Signaturen
 ################################
 
-hashfile <- paste(datasetname,
-                  datestamp,
-                  "KryptographischeHashes.csv", sep = "_")
+hashfile <- paste0(prefix.date,
+                  "KryptographischeHashes.csv")
 
-signaturefile <- paste(datasetname,
-                       datestamp,
-                       "FobbeSignaturGPG_Hashes.gpg", sep = "_")
+signaturefile <- paste0(prefix.date,
+                        "FobbeSignaturGPG_Hashes.gpg")
 
 
 
@@ -242,15 +239,15 @@ signaturefile <- paste(datasetname,
 
 #'# Einführung
 
-#' Das **\court\ (\courtshort)** ist einer der fünf obersten Gerichtshöfe des Bundes und steht an der Spitze der ordentlichen Gerichtsbarkeit der Bundesrepublik Deutschland (Art. 95 Abs. 1 GG, §§ 12, 13 GVG).\footnote{Die \enquote{ordentliche Gerichtsbarkeit} ist eine historische gewachsene Bezeichnung. Früher war die Verwaltungsgerichtsbarkeit nicht mit unabhängigen Richtern, sondern mit Verwaltungsbeamten besetzt und daher \enquote{außerordentlich}. Die mit unabhängigen Richtern besetzten Gerichte wurden als \enquote{ordentlich} bezeichnet.} Der \court\ ist die höchste Instanz in Zivil- und Strafsachen, sowie in einigen ihm zugewiesenen Spezialgebieten. Er wurde am 1. Oktober 1950 errichtet und hat seinen Sitz in Karlsruhe (§ 123 GVG). Der 5. und 6. Strafsenat sind allerdings in Leipzig beheimatet.
+#' Der **Bundesgerichtshof (BGH)** ist einer der fünf obersten Gerichtshöfe des Bundes und steht an der Spitze der ordentlichen Gerichtsbarkeit der Bundesrepublik Deutschland (Art. 95 Abs. 1 GG, §§ 12, 13 GVG).\footnote{Die \enquote{ordentliche Gerichtsbarkeit} ist eine historische gewachsene Bezeichnung. Früher war die Verwaltungsgerichtsbarkeit nicht mit unabhängigen Richtern, sondern mit Verwaltungsbeamten besetzt und daher \enquote{außerordentlich}. Die mit unabhängigen Richtern besetzten Gerichte wurden als \enquote{ordentlich} bezeichnet.} Der BGH ist die höchste Instanz in Zivil- und Strafsachen, sowie in einigen ihm zugewiesenen Spezialgebieten. Er wurde am 1. Oktober 1950 errichtet und hat seinen Sitz in Karlsruhe (§ 123 GVG). Der 5. und 6. Strafsenat sind allerdings in Leipzig beheimatet.
 #'
-#' Im Jahr 2021 am \court\ eingerichtet sind 13 Zivilsenate, 6 Strafsenate, und 8 Spezialsenate (6 berufsrechtliche Senate, Kartellsenat und Landwirtschaftsenat), sowie ein Großer Zivilsenat, ein Großer Strafsenat und die Vereinigten Großen Senate.\footnote{Geschäftsverteilungsplan des Bundesgerichtshofs für das Jahr 2021.} Ein Senat hat grundsätzlich 7 bis 9 Mitglieder, entscheidet aber als Spruchkörper in Senatsgruppen von 5 Mitgliedern einschließlich des/der Vorsitzenden (§ 139 Abs. 1 GVG).
+#' Im Jahr 2021 am BGH eingerichtet sind 13 Zivilsenate, 6 Strafsenate, und 8 Spezialsenate (6 berufsrechtliche Senate, Kartellsenat und Landwirtschaftsenat), sowie ein Großer Zivilsenat, ein Großer Strafsenat und die Vereinigten Großen Senate.\footnote{Geschäftsverteilungsplan des Bundesgerichtshofs für das Jahr 2021.} Ein Senat hat grundsätzlich 7 bis 9 Mitglieder, entscheidet aber als Spruchkörper in Senatsgruppen von 5 Mitgliedern einschließlich des/der Vorsitzenden (§ 139 Abs. 1 GVG).
 #'
-#' Die überwiegende Anzahl der Verfahren vor dem \court\ sind Revisionen, d.h. die Überprüfung von Entscheidungen unterer Instanzen (Landgerichte oder Oberlandesgerichte, Amtsgericht nur bei Sprungrevision) auf Rechtsfehler ohne erneute Beweisaufnahme. In Zivilsachen ist der \court\ zuständig für Revisionen, Sprungrevisionen, Rechtsbeschwerden und Sprungrechtsbeschwerden (§ 133 GVG). In Strafsachen ist er zuständig für Revisionen, Beschwerden gegen Beschlüsse und Verfügungen der Oberlandesgerichte, Beschwerden gegen Verfügungen des Ermittlungsrichters am \court\ und Rügen der Besetzung eines Oberlandesgerichts (§ 135 GVG).
+#' Die überwiegende Anzahl der Verfahren vor dem BGH sind Revisionen, d.h. die Überprüfung von Entscheidungen unterer Instanzen (Landgerichte oder Oberlandesgerichte, Amtsgericht nur bei Sprungrevision) auf Rechtsfehler ohne erneute Beweisaufnahme. In Zivilsachen ist der BGH zuständig für Revisionen, Sprungrevisionen, Rechtsbeschwerden und Sprungrechtsbeschwerden (§ 133 GVG). In Strafsachen ist er zuständig für Revisionen, Beschwerden gegen Beschlüsse und Verfügungen der Oberlandesgerichte, Beschwerden gegen Verfügungen des Ermittlungsrichters am BGH und Rügen der Besetzung eines Oberlandesgerichts (§ 135 GVG).
 #'
 #'
 #' 
-#'Die quantitative Analyse von juristischen Texten, insbesondere denen des \court s, ist in den deutschen Rechtswissenschaften ein noch junges und kaum bearbeitetes Feld.\footnote{Besonders positive Ausnahmen finden sich unter: \url{https://www.quantitative-rechtswissenschaft.de/}} Zu einem nicht unerheblichen Teil liegt dies auch daran, dass die Anzahl an frei nutzbaren Datensätzen außerordentlich gering ist.
+#'Die quantitative Analyse von juristischen Texten, insbesondere denen des BGH, ist in den deutschen Rechtswissenschaften ein noch junges und kaum bearbeitetes Feld.\footnote{Besonders positive Ausnahmen finden sich unter: \url{https://www.quantitative-rechtswissenschaft.de/}} Zu einem nicht unerheblichen Teil liegt dies auch daran, dass die Anzahl an frei nutzbaren Datensätzen außerordentlich gering ist.
 #' 
 #'Die meisten hochwertigen Datensätze lagern (fast) unerreichbar in kommerziellen Datenbanken und sind wissenschaftlich gar nicht oder nur gegen Entgelt zu nutzen. Frei verfügbare Datenbanken wie \emph{Opinio Iuris}\footnote{\url{https://opinioiuris.de/}} und \emph{openJur}\footnote{\url{https://openjur.de/}} verbieten ausdrücklich das maschinelle Auslesen der Rohdaten. Wissenschaftliche Initiativen wie der Juristische Referenzkorpus (JuReKo) sind nach jahrelanger Arbeit hinter verschlossenen Türen verschwunden.
 #' 
@@ -308,7 +305,7 @@ df.bgh <- readtext("./*.txt",
 
 #+
 #'## Beschreibung des Datensatzes
-#'Dieser Datensatz ist eine digitale Zusammenstellung von möglichst allen begründeten Entscheidungen, die auf der amtlichen Internetpräsenz des \court s (\courtshort) am jeweiligen Stichtag veröffentlicht waren. Die Stichtage für jede Version entsprechen exakt der Versionsnummer.
+#'Dieser Datensatz ist eine digitale Zusammenstellung von möglichst allen begründeten Entscheidungen, die auf der amtlichen Internetpräsenz des Bundesgerichtshofs (BGH) am jeweiligen Stichtag veröffentlicht waren. Die Stichtage für jede Version entsprechen exakt der Versionsnummer.
 #'
 #'Zusätzlich zu den aufbereiteten maschinenlesbaren Formaten (TXT und CSV) sind die PDF-Rohdaten enthalten, damit Analyst:innen gegebenenfalls ihre eigene Konvertierung vornehmen können. Die PDF-Rohdaten wurden inhaltlich nicht verändert und nur die Dateinamen angepasst um die Lesbarkeit für Mensch und Maschine zu verbessern.
 #'
@@ -362,7 +359,7 @@ df.bgh <- readtext("./*.txt",
 #'\item Der Datensatz enthält nur das, was das Gericht auch tatsächlich veröffentlicht, nämlich begründete Entscheidungen (\emph{publication bias}). Platzhalter für Nichtannahme- und Verwerfungsbeschlüsse ohne Begründung wurden automatisiert entfernt, sofern vorhanden.
 #'\item Es kann aufgrund technischer Grenzen bzw. Fehler sein, dass manche --- im Grunde verfügbare --- Entscheidungen nicht oder nicht korrekt abgerufen werden (\emph{automation bias}).
 #'\item Es werden nur PDF-Dateien abgerufen (\emph{file type bias}). Manche Entscheidungen sind nur als HTML verfügbar. 
-#'\item Erst ab dem 1. Januar 2000 sind begründete Entscheidungen des \court s einigermaßen vollständig veröffentlicht (\emph{temporal bias}). Die Frequenztabellen geben hierzu genauer Auskunft.
+#'\item Erst ab dem 1. Januar 2000 sind begründete Entscheidungen des Bundesgerichtshofs einigermaßen vollständig veröffentlicht (\emph{temporal bias}). Die Frequenztabellen geben hierzu genauer Auskunft.
 #'\end{enumerate}
 
 
@@ -409,7 +406,7 @@ df.bgh <- readtext("./*.txt",
 #+
 #'## Grafische Darstellung
 #'
-#' Die Robenfarbe der Richter des \court s ist \enquote{karmesinrot}. Der Hex-Wert hierfür ist vermutlich \#7e0731. Das ist besonders bei der Erstellung thematisch passender Diagrammen hilfreich. Alle im Compilation Report und diesem Codebook präsentierten Diagramme sind in diesem karmesinrot gehalten.
+#' Die Robenfarbe der Richter des Bundesgerichtshofss ist \enquote{karmesinrot}. Der Hex-Wert hierfür ist vermutlich \#7e0731. Das ist besonders bei der Erstellung thematisch passender Diagrammen hilfreich. Alle im Compilation Report und diesem Codebook präsentierten Diagramme sind in diesem karmesinrot gehalten.
 
 
 
@@ -434,7 +431,7 @@ df.bgh <- readtext("./*.txt",
 #'
 #'\endhead
 
-#'PDF & \textbf{Traditionelle juristische Forschung}. Die PDF-Dokumente wie sie vom \court\ auf der amtlichen Webseite bereitgestellt werden, jedoch verbessert durch semantisch hochwertige Dateinamen, die der leichteren Auffindbarkeit von Entscheidungen dienen. Die Dateinamen sind so konzipiert, dass sie auch für die traditionelle qualitative juristische Arbeit einen erheblichen Mehrwert bieten. Im Vergleich zu den CSV-Dateien enthalten die Dateinamen nur einen reduzierten Umfang an Metadaten, um Kompatibilitätsprobleme zu vermeiden und die Lesbarkeit zu verbessern. Neben dem vollen Datensatz sind für Praktiker:innen auch Varianten aufbereitet, die nur \emph{Leitsatzentscheidungen} oder nur \emph{besonders wichtige Entscheidungen mit Namen} enthalten.\\
+#'PDF & \textbf{Traditionelle juristische Forschung}. Die PDF-Dokumente wie sie vom BGH auf der amtlichen Webseite bereitgestellt werden, jedoch verbessert durch semantisch hochwertige Dateinamen, die der leichteren Auffindbarkeit von Entscheidungen dienen. Die Dateinamen sind so konzipiert, dass sie auch für die traditionelle qualitative juristische Arbeit einen erheblichen Mehrwert bieten. Im Vergleich zu den CSV-Dateien enthalten die Dateinamen nur einen reduzierten Umfang an Metadaten, um Kompatibilitätsprobleme zu vermeiden und die Lesbarkeit zu verbessern. Neben dem vollen Datensatz sind für Praktiker:innen auch Varianten aufbereitet, die nur \emph{Leitsatzentscheidungen} oder nur \emph{besonders wichtige Entscheidungen mit Namen} enthalten.\\
 #' CSV\_Datensatz & \textbf{Legal Tech/Quantitative Forschung}. Diese CSV-Datei ist die für statistische Analysen empfohlene Variante des Datensatzes. Sie enthält den Volltext aller Entscheidungen, sowie alle in diesem Codebook beschriebenen Metadaten. Über Zeilenumbrüche getrennte Wörter wurden zusammengefügt.\\
 #' CSV\_Metadaten & \textbf{Legal Tech/Quantitative Forschung}. Wie die andere CSV-Datei, nur ohne die Entscheidungstexte. Sinnvoll für Analyst:innen, die sich nur für die Metadaten interessieren und Speicherplatz sparen wollen.\\
 #' TXT & \textbf{Subsidiär für alle Zielgruppen}. Diese Variante enthält die vollständigen aus den PDF-Dateien extrahierten Entscheidungstexte, aber nur einen reduzierten Umfang an Metadaten, der dem der PDF-Dateien entspricht. Die TXT-Dateien sind optisch an das Layout der PDF-Dateien angelehnt. Geeignet für qualitativ arbeitende Forscher:innen, die nur wenig Speicherplatz oder eine langsame Internetverbindung zur Verfügung haben oder für quantitativ arbeitende Forscher:innen, die beim Einlesen der CSV-Dateien Probleme haben. Über Zeilenumbrüche getrennte Wörter wurden \emph{nicht} zusammengefügt.\\
@@ -457,26 +454,9 @@ df.bgh <- readtext("./*.txt",
 #+
 #'# Variablen
 
-#+
-#'## Datenstruktur 
-
-str(data.corpus)
 
 
-#'\vspace{1cm}
 
-#+
-#'## Hinweise
-
-#'\begin{itemize}
-#' \item \textbf{Doppelte Codierung der Spruchkörper} --- Für viele Urteile sind die Spruchkörper doppelt enthalten, einmal aus der Datenbank in menschenlesbarer Form (Variable \enquote{spruchkoerper\_db}), einmal durch das Aktenzeichen (Variable \enquote{spruchkoerper\_az}). Nicht wenige Aktenzeichen enthalten keine separate und einheitliche Angabe des Spruchkörpers, weil sich diese schon aus dem Registerzeichen ergibt, z.B. für Aktenkontrollen in Haftprüfungsverfahren oder Kartellsachen. Die Variable \enquote{spruchkoerper\_db} ermöglicht hier eine einfache Selektion bestimmter Spruchkörper anhand einer einheitlichen Variable, ohne im Detail erst jedes passende Registerzeichen suchen zu müssen.
-#' \item \textbf{Abweichende Codierung der Registerzeichen} --- Die Registerzeichen wurden gekürzt und Sonderzeichen entfernt um die Arbeit mit ihnen zu vereinfachen. Beachten Sie bitte die Gegenüberstellungstabelle unter Punkt \ref{register}.
-#'\item Fehlende Werte sind immer mit \enquote{NA} codiert.
-#'\item Strings können grundsätzlich alle in UTF-8 definierten Zeichen (insbesondere Buchstaben, Zahlen und Sonderzeichen) enthalten.
-#'\end{itemize}
-
-
-#'\newpage
 #+
 #'## Erläuterungen zu den einzelnen Variablen
 
@@ -496,7 +476,7 @@ str(data.corpus)
 #' 
 #' doc\_id & String & (Nur CSV-Datei) Der Name der extrahierten TXT-Datei.\\
 #' text  & String & (Nur CSV-Datei) Der vollständige Inhalt der Entscheidung, so wie er in der heruntergeladenen PDF-Datei dokumentiert ist. Die einzige editorische Änderung gegenüber den TXT-Dateien ist die Zusammenfügung von über Zeilengrenzen gebrochenen Wörtern.\\
-#' gericht & Alphabetisch & In diesem Datensatz ist nur der Wert \mbox{\enquote{BGH}} vergeben. Dies ist der ECLI-Gerichtscode für \enquote{\court}. Diese Variable dient vor allem zur einfachen und transparenten Verbindung der Daten mit anderen Datensätzen.\\
+#' gericht & Alphabetisch & In diesem Datensatz ist nur der Wert \mbox{\enquote{BGH}} vergeben. Dies ist der ECLI-Gerichtscode für \enquote{Bundesgerichtshof}. Diese Variable dient vor allem zur einfachen und transparenten Verbindung der Daten mit anderen Datensätzen.\\
 #' datum & Datum (ISO) & Das Datum der Entscheidung im Format YYYY-MM-DD (Langform nach ISO-8601). Die Langform ist für Menschen einfacher lesbar und wird maschinell auch öfter automatisch als Datumsformat erkannt.\\
 #' entscheidung\_typ & Alphabetisch &  (Nur CSV-Datei) Der Typ der Entscheidung. Es sind die Werte \enquote{B} (Beschluss), \enquote{U} (Urteil) und \enquote{V} (Verfügung) vergeben. Wurde durch \emph{regular expressions} aus der Variable \enquote{text} berechnet.\\
 #' leitsatz & Alphabetisch & Ob es sich um eine Leitsatzentscheidung handelt. Wenn ja ist der Wert \enquote{LE}, ansonsten \enquote{NA}. Wurde für jede Entscheidung bejaht, die in der Variable \enquote{bemerkung} die Zeichenfolge \enquote{Leitsatz} enthält.\\
@@ -531,6 +511,15 @@ str(data.corpus)
 #'\end{longtable}
 #'\end{centering}
 
+#+
+#'## Hinweise
+
+#'\begin{itemize}
+#' \item \textbf{Doppelte Codierung der Spruchkörper} --- Für viele Urteile sind die Spruchkörper doppelt enthalten, einmal aus der Datenbank in menschenlesbarer Form (Variable \enquote{spruchkoerper\_db}), einmal durch das Aktenzeichen (Variable \enquote{spruchkoerper\_az}). Nicht wenige Aktenzeichen enthalten keine separate und einheitliche Angabe des Spruchkörpers, weil sich diese schon aus dem Registerzeichen ergibt, z.B. für Aktenkontrollen in Haftprüfungsverfahren oder Kartellsachen. Die Variable \enquote{spruchkoerper\_db} ermöglicht hier eine einfache Selektion bestimmter Spruchkörper anhand einer einheitlichen Variable, ohne im Detail erst jedes passende Registerzeichen suchen zu müssen.
+#' \item \textbf{Abweichende Codierung der Registerzeichen} --- Die Registerzeichen wurden gekürzt und Sonderzeichen entfernt um die Arbeit mit ihnen zu vereinfachen. Beachten Sie bitte die Gegenüberstellungstabelle unter Punkt \ref{register}.
+#'\item Fehlende Werte sind immer mit \enquote{NA} codiert.
+#'\item Strings können grundsätzlich alle in UTF-8 definierten Zeichen (insbesondere Buchstaben, Zahlen und Sonderzeichen) enthalten.
+#'\end{itemize}
 
 
 
@@ -725,122 +714,26 @@ kable(stats.ling,
 #+
 #'## Verteilung Zeichen
 
-#+ CE-BGH_09_Density_Zeichen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = zeichen),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Zeichen je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Zeichen",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_09_Density_Zeichen-1.pdf)
 
-
+#+
 #'## Verteilung Tokens
 
-#+ CE-BGH_10_Density_Tokens, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = tokens),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Tokens je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Tokens",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_10_Density_Tokens-1.pdf)
 
+
+#+
 #'## Verteilung Typen
 
-
-#+ CE-BGH_11_Density_Typen, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = typen),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Typen je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Typen",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_11_Density_Typen-1.pdf)
 
 
+
+#+
 #'## Verteilung Sätze
 
-#+ CE-BGH_12_Density_Saetze, fig.height = 6, fig.width = 9
-ggplot(data = summary.corpus)+
-    geom_density(aes(x = saetze),
-                 fill = "#7e0731")+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
-                  labels = trans_format("log10", math_format(10^.x)))+
-    annotation_logticks(sides = "b")+
-    coord_cartesian(xlim = c(1, 10^6))+
-    theme_bw()+
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Verteilung der Sätze je Dokument"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Sätze",
-        y = "Dichte"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_12_Density_Saetze-1.pdf)
+
 
 
 
@@ -880,41 +773,12 @@ kable(stats.docvars,
 
 #'## Nach Typ der Entscheidung
 
-freqtable <- table.entsch.typ[-.N]
-
 #'\vspace{0.5cm}
 
-#+ CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(entscheidung_typ,
-                             -N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black",
-             width = 0.5) +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Typ"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Typ der Entscheidung",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#' ![](analyse/CE-BGH_02_Barplot_Entscheidungstyp-1.pdf)
 
 #'\vspace{1cm}
+
 
 kable(table.entsch.typ,
       format = "latex",
@@ -935,40 +799,11 @@ kable(table.entsch.typ,
 
 
 #'\vspace{0.5cm}
-freqtable <- table.spruch.az[-.N]
 
-
-#+ CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(spruchkoerper_az,
-                             -N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black",
-             width = 0.5) +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Senat (Aktenzeichen)"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Senat",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#' ![](analyse/CE-BGH_03_Barplot_Spruchkoerper_AZ-1.pdf)
 
 #'\vspace{1cm}
+
 
 kable(table.spruch.az,
       format = "latex",
@@ -985,37 +820,7 @@ kable(table.spruch.az,
 #+
 #'## Nach Spruchkörper (Datenbank)
 
-freqtable <- table.spruch.db[-.N]
-
-
-#+ CE-BGH_03_Barplot_Spruchkoerper_DB, fig.height = 12, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(spruchkoerper_db,
-                            N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black",
-             width = 0.5) +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Senat (DB)"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Senat",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
+#' ![](analyse/CE-BGH_03_Barplot_Spruchkoerper_DB-1.pdf)
 
 #'\newpage
 
@@ -1037,38 +842,10 @@ kable(table.spruch.db,
 
 
 #'## Nach Registerzeichen
-
+#'
 #'\vspace{0.5cm}
-freqtable <- table.regz[-.N]
-
-#+ CE-BGH_04_Barplot_Registerzeichen, fig.height = 14, fig.width = 10
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(registerzeichen,
-                             N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black") +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Registerzeichen"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Registerzeichen",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
+#'
+#' ![](analyse/CE-BGH_04_Barplot_Registerzeichen-1.pdf)
 
 #'\newpage
 
@@ -1087,39 +864,11 @@ kable(table.regz,
 #'## Nach Präsident:in
 
 #'\vspace{0.5cm}
-freqtable <- table.output.praesi[-.N]
-
-#+ CE-BGH_05_Barplot_PraesidentIn, fig.height = 5.5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(praesi,
-                             N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black") +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Präsident:in"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Präsident:in",
-        y = "Entscheidungen"
-    )+
-    theme(
-        axis.title.y = element_blank(),
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#'
+#' ![](analyse/CE-BGH_05_Barplot_PraesidentIn-1.pdf)
+#'
 #'\vspace{0.5cm}
+
 
 kable(table.output.praesi,
       format = "latex",
@@ -1139,39 +888,9 @@ kable(table.output.praesi,
 #'## Nach Vize-Präsident:in
 
 #'\vspace{0.5cm}
-freqtable <- table.output.vpraesi[-.N]
-
-
-#+ CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 5.5, fig.width = 8
-ggplot(data = freqtable) +
-    geom_bar(aes(x = reorder(v_praesi,
-                             N),
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731",
-             color = "black") +
-    coord_flip()+
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Vize-Präsident:in"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Vize-Präsident:in",
-        y = "Entscheidungen"
-    )+
-    theme(
-        axis.title.y = element_blank(),
-        text = element_text(size = 14),
-        plot.title = element_text(size = 14,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
-
+#' 
+#' ![](analyse/CE-BGH_06_Barplot_VizePraesidentIn-1.pdf)
+#'
 #'\vspace{0.5cm}
 
 kable(table.output.vpraesi,
@@ -1194,33 +913,9 @@ kable(table.output.vpraesi,
 #'## Nach Entscheidungsjahr
 
 #'\vspace{0.5cm}
-freqtable <- table.jahr.entscheid[-.N][,lapply(.SD, as.numeric)]
-
-#+ CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 7, fig.width = 11
-ggplot(data = freqtable) +
-    geom_bar(aes(x = entscheidungsjahr,
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731") +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Entscheidungsjahr"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Entscheidungsjahr",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 16),
-        plot.title = element_text(size = 16,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
+#' 
+#' ![](analyse/CE-BGH_07_Barplot_Entscheidungsjahr-1.pdf)
+#'
 #'\vspace{1cm}
 
 kable(table.jahr.entscheid,
@@ -1242,36 +937,10 @@ kable(table.jahr.entscheid,
 
 
 #'\vspace{0.5cm}
-
-
-freqtable <- table.jahr.eingangISO[-.N][,lapply(.SD, as.numeric)]
-
-
-#+ CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 7, fig.width = 11
-ggplot(data = freqtable) +
-    geom_bar(aes(x = eingangsjahr_iso,
-                 y = N),
-             stat = "identity",
-             fill = "#7e0731") +
-    theme_bw() +
-    labs(
-        title = paste(datasetname,
-                      "| Version",
-                      datestamp,
-                      "| Entscheidungen je Eingangsjahr (ISO)"),
-        caption = paste("DOI:",
-                        doi.version),
-        x = "Eingangsjahr (ISO)",
-        y = "Entscheidungen"
-    )+
-    theme(
-        text = element_text(size = 16),
-        plot.title = element_text(size = 16,
-                                  face = "bold"),
-        legend.position = "none",
-        plot.margin = margin(10, 20, 10, 10)
-    )
-
+#'
+#' ![](analyse/CE-BGH_08_Barplot_EingangsjahrISO-1.pdf)
+#'
+#'
 #'\vspace{1cm}
 
 kable(table.jahr.eingangISO,
@@ -1293,22 +962,23 @@ kable(table.jahr.eingangISO,
 #+
 #'## Verteilung PDF-Dateigrößen
 
-#' ![](ANALYSE/CE-BGH_13_Density_Dateigroessen_PDF-1.pdf)
+#' ![](analyse/CE-BGH_13_Density_Dateigroessen_PDF-1.pdf)
 
 
 #+
 #'## Verteilung TXT-Dateigrößen
 
-#' ![](ANALYSE/CE-BGH_14_Density_Dateigroessen_TXT-1.pdf)
+#' ![](analyse/CE-BGH_14_Density_Dateigroessen_TXT-1.pdf)
 
 #'\newpage
 
 #+
 #'## Gesamtgröße je ZIP-Archiv
 files.zip <- fread(hashfile)$filename
+files.zip <- file.path("output", files.zip)
 filesize <- round(file.size(files.zip) / 10^6, digits = 2)
 
-table.size <- data.table(files.zip,
+table.size <- data.table(basename(files.zip),
                          filesize)
 
 
@@ -1348,7 +1018,7 @@ kable(table.size,
 #+
 #'## Import: Public Key
 #+ echo = TRUE
-system2("gpg2", "--import GPG-Public-Key_Fobbe-Data.asc",
+system2("gpg2", "--import gpg/PublicKey_Fobbe-Data.asc",
         stdout = TRUE,
         stderr = TRUE)
 
@@ -1401,7 +1071,7 @@ sha3test <- function(filename, sig){
 
 # Ursprüngliche Signaturen importieren
 table.hashes <- fread(hashfile)
-filename <- table.hashes$filename
+filename <- file.path("output", table.hashes$filename)
 sha3.512 <- table.hashes$sha3.512
 
 # Signaturprüfung durchführen 
@@ -1417,49 +1087,11 @@ kable(testresult, format = "latex", booktabs = TRUE,
 
 
 
-#+
-#'# Changelog
-#'
-#'\ra{1.3}
-#'
-#' 
-#'\begin{centering}
-#'\begin{longtable}{p{2.5cm}p{11.5cm}}
-#'\toprule
-#'Version &  Details\\
-#'\midrule
-#'
-#' \version  &
-#'
-#' \begin{itemize}
-#' \item Vollständige Aktualisierung der Daten
-#' \item Veröffentlichung des vollständigen Source Codes
-#' \item Deutliche Erweiterung des inhaltlichen Umfangs des Codebooks
-#' \item Einführung der vollautomatischen Erstellung von Datensatz und Codebook
-#' \item Einführung von Compilation Reports um den Erstellungsprozess exakt zu dokumentieren
-#' \item Einführung von Variablen für Lizenz, Versionsnummer, Concept DOI, Version DOI, ECLI, Typ der Entscheidung, Präsident:in, Vize-Präsident:in, Verfahrensart, Name, Leitsatz, Bemerkungen, Berichtigungen, und linguistische Kennzahlen (Zeichen, Tokens, Typen, Sätze)
-#' \item Einführung von PDF-Varianten für Leitsatzentscheidungen und namentlich gekennzeichneten Entscheidungen.
-#' \item Zusammenfügung von über Zeilengrenzen getrennten Wörtern in der CSV-Variante
-#' \item Automatisierung und Erweiterung der Qualitätskontrolle
-#' \item Einführung von Diagrammen zur Visualisierung von Prüfergebnissen
-#' \item Einführung kryptographischer Signaturen
-#' \item Alle Variablen sind nun in Kleinschreibung und Snake Case gehalten
-#' \item Variable \enquote{Ordinalzahl} in \enquote{eingangsnummer} umbenannt
-#' \end{itemize}\\
-#' 
-#' 
-#'2020-07-09  &
-#'
-#' \begin{itemize}
-#' \item Erstveröffentlichung
-#' \end{itemize}\\
-#' 
-#'\bottomrule
-#'\end{longtable}
-#'\end{centering}
 
 
-
+#+ results = "asis"
+cat(readLines("CHANGELOG.md"),
+    sep = "\n")
 
 
 

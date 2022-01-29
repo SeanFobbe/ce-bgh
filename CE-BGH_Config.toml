@@ -1,0 +1,81 @@
+# Project
+
+project.fullname = "Corpus der Entscheidungen des Bundesgerichtshofs"
+project.shortname = "CE-BGH"
+project.author = "Seán Fobbe"
+
+
+
+# License
+
+license.data = "Creative Commons Zero 1.0 Universal"
+license.code = "MIT-0"
+
+
+
+# Digital Object Identifier (DOI)
+
+doi.data.concept = "10.5281/zenodo.3942742"
+doi.data.version = "10.5281/zenodo.5910135"
+
+doi.software.concept = "10.5281/zenodo.4705864"
+doi.software.version = "10.5281/zenodo.5910138"
+
+doi.personendaten = "10.5281/zenodo.4568682"
+doi.aktenzeichen = "10.5281/zenodo.4569564"
+
+
+# Debugging
+
+debug.toggle = false   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
+
+debug.pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
+
+debug.sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
+
+# Im Anschluss werden fünf zufällig ausgewählte Entscheidungen gelöscht um den Wiederholungsversuch zu testen. Nur für Test- und Demonstrationszwecke. 
+
+
+
+# Parallelization
+
+cores.max = true  # Ob die maximale Anzahl an logischen Kernen genutzt werden soll; Möglichkeiten sind "true" oder "false"
+cores.number = 8   # Die Anzahl Rechtenkerne, die verwendet werden soll; wird nur berücksichtigt falls "cores.max" auf "false" steht
+
+
+parallel.extractPDF = true
+parallel.lingsummarize = true
+parallel.multihashes = true
+
+
+
+# Download
+download.timeout = 600			# Timeout für Downloads
+
+
+
+# Quanteda
+quanteda.tokens_locale = "de_DE" # Locale in denen Tokens analyisert werden
+
+
+
+# Knitr
+fig.format = [ "pdf", "png" ] 	# Ausgabe-Format für Diagramme
+fig.dpi = 300     	 	# Auflösung für Diagramme
+fig.align = "center"    	# Ausrichtung von Diagrammen im Compilation Report
+
+
+
+# Frequenztabellen: Liste zu prüfender Variablen
+#' **Hinweis:** Nur diese Variablen werden bei der Erstellung der Frequenztabellen berücksichtigt.
+
+freqtable.ignore = ["text",
+               	 "eingangsnummer",
+               	 "datum",
+               	 "doc_id",
+               	 "ecli",
+               	 "aktenzeichen",
+               	 "name",
+               	 "bemerkung"]
+
+
