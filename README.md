@@ -68,5 +68,5 @@ In der Standard-Einstellung wird das Skript vollautomatisch die maximale Anzahl 
 
 ### Speicherplatz
 
-Auf der Festplatte sollten 8 GB Speicherplatz vorhanden sein.
+Auf der Festplatte sollten 20 GB Speicherplatz vorhanden sein.
 
