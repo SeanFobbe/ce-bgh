@@ -749,12 +749,12 @@ spruch1 <- gsub(" ",
 
 
 #+ echo = TRUE
-spruch1 <- gsub("\\._Zivilsenat",
-                "",
+spruch1 <- gsub("(.*)\\._Zivilsenat",
+                "Zivilsenat-\\1",
                 spruch1)
 
-spruch1 <- gsub("\\._Strafsenat",
-                "",
+spruch1 <- gsub("(.*)\\._Strafsenat",
+                "Strafsenat-\\1",
                 spruch1)
 
 spruch1 <- gsub("Senat_für Anwaltssachen",
