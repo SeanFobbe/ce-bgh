@@ -12,6 +12,9 @@
 - Fehlerhafte Kompilierungen werden beim vor der nächsten Kompilierung vollautomatisch aufgeräumt
 - Alle Ergebnisse werden automatisch fertig verpackt in den Ordner 'output' sortiert
 - README und CHANGELOG sind jetzt externe Markdown-Dateien, die bei der Kompilierung automatisiert eingebunden werden
+- Issue #1 fixed: Senate normalisiert
+- Issue #2 fixed: Variablen nicht mehr doppelt definiert
+- Issue #3 fixed: Alle Dateinamen-Präfixe nun korrekt
 - Source Code des Changelogs zu Markdown konvertiert
 
 
