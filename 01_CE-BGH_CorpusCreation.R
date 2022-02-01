@@ -1560,12 +1560,12 @@ txt.bgh$berichtigung <- ifelse(grepl("Berichtigung",
 
 
 #'## Variable "leitsatz" hinzufügen
-txt.bgh$leitsatz <- dt.download[targetindices]$leitsatz
+#txt.bgh$leitsatz <- dt.download[targetindices]$leitsatz
 ##---- ACHTUNG Dopplung mit Dateinamen---
 
 
 #'## Variable "name" hinzufügen
-txt.bgh$name <- dt.download[targetindices]$name
+#txt.bgh$name <- dt.download[targetindices]$name
 ##---- ACHTUNG Dopplung mit Dateinamen---
 
 
