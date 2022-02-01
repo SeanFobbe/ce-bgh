@@ -658,6 +658,7 @@ az.out1 <- gsub("WpSt_\\(B\\)_", "NA_WpStB_", az.out1)
 az.out1 <- gsub("VGS_", "NA_VGS_", az.out1)
 
 az.out1 <- gsub("V_I_", "VI_", az.out1)
+az.out1 <- gsub("XA", "Xa", az.out1)
 
 
 #'### Einzelne Fehler bereinigen
@@ -748,12 +749,12 @@ spruch1 <- gsub(" ",
 
 
 #+ echo = TRUE
-spruch1 <- gsub("\\._Zivilsenat",
-                "",
+spruch1 <- gsub("(.*)\\._Zivilsenat",
+                "Zivilsenat-\\1",
                 spruch1)
 
-spruch1 <- gsub("\\._Strafsenat",
-                "",
+spruch1 <- gsub("(.*)\\._Strafsenat",
+                "Strafsenat-\\1",
                 spruch1)
 
 spruch1 <- gsub("Senat_für Anwaltssachen",
