@@ -16,6 +16,7 @@
 - Issue #2 fixed: Variablen nicht mehr doppelt definiert
 - Issue #3 fixed: Alle Dateinamen-Präfixe nun korrekt
 - Source Code des Changelogs zu Markdown konvertiert
+- In der Vergangenheit fälschlich als "Platzhalter" aussortierte drei Dokumente sind nun im Datensatz enthalten
 
 
 ## Version 2021-04-27
