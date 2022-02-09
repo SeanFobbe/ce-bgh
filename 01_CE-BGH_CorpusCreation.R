@@ -1878,6 +1878,8 @@ ggplot(data = freqtable) +
              fill = "#7e0731",
              color = "black") +
     coord_flip()+
+    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x)))+
     theme_bw() +
     labs(
         title = paste(prefix.figuretitle,
