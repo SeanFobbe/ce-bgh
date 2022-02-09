@@ -1877,9 +1877,9 @@ ggplot(data = freqtable) +
              stat = "identity",
              fill = "#7e0731",
              color = "black") +
-    coord_flip()+
-    scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
+    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
                   labels = trans_format("log10", math_format(10^.x)))+
+    coord_flip()+
     theme_bw() +
     labs(
         title = paste(prefix.figuretitle,
@@ -1895,7 +1895,6 @@ ggplot(data = freqtable) +
         legend.position = "none",
         plot.margin = margin(10, 20, 10, 10)
     )
-
 
 
 
