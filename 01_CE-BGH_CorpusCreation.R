@@ -2275,7 +2275,7 @@ ggplot(data = meta.bgh)+
     )
 
 
-
+#'\newpage
 #+
 #'### Diagramm: Verteilung Tokens
 
