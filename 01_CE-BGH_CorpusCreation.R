@@ -1607,6 +1607,22 @@ txt.bgh$lizenz <- as.character(rep(config$license$data,
 placeholder.txt <- txt.bgh[is.na(entscheidung_typ) == TRUE & is.na(name) == TRUE & is.na(berichtigung) == TRUE]$doc_id
 
 
+#'### Falsch-positive Dokumente behalten
+
+falsepositives.names <- c("BGH_IX_NA_2002-03-21_IX_ZB_57_02_NA_NA_0",
+                          "BGH_X_LE_2006-11-23_X_ZR_16_05_NA_NA_0",
+                          "BGH_X_LE_2008-04-22_X_ZR_76_07_NA_NA_0")
+
+falsepositives.index <- grep(paste(falsepositives.names,
+                                   collapse = "|"),
+                             falsepositives.names)
+
+
+if (length(falsepositives.index) != 0){
+
+placeholder.txt <- placeholder.txt[-falsepositives.index]
+
+    }
 
 #'### Einzelkorrektur
 #' Das folgende Dokument ist nach Extraktion ein leeres Text-Dokument, im originalen PDF aber ein funktionaler Scan. Es wird temporär vom Datensatz ausgeschlossen damit keine Fehler in der Zählung linguistischer Kennzahlen auftreten. In Zukunft wird ein OCR-Modul hierfür eingerichtet.
