@@ -1156,7 +1156,7 @@ print(f.future_pdf_to_txt)
 
 #'## Text Extrahieren
 
-#+ results = "hide"
+
 
 if(config$parallel$extractPDF == TRUE){
 
@@ -1170,10 +1170,10 @@ if(config$parallel$extractPDF == TRUE){
 }
 
 
-
+#+ results = "hide", warning = FALSE, message = FALSE
 f.future_pdf_to_txt(files.pdf)
 
-
+#' Für fast alle Dateien taucht der Fehler "PDF Error: Expected the default config, but wasn't able to find it or it isn't a Dictionary" auf. Dieser scheint die Konvertierung zu TXT aber nicht zu hindern und in den Dateien finden sich bei Stichproben keine Fehler. 
 
 
 
