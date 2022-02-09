@@ -28,7 +28,7 @@ Zusätzlich werden für alle ZIP-Archive kryptographische Signaturen (SHA2-256 u
 
 Alle Kommentare sind im roxygen2-Stil gehalten. Die beiden Skripte können daher auch **ohne render()** regulär als R-Skripte ausgeführt werden. Es wird in diesem Fall kein PDF-Bericht erstellt und Diagramme werden nicht abgespeichert.
  
-Um den **vollständigen Datensatz** zu kompilieren, sowie Compilation Report und Codebook zu erstellen, kopieren Sie bitte alle im Source-Archiv bereitgestellten Dateien in einen leeren Ordner (!) und führen mit R diesen Befehl aus:
+Um den **vollständigen Datensatz** zu kompilieren, sowie Compilation Report und Codebook zu erstellen, kopieren Sie bitte alle auf Zenodo im ZIP-Archiv "Source_Files" bereitgestellten Dateien in einen leeren Ordner (!) und führen mit R diesen Befehl aus:
 
 
 ```

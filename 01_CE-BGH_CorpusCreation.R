@@ -1156,7 +1156,7 @@ print(f.future_pdf_to_txt)
 
 #'## Text Extrahieren
 
-#+ results = "hide"
+
 
 if(config$parallel$extractPDF == TRUE){
 
@@ -1170,10 +1170,10 @@ if(config$parallel$extractPDF == TRUE){
 }
 
 
-
+#+ results = "hide", warning = FALSE, message = FALSE
 f.future_pdf_to_txt(files.pdf)
 
-
+#' Für fast alle Dateien taucht der Fehler "PDF Error: Expected the default config, but wasn't able to find it or it isn't a Dictionary" auf. Dieser scheint die Konvertierung zu TXT aber nicht zu hindern und in den Dateien finden sich bei Stichproben keine Fehler. 
 
 
 
@@ -1560,12 +1560,12 @@ txt.bgh$berichtigung <- ifelse(grepl("Berichtigung",
 
 
 #'## Variable "leitsatz" hinzufügen
-txt.bgh$leitsatz <- dt.download[targetindices]$leitsatz
+#txt.bgh$leitsatz <- dt.download[targetindices]$leitsatz
 ##---- ACHTUNG Dopplung mit Dateinamen---
 
 
 #'## Variable "name" hinzufügen
-txt.bgh$name <- dt.download[targetindices]$name
+#txt.bgh$name <- dt.download[targetindices]$name
 ##---- ACHTUNG Dopplung mit Dateinamen---
 
 
@@ -1607,6 +1607,22 @@ txt.bgh$lizenz <- as.character(rep(config$license$data,
 placeholder.txt <- txt.bgh[is.na(entscheidung_typ) == TRUE & is.na(name) == TRUE & is.na(berichtigung) == TRUE]$doc_id
 
 
+#'### Falsch-positive Dokumente behalten
+
+falsepositives.names <- c("BGH_IX_NA_2002-03-21_IX_ZB_57_02_NA_NA_0",
+                          "BGH_X_LE_2006-11-23_X_ZR_16_05_NA_NA_0",
+                          "BGH_X_LE_2008-04-22_X_ZR_76_07_NA_NA_0")
+
+falsepositives.index <- grep(paste(falsepositives.names,
+                                   collapse = "|"),
+                             falsepositives.names)
+
+
+if (length(falsepositives.index) != 0){
+
+placeholder.txt <- placeholder.txt[-falsepositives.index]
+
+    }
 
 #'### Einzelkorrektur
 #' Das folgende Dokument ist nach Extraktion ein leeres Text-Dokument, im originalen PDF aber ein funktionaler Scan. Es wird temporär vom Datensatz ausgeschlossen damit keine Fehler in der Zählung linguistischer Kennzahlen auftreten. In Zukunft wird ein OCR-Modul hierfür eingerichtet.
@@ -1861,6 +1877,8 @@ ggplot(data = freqtable) +
              stat = "identity",
              fill = "#7e0731",
              color = "black") +
+    scale_y_log10(breaks = trans_breaks("log10", function(x) 10^x),
+                  labels = trans_format("log10", math_format(10^.x)))+
     coord_flip()+
     theme_bw() +
     labs(
@@ -1877,7 +1895,6 @@ ggplot(data = freqtable) +
         legend.position = "none",
         plot.margin = margin(10, 20, 10, 10)
     )
-
 
 
 
@@ -2258,7 +2275,7 @@ ggplot(data = meta.bgh)+
     )
 
 
-
+#'\newpage
 #+
 #'### Diagramm: Verteilung Tokens
 
