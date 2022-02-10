@@ -902,10 +902,9 @@ filename <- paste("BGH",
 
 #'## Einzelkorrektur vornehmen
 
-filename <- gsub("BGH_3_([NALE]{2})_NA_NA_AK_13_19_NA",
-                  "BGH_3_\\1_2019-05-07_NA_AK_13_19_NA",
-                  filename)
-
+filename <- gsub("BGH_Strafsenat-3_([NALE]{2})_NA_NA_AK_13_19_NA",
+                 "BGH_Strafsenat-3_\\1_2019-05-07_NA_AK_13_19_NA",
+                 filename)
 
 
 
@@ -975,6 +974,7 @@ regex.test2 <- grep(paste0("BGH", # gericht
                     filenames2,
                     value = TRUE,
                     invert = TRUE)
+
 
 
 
