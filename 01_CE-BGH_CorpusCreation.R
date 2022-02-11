@@ -470,7 +470,7 @@ for (i in seq_along(scope.random)){
     remaining <- length(scope.random) - i
     
     if ((remaining %% 10^2) == 0){
-        print(paste(Sys.time(), "| Noch", remaining , "verbleibend."))
+        message(paste(Sys.time(), "| Noch", remaining , "verbleibend."))
     }
 
     if((i %% 100) == 0){
