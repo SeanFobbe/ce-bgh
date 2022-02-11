@@ -753,6 +753,10 @@ spruch1 <- gsub("(.*)\\._Zivilsenat",
                 "Zivilsenat-\\1",
                 spruch1)
 
+spruch1 <- gsub("(I?Xa)",
+                "Zivilsenat-\\1",
+                spruch1)
+
 spruch1 <- gsub("(.*)\\._Strafsenat",
                 "Strafsenat-\\1",
                 spruch1)
