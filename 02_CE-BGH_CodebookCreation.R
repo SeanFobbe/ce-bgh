@@ -766,11 +766,6 @@ kable(stats.docvars,
 #'\vspace{0.5cm}
 
 
-
-
-
-#'\vspace{1cm}
-
 #'## Nach Typ der Entscheidung
 
 #'\vspace{0.5cm}
@@ -789,7 +784,6 @@ kable(table.entsch.typ,
                     "Entscheidungen",
                     "% Gesamt",
                     "% Kumulativ"))
-
 
 
 
