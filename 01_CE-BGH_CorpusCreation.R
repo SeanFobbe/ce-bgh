@@ -782,7 +782,7 @@ spruch1 <- gsub("Senat_für Steuerberater-_und Steuerbevollmächtigtensachen",
                 spruch1)
 
 spruch1 <- gsub("Gemeinsamer Senat der obersten Gerichtshöfe des Bundes",
-                "GemeinsamerSenatObersteGerichtshöfeBund",
+                "GemSenatOGBund",
                 spruch1)
 
 spruch1 <- gsub("Senat_für Patentanwaltssachen",
