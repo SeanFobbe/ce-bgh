@@ -772,7 +772,7 @@ kable(stats.docvars,
 
 #' ![](analyse/CE-BGH_02_Barplot_Entscheidungstyp-1.pdf)
 
-#'\vspace{1cm}
+#'\vspace{0.2cm}
 
 
 kable(table.entsch.typ,
