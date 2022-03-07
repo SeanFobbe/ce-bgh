@@ -40,7 +40,7 @@ debug.sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, di
 # Parallelization
 
 cores.max = true  # Ob die maximale Anzahl an logischen Kernen genutzt werden soll; Möglichkeiten sind "true" oder "false"
-cores.number = 8   # Die Anzahl Rechtenkerne, die verwendet werden soll; wird nur berücksichtigt falls "cores.max" auf "false" steht
+cores.number = 8   # Die Anzahl Rechenkerne, die verwendet werden soll; wird nur berücksichtigt falls "cores.max" auf "false" steht
 
 
 parallel.extractPDF = true
