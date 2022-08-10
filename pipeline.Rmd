@@ -265,6 +265,21 @@ Mit diesem Abschnitt der Pipeline werden Input-Dateien getrackt und eingelesen. 
 
 
 
+### Scope
+
+Der Umfang der Auswertung der Datenbank des BGH.
+
+
+```{targets tar.file0}
+list(
+    tar_target(file.scope,
+               "data/CE-BGH_Scope.csv",
+               format = "file"),
+    tar_target(scope,
+               fread(file.scope))
+)
+```
+
 
 ### Variablen
 
