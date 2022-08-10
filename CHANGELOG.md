@@ -2,6 +2,11 @@
 
 
 ## Version \version
+
+
+
+
+## Version 2022-02-12
  
 - Vollständige Aktualisierung der Daten
 - Strenge Kontrolle und semantische Sortierung aller Variablen (entsprechend der Reihenfolge im Codebook)
