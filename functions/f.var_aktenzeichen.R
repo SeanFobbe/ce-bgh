@@ -27,9 +27,9 @@ f.var_aktenzeichen <- function(x,
 
     aktenzeichen <- paste0(x$spruchkoerper_az,
                            " ",
-                           mgsub(x$registerzeichen,
-                                 az.gericht$zeichen_code,
-                                 az.gericht$zeichen_original),
+                           mgsub::mgsub(x$registerzeichen,
+                                        az.gericht$zeichen_code,
+                                        az.gericht$zeichen_original),
                            " ",
                            x$eingangsnummer,
                            "/",
@@ -43,6 +43,22 @@ f.var_aktenzeichen <- function(x,
 
 
     ## REGEX-Validierung: Aktenzeichen
+
+    if(gericht == "BGH"){
+    
+    regex.test <- grep(paste0("[0-9XIVNAa-z]+", # Spruchkörper
+                              " ",
+                              "[\\(\\)A-Za-z-]+", # Registerzeichen
+                              " ",
+                              "[0-9]+", # Eingangsnummer
+                              "/",
+                              "[0-9]{1,2}" # Eingangsjahr
+                              ),
+                       aktenzeichen,
+                       value = TRUE,
+                       invert = TRUE)
+
+    }else{
     
     regex.test <- grep(paste0("[0-9NA]+", # Spruchkörper
                               " ",
@@ -55,6 +71,8 @@ f.var_aktenzeichen <- function(x,
                        aktenzeichen,
                        value = TRUE,
                        invert = TRUE)
+
+    }
 
     ## Fehlerhafte Aktenzeichen
 
