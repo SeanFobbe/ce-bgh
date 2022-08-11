@@ -56,18 +56,57 @@ f.finalize <- function(x,
                                    ignore.case = TRUE)
     
 
-    ## Remove LaTeX escape characters
-    varnames <- gsub("\\\\", "", varnames)
+
+
+
+    ## Platzhalter-Dokumente
+    ## Dokumente ohne Typ, Name und Berichtigung sind fast immer Platzhalter-Dokumente, die keine Begründung enthalten und/oder auf den Push-Service der Universität des Saarlandes hinweisen. Diese werden am Ende dieses Abschnitts entfernt.
+
+    placeholder.txt <- dt.final[is.na(entscheidung_typ) == TRUE &
+                                is.na(name) == TRUE &
+                                is.na(berichtigung) == TRUE]$doc_id
+
+
+    ## Falsch-positive Dokumente behalten
+
+    falsepositives <- c("BGH_Zivilsenat-9_NA_2002-03-21_IX_ZB_57_02_NA_NA_0.txt",
+                        "BGH_Zivilsenat-10_LE_2006-11-23_X_ZR_16_05_NA_NA_0.txt",
+                        "BGH_Zivilsenat-10_LE_2008-04-22_X_ZR_76_07_NA_NA_0.txt")
+
+    placeholder.txt <- setdiff(placeholder.txt, falsepositives)
+    
+
+    ## Einzelkorrektur
+    
+    ## Das folgende Dokument ist nach Extraktion ein leeres Text-Dokument, im originalen PDF aber ein funktionaler Scan. Es wird temporär vom Datensatz ausgeschlossen damit keine Fehler in der Zählung linguistischer Kennzahlen auftreten. In Zukunft wird ein OCR-Modul hierfür eingerichtet.
+
+
+    if (file.exists("txt/BGH_Zivilsenat-1_LE_2006-07-13_I_ZR_241_03_NA_Kontaktanzeigen_0.txt") == TRUE){
+
+        placeholder.txt <- c(placeholder.txt,
+                             "BGH_Zivilsenat-1_LE_2006-07-13_I_ZR_241_03_NA_Kontaktanzeigen_0.txt")
+
+    }
+
+
+
+    ## Platzhalter aus Datensatz entfernen
+    dt.final <- dt.final[!(doc_id %in% placeholder.txt)]
+
+
+
 
     ## Unit Test: Check variables and set column order
+    
+    varnames <- gsub("\\\\", "", varnames) # Remove LaTeX escape characters
     data.table::setcolorder(dt.final, varnames)
 
 
     ## Unit Test
     test_that("Ergebnis entspricht Erwartungen.", {
         expect_s3_class(dt.final, "data.table")
-        expect_equal(dt.final[,.N],  x[,.N])
-        expect_equal(dt.final[,.N],  download.table[,.N])
+        expect_equal(dt.final[,.N],  x[,.N] - length(placeholder.txt))
+        expect_equal(dt.final[,.N],  download.table[,.N]  - length(placeholder.txt))
     })
 
     
