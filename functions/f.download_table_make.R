@@ -80,13 +80,13 @@ f.download_table_make <- function(x,
         bemerkung <- rvest::html_nodes(html, "[class='ETitel']") %>%
             rvest::html_text(trim = TRUE)
 
-        meta.all.list[[scope.random[i]]] <- data.table(year,
-                                                       page,
-                                                       url,
-                                                       datum,
-                                                       spruch,
-                                                       az,
-                                                       bemerkung)
+        meta.all.list[[i]] <- data.table(year,
+                                         page,
+                                         url,
+                                         datum,
+                                         spruch,
+                                         az,
+                                         bemerkung)
 
         remaining <- length(scope) - i
         
