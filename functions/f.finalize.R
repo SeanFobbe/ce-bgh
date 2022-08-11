@@ -41,11 +41,9 @@ f.finalize <- function(x,
 
     ## Variable "berichtigung" hinzufügen
 
-    dt.final$berichtigung <- ifelse(grepl("Berichtigung",
-                                         dt.final$bemerkung,
-                                         ignore.case = TRUE),
-                                   "Berichtigung",
-                                   NA)
+    dt.final$berichtigung <- grepl("Berichtigung",
+                                   dt.final$bemerkung,
+                                   ignore.case = TRUE)
     
 
     ## Remove LaTeX escape characters
@@ -55,8 +53,9 @@ f.finalize <- function(x,
     data.table::setcolorder(dt.final, varnames)
 
 
+
+
+    
     return(dt.final)
-
-
     
 }
