@@ -399,6 +399,19 @@ list(
 				
 ```
 
+### Finale Download-Tabelle erstellen
+
+Die bereinigten Variablen werden hier mit der vorläufigen Download-Tabelle zusammengeführt, weitere Bereinigungen durchgeführt, weitere Variablen aus den Bemerkungen extrahiert und schließlich auf ihre Konformität mit der Beschreibung im Codebook getestet.
+
+
+
+```{targets tar.download3}
+
+tar_target(dt.download.final,
+           f.download_table_finalize(x = dt.download,
+                                     az = az_clean,
+                                     spruch = spruch_clean))
+```
 
 
 
