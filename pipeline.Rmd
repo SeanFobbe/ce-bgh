@@ -1128,8 +1128,8 @@ kable(table.size,
 ## Datensatz in RAM (MB)
 
 ```{r}
-tar_load(dt.bverwg.final)
-print(object.size(dt.bverwg.final),
+tar_load(dt.bgh.final)
+print(object.size(dt.bgh.final),
       standard = "SI",
       humanReadable = TRUE,
       units = "MB")
