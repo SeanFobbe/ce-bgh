@@ -370,8 +370,18 @@ tar_target(changelog,
 ## Download Targets
 
 
+### Vorläufige Download-Tabelle erstellen
 
+Abfrage der Datenbank des BGH und erstellen der vorläufigen Download-Tabelle.
 
+```{targets tar.download1}
+tar_target(dt.download,
+           f.download_table_make(x = scope,
+                                 debug.toggle = config$debug$toggle,
+                                 debug.pages = config$debug$pages))
+
+```
+	
 
 
 
