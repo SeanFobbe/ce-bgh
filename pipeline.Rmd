@@ -516,6 +516,39 @@ tar_target(var_entscheidung_typ,
 
 
 
+### Variablen erstellen: \enquote{zeichen, token, typen, saetze}
+
+Berechnung klassischer linguistischer Kennzahlen.
+
+
+
+```{targets tar.enhance6}
+tar_target(var_lingstats,
+                f.lingstats(dt.bgh.datecleaned,
+                            multicore = config$parallel$lingsummarize,
+                            cores = fullCores,
+                            germanvars = TRUE))
+```
+
+
+
+
+
+### Konstanten erstellen
+
+Konstanten die dem Datensatz wichtige Herkunftsinformationen hinzufügen. Darunter sind die Versionsnummer, die Version DOI, die Concept DOI und die Lizenz.
+
+
+
+```{targets tar.enhance7}
+tar_target(var_constants,
+           data.frame(version = as.character(datestamp),
+                      doi_concept = config$doi$data$concept,
+                      doi_version = config$doi$data$version,
+                      lizenz = as.character(config$license$data))[rep(1,
+                                                                      nrow(dt.bgh.datecleaned)),])
+```
+
 
 
 
