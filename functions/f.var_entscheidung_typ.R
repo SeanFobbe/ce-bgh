@@ -34,7 +34,7 @@ f.var_entscheidung_typ <- function(x){
     }
     
     ## Unit Test: Begrenzung auf bestimmte Entscheidungstypen
-    if (any(!entscheidung_typ %in% c("B", "U", "V"))){
+    if (any(!entscheidung_typ %in% c("B", "U", "V", NA))){
 
         stop("Entscheidungstypen entsprechen nicht der Definition.")
         
