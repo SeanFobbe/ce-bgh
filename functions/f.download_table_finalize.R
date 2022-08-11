@@ -173,12 +173,9 @@ f.download_table_finalize <- function(x,
     ## Unit Test: Ergebnis
     test_that("Ergebnis entspricht Erwartungen.", {
         expect_length(regex.test, 0)
-        expect_type(x, "character")
-
-
+        expect_s3_class(x, "data.table")
+        expect_length(x, 12)
     })
-
-       
 
 
 
