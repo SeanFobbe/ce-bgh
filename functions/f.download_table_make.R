@@ -66,7 +66,7 @@ f.download_table_make <- function(x,
                       ignore.case = TRUE,
                       value = TRUE)
         
-        url <- sprintf("https://juris.bundespatentgericht.de/cgi-bin/rechtsprechung/%s",
+        url <- sprintf("https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/%s",
                         url)
         
 
