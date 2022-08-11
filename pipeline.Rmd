@@ -892,6 +892,51 @@ tar_target(zip.source,
 
 
 
+## Kryptographische Hashes
+
+### Zu hashende ZIP-Archive definieren
+
+
+```{targets tar.hashes1}
+tar_target(zip.all,
+           c(zip.pdf.all,
+             zip.pdf.leitsatz,
+             zip.pdf.benannt,
+             zip.txt,
+             zip.csv.full,
+             zip.csv.meta,
+             zip.analysis,
+             zip.source))
+```
+
+### Kryptographische Hashes berechnen
+
+
+```{targets tar.hashes2}
+tar_target(hashes,
+           f.tar_multihashes(c(zip.all,
+                               report.codebook[1],
+                               report.robustness[1]),
+                             multicore = config$parallel$multihashes,
+                             cores = fullCores))
+```
+
+
+
+### CSV schreiben: Kryptographische Hashes
+
+
+```{targets tar.hashes3}
+tar_target(csv.hashes,
+           f.tar_fwrite(x = hashes,
+                        filename = file.path("output",
+                                             paste0(prefix.files,
+                                                    "_KryptographischeHashes.csv"))
+                        )
+           )
+```
+
+
 
 
 
