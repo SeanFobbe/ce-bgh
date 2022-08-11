@@ -109,6 +109,7 @@ unlink(grep(datestamp,
 #unlink("output", recursive = TRUE)
 dir.create("output", showWarnings = FALSE)
 dir.create("temp", showWarnings = FALSE)
+dir.create("platzhalter", showWarnings = FALSE)
 
 dir.create(dir.analysis, showWarnings = FALSE)
 
