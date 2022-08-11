@@ -507,7 +507,7 @@ tar_target(var_aktenzeichen,
 ### Variable erstellen: \enquote{praesi}
 
 
-```{targets tar.enhance6}
+```{targets tar.enhance4}
 tar_target(var_praesi,
            f.presidents(datum = dt.bgh.datecleaned$datum,
                         gericht = "BGH",
@@ -517,7 +517,7 @@ tar_target(var_praesi,
 ### Variable erstellen: \enquote{vpraesi}
 
 
-```{targets tar.enhance7}
+```{targets tar.enhance5}
 tar_target(var_vpraesi,
            f.presidents(datum = dt.bgh.datecleaned$datum,
                         gericht = "BGH",
@@ -534,7 +534,7 @@ tar_target(var_vpraesi,
 Der Typ der Entscheidung wird aus dem Text extrahiert.
 
 
-```{targets tar.enhance4}
+```{targets tar.enhance6}
 tar_target(var_entscheidung_typ,
                 f.var_entscheidung_typ(dt.bgh.datecleaned$text))
 ```
@@ -547,7 +547,7 @@ Berechnung klassischer linguistischer Kennzahlen.
 
 
 
-```{targets tar.enhance6}
+```{targets tar.enhance7}
 tar_target(var_lingstats,
                 f.lingstats(dt.bgh.datecleaned,
                             multicore = config$parallel$lingsummarize,
@@ -565,7 +565,7 @@ Konstanten die dem Datensatz wichtige Herkunftsinformationen hinzufügen. Darunt
 
 
 
-```{targets tar.enhance7}
+```{targets tar.enhance8}
 tar_target(var_constants,
            data.frame(version = as.character(datestamp),
                       doi_concept = config$doi$data$concept,
