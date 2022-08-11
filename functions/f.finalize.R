@@ -25,20 +25,27 @@ f.finalize <- function(x,
 
     dt.download.reduced <- download.table[,.(doc_id,
                                              url,
-                                             bemerkung,
-                                             berichtigung,
-                                             wirkung,
-                                             ruecknahme,
-                                             erledigung)]
+                                             bemerkung)]
+
 
     
-    download.table$doc_id <- gsub("\\.pdf",
-                                  "\\.txt",
-                                  download.table$doc_id)
+    dt.download.reduced$doc_id <- gsub("\\.pdf",
+                                       "\\.txt",
+                                       dt.download.reduced$doc_id)
 
     dt.final <- merge(dt.main,
-                      download.table,
+                      dt.download.reduced,
                       by = "doc_id")
+
+
+
+    ## Variable "berichtigung" hinzufügen
+
+    dt.final$berichtigung <- ifelse(grepl("Berichtigung",
+                                         dt.final$bemerkung,
+                                         ignore.case = TRUE),
+                                   "Berichtigung",
+                                   NA)
     
 
     ## Remove LaTeX escape characters
