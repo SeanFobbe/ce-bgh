@@ -383,6 +383,23 @@ tar_target(dt.download,
 ```
 	
 
+### Download-Tabelle Bereinigen
+
+Die Aktenzeichen und Spruchkörper werden bereinigt und gespeichert.
+
+```{targets tar.download2}
+
+list(
+    tar_target(az_clean,
+                f.clean_az_bgh(dt.download$az)),
+    tar_target(spruch_clean,
+               f.clean_spruch_bgh(dt.download$spruch))
+    )
+				
+				
+```
+
+
 
 
 
