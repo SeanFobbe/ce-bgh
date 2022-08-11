@@ -10,6 +10,13 @@
 
 f.clean_az_bgh <- function(x){
 
+    ## Unit Test: Argumente
+    test_that("Argumente entsprechen Erwartungen.", {
+        expect_type(x, "character")
+
+    })
+    
+
     ## An dieser Stelle wird eine mysteriöse Unterstrich-Variante mit einem regulären Unterstrich ersetzt. Es ist mir aktuell unklar um was für eine Art von Zeichen es sich handelt und wieso es in den Daten des Bundespatentgerichts auftaucht. Vermutlich handelt es sich um non-breaking spaces.
 
     az <- gsub(" ", "_", x)
@@ -143,17 +150,22 @@ f.clean_az_bgh <- function(x){
                        invert = TRUE,
                        value = TRUE)
 
-    
-    ## Stoppen falls REGEX-Validierung gescheitert
 
     if (length(regex.test) != 0){
 
         warning("Folgende Aktenzeichen sind fehlerhaft:")
         warning(regex.test)
-        
-        stop("REGEX VALIDIERUNG GESCHEITERT: AKTENZEICHEN ENTSPRECHEN NICHT DEM CODEBOOK-SCHEMA!")
     }
 
+    
+
+    ## Unit Test: Argumente
+    test_that("Ergebnis entspricht Erwartungen.", {
+        expect_length(regex.test, 0)
+        expect_type(az, "character")
+        expect_length(az, length(x))
+
+    })
 
     return(az)
 
