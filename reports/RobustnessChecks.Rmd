@@ -1,5 +1,5 @@
 ---
-title: "Robustness Checks | Corpus der Entscheidungen des Bundesverwaltungsgerichts (CE-BVerwG)"
+title: "Robustness Checks | Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH)"
 author: Seán Fobbe
 geometry: margin=3cm
 papersize: a4
@@ -35,8 +35,9 @@ knitr::opts_chunk$set(fig.path = file.path("..", "analysis/"),
 
 ```{r}
 tar_load(latexdefs)
+tar_load(scope)
 tar_load(dt.download.final)
-tar_load(dt.bverwg.full)
+tar_load(dt.bgh.full)
 tar_load(files.pdf)
 tar_load(files.txt)
 
@@ -44,6 +45,112 @@ tar_load(files.txt)
 
 
 
+
+
+# Vollständigkeit der Datenbank-Auswertung
+
+
+## Genauen Such-Umfang berechnen
+
+```{r}
+    scope <- f.extend(scope$year,
+                      scope$pagemax0)
+
+
+    scope <- rbindlist(scope)
+
+    setnames(scope,
+             c("year",
+               "page"))
+```
+
+
+## Locator einfügen
+
+```{r}
+
+
+scope[, loc := {
+    loc <- paste0(year,
+                  "-",
+                  page)
+    list(loc)
+}]
+
+
+dt.download.final[, loc := {
+    loc <- paste0(year,
+                  "-",
+                  page)
+    list(loc)
+}]
+
+
+
+```
+
+
+## Theoretischer Fehlbetrag
+
+```{r}
+SOLL <- scope[,.N] * 15 
+IST <- dt.download.final[,.N]
+
+missing.N <- SOLL - IST
+
+print(missing.N)
+
+```
+
+
+## Seiten mit weniger als 15 Entscheidungen anzeigen
+
+```{r}
+less15 <- dt.download.final[, .N,  keyby = "loc"][N < 15]
+
+print(less15)
+```
+
+
+## Fehlbetrag durch Seiten mit weniger als 15 Entscheidungen
+
+```{r}
+less15.N <- (length(less15$N) * 15) - sum(less15$N)
+print(less15.N)
+```
+
+## Tatsächlicher Fehlbetrag
+
+ **Test:** Ist der Fehlbetrag vollständig durch Seiten mit weniger als 15 Entscheidungen zu erklären? Falls ja, weisen beide sub-Tests maximal ein Ergebnis von 0 oder ein negatives Ergebnis auf.
+
+
+### Fehlbetrag der NICHT durch Seiten mit weniger als 15 Entscheidungen erklärbar ist
+
+```{r}
+print(missing.N - less15.N)
+```
+
+
+### Gegenüberstellung: Anzahl Jahre und Anzahl Seiten mit weniger als 15 Entscheidungen
+
+Für jedes Jahr sollte es eine letzte Seite mit weniger als 15 Entscheidungen geben. Falls zufällig die letzte Seite exakt 15 Entscheidungen hat, wäre das Ergebnis negativ. Ein Ergebnis von 0 oder kleiner bedeutet, dass der Test bestanden wurde. Der Test ist nur aussagekräftig wenn der gesamte Such-Umfang abgefragt wurde.
+
+```{r}
+if (config$debug$toggle == FALSE){
+    less15[,.N] - uniqueN(scope$year)
+    }
+```
+
+
+## Vorhandensein aller Jahr/Seiten-Kombinationen
+
+Dieser Test zeigt an, ob alle Jahr/Seiten-Kombinationen auch in den Daten vorhanden sind. Falls nicht, zeigt er die fehlenden Kombinationen an.
+
+
+```{r}
+setdiff(scope$loc,
+        dt.download.final$loc)
+```
 
 
 
@@ -68,24 +175,24 @@ setdiff(tools::file_path_sans_ext(basename(files.pdf)),
 
 # Variablen
 
-## Anzahl Variablen der Datensätze
+## Anzahl Variablen
 
 ```{r}
-length(dt.bverwg.full)
+length(dt.bgh.full)
 ```
 
 
-## Alle Variablen-Namen der Datensätze
+## Alle Namen der Variablen
 
 ```{r}
-names(dt.bverwg.full)
+names(dt.bgh.full)
 ```
 
 
 ## Beispiel-Werte
 
 ```{r}
-str(dt.bverwg.full)
+str(dt.bgh.full)
 ```
 
 
@@ -104,12 +211,17 @@ freqtable.ignore  <-  c("text",
                         "doc_id",
                         "ecli",
                         "aktenzeichen",
+                        "name",
+                        "bemerkung",
                         "tokens",
                         "typen",
                         "saetze",
                         "zeichen",
                         "url")
 ```
+
+
+
 
 
 
@@ -120,7 +232,7 @@ freqtable.ignore  <-  c("text",
 
 ## Liste zu prüfender Variablen
 
-varlist <- names(dt.bverwg.full)
+varlist <- names(dt.bgh.full)
 varlist <- grep(paste(freqtable.ignore,
                       collapse = "|"),
                 varlist,
@@ -141,7 +253,7 @@ prefix <- paste0(config$project$shortname,
 
 ```{r, results = "asis"}
 
-f.fast.freqtable(dt.bverwg.full,
+f.fast.freqtable(dt.bgh.full,
                  varlist = varlist,
                  sumrow = TRUE,
                  output.list = FALSE,
