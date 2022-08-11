@@ -88,7 +88,7 @@ f.download_table_make <- function(x,
                                                        az,
                                                        bemerkung)
 
-        remaining <- length(scope.random) - i
+        remaining <- length(scope) - i
         
         if ((remaining %% 100) == 0){
             message(paste(Sys.time(),
