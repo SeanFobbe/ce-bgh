@@ -5,6 +5,7 @@
 #' @param x Data.table. Der Umfang der Datenbankseiten, der berücksichtigt werden soll. Ist im Datensatz im Ordner data/ dokumentiert.
 #' @param debug.toggle Logical. Ob der Debugging-Modus aktiviert werden soll. Im Debugging-Modus wird nur eine reduzierte Anzahl Datenbankseiten ausgewertet. Jede Seite enthält idR 30 Entscheidungen.
 #' @param debug.pages Integer. Anzahl der auszuwertenden Datenbankseiten.
+#' @param progresscount Integer. Die Anzahl Seiten nach denen der Progress Count eine Meldung ausgibt.
 
 
 #' @return Data.table. Eine Tabelle mit allen URLs und in der Datenbank verfügbaren Metadaten.
@@ -14,7 +15,8 @@
 
 f.download_table_make <- function(x,
                                   debug.toggle = FALSE,
-                                  debug.pages = 50){
+                                  debug.pages = 50,
+                                  progresscount = 100){
 
 
     ## Genauen Such-Umfang berechnen
@@ -90,7 +92,7 @@ f.download_table_make <- function(x,
 
         remaining <- length(scope) - i
         
-        if ((remaining %% 100) == 0){
+        if ((remaining %% progresscount) == 0){
             message(paste(Sys.time(),
                           "| Noch",
                           remaining,
