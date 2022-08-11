@@ -46,7 +46,7 @@ f.download_table_make <- function(x,
 
     scope.random <- sample(scope[,.N])
 
-    for (i in seq_along(scope.random)){
+    for (i in scope.random){
         
         year <- scope$year[scope.random[i]]
         page <- scope$page[scope.random[i]]
