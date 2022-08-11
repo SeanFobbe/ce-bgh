@@ -21,6 +21,12 @@ f.var_ecli_BGH <- function(x,
                            az.brd){
 
 
+    ## Unit Test
+    test_that("Argumente entsprechen Erwartungen.", {
+        expect_s3_class(x, "data.table")
+        expect_s3_class(az.brd, "data.table")
+    })
+    
 
 
     ## Originale Registerzeichen wiederherstellen
