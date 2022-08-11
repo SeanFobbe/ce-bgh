@@ -17,7 +17,7 @@
 
 
 
-f.var_ecli_BGH <- function(x,
+f.var_ecli_bgh <- function(x,
                            az.brd){
 
 
