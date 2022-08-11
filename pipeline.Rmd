@@ -776,7 +776,7 @@ tar_target(zip.pdf.benannt,
 
 ### ZIP erstellen: TXT-Dateien
 
-```{targets tar.zip2}
+```{targets tar.zip4}
 tar_target(zip.txt,
            f.tar_zip(x = intersect(files.txt, file.path("txt", dt.bgh.final$doc_id),
                      filename = paste(prefix.files,
@@ -791,7 +791,7 @@ tar_target(zip.txt,
 ### ZIP erstellen: CSV-Datei (voller Datensatz)
 
 
-```{targets tar.zip3}
+```{targets tar.zip5}
 tar_target(zip.csv.full,
                 f.tar_zip(csv.full,
                               filename = gsub("\\.csv", "\\.zip", basename(csv.full)),
@@ -805,7 +805,7 @@ tar_target(zip.csv.full,
 ### ZIP erstellen: CSV-Datei (nur Metadaten)
 
 
-```{targets tar.zip4}
+```{targets tar.zip6}
 tar_target(zip.csv.meta,
                 f.tar_zip(csv.meta,
                               filename = gsub("\\.csv", "\\.zip", basename(csv.meta)),
@@ -819,7 +819,7 @@ tar_target(zip.csv.meta,
 
 ### ZIP erstellen: Analyse-Dateien
 
-```{targets tar.zip5}
+```{targets tar.zip7}
 tar_target(zip.analysis,
            f.tar_zip("analysis/",
                      filename = paste(prefix.files,
@@ -839,7 +839,7 @@ tar_target(zip.analysis,
 ### ZIP erstellen: Source Code
 
 
-```{targets tar.zip6}
+```{targets tar.zip8}
 tar_target(zip.source,
                 f.tar_zip(files.source,
                               filename = paste0(prefix.files,
