@@ -852,7 +852,7 @@ freqtable.az.nosum <- freqtable.az[-.N]
 
 
 
-```{r, CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_06_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.az.nosum) +
     geom_bar(aes(x = reorder(spruchkoerper_az,
                              -N),
@@ -900,6 +900,73 @@ kable(freqtable.az,
 \newpage
 
 
+## Nach Spruchkörper (Datenbank)
+
+```{r}
+
+freqtable.db <- f.fast.freqtable(dt.bgh.meta,
+                                 varlist = "spruchkoerper_db",
+                                 sumrow = TRUE,
+                                 output.list = TRUE,
+                                 output.kable = FALSE,
+                                 output.csv = FALSE,
+                                 align = c("p{5cm}"))[[1]][,exactpercent:=NULL]
+
+freqtable.db.nosum <- freqtable.db[-.N]
+
+```
+
+
+
+
+
+```{r, CE-BGH_07_Barplot_Spruchkoerper_DB, fig.height = 12, fig.width = 8}
+ggplot(data = freqtable.db.nosum) +
+    geom_bar(aes(x = reorder(spruchkoerper_db,
+                             -N),
+                 y = N),
+             stat = "identity",
+             fill = "#7e0731",
+             color = "black",
+             width = 0.5) +
+    theme_bw() +
+    labs(
+        title = paste(prefix.figuretitle,
+                      "| Entscheidungen je Senat (Aktenzeichen)"),
+        caption = caption,
+        x = "Senat",
+        y = "Entscheidungen"
+    )+
+    theme(
+        text = element_text(size = 14),
+        plot.title = element_text(size = 14,
+                                  face = "bold"),
+        legend.position = "none",
+        plot.margin = margin(10, 20, 10, 10)
+    )
+
+```
+
+\vspace{0.5cm}
+
+
+```{r}
+kable(freqtable.db,
+      format = "latex",
+      align = 'P{3cm}',
+      booktabs = TRUE,
+      longtable = TRUE,
+      col.names = c("Senat",
+                    "Entscheidungen",
+                    "% Gesamt",
+                    "% Kumulativ"))  %>% kable_styling(latex_options = "repeat_header")
+
+```
+
+
+\newpage
+
+
 ## Nach Registerzeichen
 
 ```{r}
@@ -920,7 +987,7 @@ freqtable.regz.nosum <- freqtable.regz[-.N]
 
 
 
-```{r, CE-BGH_04_Barplot_Registerzeichen, fig.height = 8, fig.width = 10}
+```{r, CE-BGH_08_Barplot_Registerzeichen, fig.height = 14, fig.width = 10}
 ggplot(data = freqtable.regz.nosum) +
     geom_bar(aes(x = reorder(registerzeichen,
                              N),
@@ -986,7 +1053,7 @@ freqtable.praesi.nosum <- freqtable.praesi[-.N]
 
 
 
-```{r, CE-BGH_05_Barplot_PraesidentIn, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_09_Barplot_PraesidentIn, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.praesi.nosum) +
     geom_bar(aes(x = reorder(praesi,
                              N),
@@ -1051,7 +1118,7 @@ freqtable.vpraesi.nosum <- freqtable.vpraesi[-.N]
 
 
 
-```{r, CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_10_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.vpraesi.nosum) +
     geom_bar(aes(x = reorder(v_praesi,
                              N),
@@ -1119,7 +1186,7 @@ freqtable.entscheidungsjahr.nosum <- freqtable.entscheidungsjahr[-.N]
 
 
 
-```{r, CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_11_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.entscheidungsjahr.nosum) +
     geom_bar(aes(x = entscheidungsjahr,
                  y = N),
@@ -1178,7 +1245,7 @@ freqtable.eingangsjahr.nosum <- freqtable.eingangsjahr[-.N]
 
 
 
-```{r, CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_12_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.eingangsjahr.nosum) +
     geom_bar(aes(x = eingangsjahr_iso,
                  y = N),
