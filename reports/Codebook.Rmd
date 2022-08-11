@@ -112,15 +112,18 @@ df.bgh <- readtext("./*.txt",
 
 
 
+
 # Konstruktion
 
 
 
 ## Beschreibung des Datensatzes
 
-Dieser Datensatz ist eine digitale Zusammenstellung von möglichst allen Entscheidungen, die auf der amtlichen Internetpräsenz des Bundesverwaltungsgerichts (BGH) am jeweiligen Stichtag veröffentlicht waren. Die Stichtage für jede Version entsprechen exakt der Versionsnummer.
+Dieser Datensatz ist eine digitale Zusammenstellung von möglichst allen begründeten Entscheidungen, die auf der amtlichen Internetpräsenz des Bundesgerichtshofs (BGH) am jeweiligen Stichtag veröffentlicht waren. Die Stichtage für jede Version entsprechen exakt der Versionsnummer.
 
 Zusätzlich zu den aufbereiteten maschinenlesbaren Formaten (TXT und CSV) sind die PDF-Rohdaten enthalten, damit Analyst:innen gegebenenfalls ihre eigene Konvertierung vornehmen können. Die PDF-Rohdaten wurden inhaltlich nicht verändert und nur die Dateinamen angepasst, um die Lesbarkeit für Mensch und Maschine zu verbessern.
+
+Speziell an Praktiker:innen richten sich die PDF-Sammlungen aller Leitsatzentscheidungen und aller mit Namen versehenen Entscheidungen.
 
 
 
@@ -135,7 +138,7 @@ Zusätzlich zu den aufbereiteten maschinenlesbaren Formaten (TXT und CSV) sind d
 
 \midrule
 
- Primäre Datenquelle & \url{https://www.bgh.de}\\
+ Primäre Datenquelle & \url{https://www.bundesgerichtshof.de}\\
  Source Code & \url{\softwareversionurldoi}\\
  Personendaten & \url{\personendatenurldoi}\\
  Registerzeichen & \url{\aktenzeichenurldoi}\\
@@ -148,15 +151,15 @@ Zusätzlich zu den aufbereiteten maschinenlesbaren Formaten (TXT und CSV) sind d
 
 Die Personendaten stammen aus folgendem Datensatz: \enquote{Seán Fobbe and Tilko Swalve (2021). Presidents and Vice-Presidents of the Federal Courts of Germany (PVP-FCG). Version 2021-04-08. Zenodo. DOI: 10.5281/zenodo.4568682}.
  
+
 Die Tabelle der Registerzeichen und der ihnen zugeordneten Verfahrensarten stammt aus dem folgenden Datensatz: "Seán Fobbe (2021). Aktenzeichen der Bundesrepublik Deutschland (AZ-BRD). Version 1.0.1. Zenodo. DOI: 10.5281/zenodo.4569564."
-
-
 
 
 
 ## Sammlung der Daten
 
 Die Daten wurden unter Beachtung des Robot Exclusion Standard (RES) gesammelt. Der Abruf geschieht ausschließlich über TLS-verschlüsselte Verbindungen. Die Entscheidungen sind laut dem Gericht anonymisiert, aber ungekürzt.
+
 
 
 
@@ -205,10 +208,10 @@ Mit jeder Kompilierung des vollständigen Datensatzes wird auch ein umfangreiche
 Nutzer:innen sollten folgende wichtige Grenzen beachten:
  
 
-1. Der Datensatz enthält nur das, was das Gericht auch tatsächlich veröffentlicht, nämlich begründete Entscheidungen (\emph{publication bias}).
-2. Es kann aufgrund technischer Grenzen bzw. Fehler sein, dass manche --- im Grunde verfügbare --- Entscheidungen nicht oder nicht korrekt abgerufen werden (\emph{automation bias}).
-3. Es werden nur PDF-Dateien abgerufen (\emph{file type bias}). Manche Entscheidungen sind nur als HTML verfügbar. 
-4. Erst ab dem Jahr 2002 sind begründete Entscheidungen des BGH einigermaßen vollständig veröffentlicht (\emph{temporal bias}). Die Frequenztabellen geben hierzu genauer Auskunft.
+- Der Datensatz enthält nur das, was das Gericht auch tatsächlich veröffentlicht, nämlich begründete Entscheidungen (\emph{publication bias}). Platzhalter für Nichtannahme- und Verwerfungsbeschlüsse ohne Begründung wurden automatisiert entfernt, sofern vorhanden.
+- Es kann aufgrund technischer Grenzen bzw. Fehler sein, dass manche --- im Grunde verfügbare --- Entscheidungen nicht oder nicht korrekt abgerufen werden (\emph{automation bias}).
+- Es werden nur PDF-Dateien abgerufen (\emph{file type bias}). Manche Entscheidungen sind nur als HTML verfügbar. 
+- Erst ab dem 1. Januar 2000 sind begründete Entscheidungen des Bundesgerichtshofs einigermaßen vollständig veröffentlicht (\emph{temporal bias}). Die Frequenztabellen geben hierzu genauer Auskunft.
 
 
 
@@ -227,26 +230,25 @@ Alle eigenen Beiträge (z.B. durch Zusammenstellung und Anpassung der Metadaten)
 
 ### Allgemein
 
-Die Metadaten wurden größtenteils aus den Hyperlinks zur jeweiligen Datei extrahiert. Hinzugefügt wurden von mir eine Reihe weitere Variablen, sowie in den Dateinamen der PDF/TXT-Dateien Unter- und Trennstriche, um die Maschinenlesbarkeit zu erleichtern. Der volle Satz an Metadaten ist nur in den CSV-Dateien enthalten. 
-
-Alle hinzugefügten Metadaten sind vollständig maschinenlesbar dokumentiert. Sie sind entweder im Source Code enthalten, mit dem Source Code zusammen dokumentiert oder über dauerhaft stabile Identifikatoren (z.B. DOI) zitiert.
+Die Metadaten in den Dateinamen sind größtenteils unverändert von den jeweiligen Datenbankeinträgen aus der amtlichen Datenbank des Bundesgerichtshofs entnommen. Berechnet und hinzugefügt wurden durch den Autor des Datensatzes eine Reihe weitere Variablen, sowie in den Dateinamen der PDF/TXT-Dateien Unter- und Trennstriche, um die Maschinenlesbarkeit zu erleichtern. Der volle Satz an Metadaten ist nur in den CSV-Dateien enthalten. Alle hinzugefügten Metadaten sind vollständig maschinenlesbar dokumentiert. Sie sind entweder im Source Code enthalten, mit dem Source Code zusammen dokumentiert oder über dauerhaft stabile Identifikatoren (z.B. DOI) zitiert.
  
-Die Dateinamen der PDF- und TXT-Dateien enthalten Gerichtsname, Datum (Langform nach ISO-8601, d.h. YYYY-MM-DD), den Typ der Entscheidung, das offizielle Aktenzeichen, die Angabe ob es sich um eine Verzögerungsrüge handelt und eine Kollisions-ID.
+Die Dateinamen der PDF- und TXT-Dateien enthalten Gerichtsname, Spruchkörperangabe aus der Datenbank, die Angabe ob es sich um eine Leitsatzentscheidung handelt, Datum, das offizielle Aktenzeichen, einen Zusatz zum Aktenzeichen, ggf. einen besonderen Namen und eine durch den Autor des Datensatzes generierte Kollisions-ID.
 
 
 
 ### Schema für die Dateinamen
 
 \begin{verbatim}
-[gericht]_[datum]_[entscheidung_typ]_[spruchkoerper_az]_[registerzeichen]_
-[eingangsnummer]_[eingangsjahr_az]_[verzoegerung]_[kollision]
+ [gericht]_[spruchkoerper_db]_[leitsatz]_[datum]_[spruchkoerper_az]_
+ [registerzeichen]_[eingangsnummer]_[eingangsjahr_az]_[zusatz_az]_
+ [name]_[kollision]
 \end{verbatim}
 
 
 ### Beispiel eines Dateinamens
 
 \begin{verbatim}
- BGH_2004-08-12_U_5_C_58_03_NA_0.pdf
+ BGH_Zivilsenat-1_LE_2007-10-04_I_ZR_22_05_NA_Umsatzsteuerhinweis_0.pdf
 \end{verbatim}
 
 
@@ -257,8 +259,7 @@ Die Typen der Variablen wurden mit \emph{regular expressions} strikt validiert. 
 
 ## Grafische Darstellung
 
-Die Robenfarbe der Bundesverwaltungsrichter ist \enquote{karmesinrot}.\footnote{Artikel 1, Absatz II der Anordnung des Bundespräsidenten über die Amtstracht bei dem Bundesverwaltungsgericht in der im Bundesgesetzblatt Teil III, Gliederungsnummer 340-3, veröffentlichten bereinigten Fassung, die zuletzt durch die Anordnung vom 19. Dezember 2001 (BGBl. I S. 3777) geändert worden ist.} Der Hex-Wert hierfür ist vermutlich \#7e0731. Das ist besonders bei der Erstellung thematisch passender Graphen hilfreich. Alle im Compilation Report und diesem Codebook präsentierten Graphen sind in diesem karmesinrot gehalten.
-
+Die Robenfarbe der Richter:innen des Bundesgerichtshofs ist \enquote{karmesinrot}. Der Hex-Wert hierfür ist vermutlich \#7e0731. Das ist besonders bei der Erstellung thematisch passender Diagrammen hilfreich. Alle im Compilation Report und diesem Codebook präsentierten Diagramme sind in diesem karmesinrot gehalten.
 
 
 
