@@ -504,6 +504,31 @@ tar_target(var_aktenzeichen,
 
 
 
+### Variable erstellen: \enquote{praesi}
+
+
+```{targets tar.enhance6}
+tar_target(var_praesi,
+           f.presidents(datum = dt.bgh.datecleaned$datum,
+                        gericht = "BGH",
+						pvp.fcg = presidents))
+```
+
+### Variable erstellen: \enquote{vpraesi}
+
+
+```{targets tar.enhance7}
+tar_target(var_vpraesi,
+           f.presidents(datum = dt.bgh.datecleaned$datum,
+                        gericht = "BGH",
+						pvp.fcg = vpresidents))
+```
+
+
+
+
+
+
 ### Variable erstellen: \enquote{entscheidung\_typ}
 
 Der Typ der Entscheidung wird aus dem Text extrahiert.
@@ -549,6 +574,23 @@ tar_target(var_constants,
                                                                       nrow(dt.bgh.datecleaned)),])
 ```
 
+
+
+
+
+### Zusätzliche Variablen zusammenführen
+
+```{targets tar.enhance12}
+tar_target(vars_additional,
+           data.table(verfahrensart = var_verfahrensart,
+                      aktenzeichen = var_aktenzeichen,
+#                      ecli = var_ecli,
+                      praesi = var_praesi,
+                      v_praesi = var_vpraesi,
+                      var_lingstats,
+                      var_constants))
+
+```
 
 
 
