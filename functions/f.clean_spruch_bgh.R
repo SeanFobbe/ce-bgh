@@ -87,10 +87,16 @@ f.clean_spruch_bgh <- function(x){
                     spruch)
 
 
+    ## Römische Ziffern mit arabischen Ziffern ersetzen
+
+    spruch  <- mgsub::mgsub(spruch,
+                            pattern = paste0("-", as.roman(1:30)),
+                            replacement = paste0("-", 1:30))
+
 
     ## REGEX-Validierung des Spruchkörpers
 
-    regex.test <- grep("[A-Za-z-]+",
+    regex.test <- grep("^[0-9A-Za-z-]+$",
                        spruch,
                        invert = TRUE,
                        value = TRUE)
