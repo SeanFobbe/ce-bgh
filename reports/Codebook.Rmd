@@ -594,7 +594,7 @@ kable(lingstats.summary,
 ## Verteilung Zeichen
 
 
-```{r, CE-BGH_09_Density_Zeichen, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_01_Density_Zeichen, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = zeichen),
                  fill = "#7e0731")+
@@ -623,7 +623,7 @@ ggplot(data = dt.bgh.meta)+
 
 ## Verteilung Tokens
 
-```{r,  CE-BGH_10_Density_Tokens, fig.height = 6, fig.width = 9}
+```{r,  CE-BGH_02_Density_Tokens, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = tokens),
                  fill = "#7e0731")+
@@ -651,7 +651,7 @@ ggplot(data = dt.bgh.meta)+
 
 ## Verteilung Typen
 
-```{r, CE-BGH_11_Density_Typen, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_03_Density_Typen, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = typen),
                  fill = "#7e0731")+
@@ -680,7 +680,7 @@ ggplot(data = dt.bgh.meta)+
 
 ## Verteilung Sätze
 
-```{r, CE-BGH_12_Density_Saetze, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_04_Density_Saetze, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = saetze),
                  fill = "#7e0731")+
@@ -781,7 +781,7 @@ freqtable.etyp.nosum <- freqtable.etyp[-.N]
 
 
 
-```{r, CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_05_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.etyp.nosum) +
     geom_bar(aes(x = reorder(entscheidung_typ,
                              -N),
