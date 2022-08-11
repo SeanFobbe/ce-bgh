@@ -504,6 +504,15 @@ tar_target(var_aktenzeichen,
 
 
 
+### Variable erstellen: \enquote{entscheidung\_typ}
+
+Der Typ der Entscheidung wird aus dem Text extrahiert.
+
+
+```{targets tar.enhance4}
+tar_target(var_entscheidung_typ,
+                f.var_entscheidung_typ(dt.bgh.datecleaned$text))
+```
 
 
 
