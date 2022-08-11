@@ -44,9 +44,7 @@ f.download_table_make <- function(x,
     meta.all.list <- vector("list",
                             scope[,.N])
 
-    scope.random <- sample(scope[,.N])
-
-    for (i in scope.random){
+    for (i in 1:scope[,.N]){
         
         year <- scope$year[scope.random[i]]
         page <- scope$page[scope.random[i]]
@@ -70,13 +68,17 @@ f.download_table_make <- function(x,
                         url)
         
 
-        datum <- html_nodes(html, "[class='EDatum']") %>% html_text(trim = TRUE)
+        datum <- rvest::html_nodes(html, "[class='EDatum']") %>%
+            rvest::html_text(trim = TRUE)
 
-        senatsgruppe <- html_nodes(html, "[class='ESpruchk']") %>% html_text(trim = TRUE)
+        spruch <- rvest::html_nodes(html, "[class='ESpruchk']") %>%
+            rvest::html_text(trim = TRUE)
         
-        az <- html_nodes(html, "[class='doklink']") %>% html_text(trim = TRUE)
+        az <- rvest::html_nodes(html, "[class='doklink']") %>%
+            rvest::html_text(trim = TRUE)
 
-        bemerkung <- html_nodes(html, "[class='ETitel']") %>% html_text(trim = TRUE)
+        bemerkung <- rvest::html_nodes(html, "[class='ETitel']") %>%
+            rvest::html_text(trim = TRUE)
 
         meta.all.list[[scope.random[i]]] <- data.table(year,
                                                        page,
