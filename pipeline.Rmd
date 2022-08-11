@@ -452,6 +452,7 @@ Durch diesen Abschnitt der Pipeline werden die PDF-Dateien in TXT konvertiert un
 list(tar_target(files.txt,
                 f.tar_pdf_extract(x = files.pdf,
                                   outputdir = "txt",
+								  multicore = config$parallel$extractPDF,
                                   cores = fullCores),
                 format = "file"),
      tar_target(dt.bgh,
