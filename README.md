@@ -2,7 +2,8 @@
 
 
 ## Überblick
- Dieser Code lädt alle in der amtlichen Datenbank des Bundesgerichtshofs ([www.bundesgerichtshof.de](https://www.bundesgerichtshof.de)) veröffentlichten Entscheidungen des Bundesgerichtshofs (BGH) herunter und kompiliert sie in einen reichhaltigen menschen- und maschinenlesbaren Korpus. Es ist die Basis für den **Corpus der Entscheidungen des Bundesgerichtshofs**.
+
+ Dieser Code lädt alle in der [amtlichen Datenbank des Bundesgerichtshofs](https://www.bundesgerichtshof.de) veröffentlichten Entscheidungen des Bundesgerichtshofs (BGH) herunter und kompiliert sie in einen reichhaltigen menschen- und maschinenlesbaren Korpus. Es ist die Basis für den **Corpus der Entscheidungen des Bundesgerichtshofs**.
 
  Alle mit diesem Skript erstellten Datensätze werden dauerhaft kostenlos und urheberrechtsfrei auf Zenodo, dem wissenschaftlichen Archiv des CERN, veröffentlicht. Alle Versionen sind mit einem persistenten Digital Object Identifier (DOI) versehen. Die neueste Version des Datensatzes ist immer über diesen Link erreichbar: <https://doi.org/10.5281/zenodo.3942742>
 
