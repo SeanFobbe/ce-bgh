@@ -640,6 +640,43 @@ tar_target(dt.bgh.meta,
 
 
 
+## Write Targets
+
+Dieser Abschnitt der Pipeline schreibt den Datensatz und alle Hash-Prüfsummen auf die Festplatte.
+
+
+
+### CSV schreiben: Voller Datensatz
+
+```{targets tar.write1}
+tar_target(csv.full,
+           f.tar_fwrite(x = dt.bgh.final,
+                        filename = file.path("output",
+                                             paste0(prefix.files,
+                                                    "_DE_CSV_Datensatz.csv"))
+                        )
+           )
+```
+
+
+
+### CSV schreiben: Metadaten
+
+
+```{targets tar.write2}
+tar_target(csv.meta,
+           f.tar_fwrite(x = dt.bgh.meta,
+                        filename = file.path("output",
+                                             paste0(prefix.files,
+                                                    "_DE_CSV_Metadaten.csv"))
+                        )
+           )
+```
+
+
+
+
+
 ## Report Targets
 
 Dieser Abschnitt der Pipeline erstellt die finalen Berichte (Codebook und Robustness Checks).
@@ -658,6 +695,163 @@ tar_target(latexdefs,
 	       format = "file")
 
 ```
+
+
+
+
+
+
+
+## ZIP Targets
+
+Diese Abschnitt der Pipeline erstellt ZIP-Archive für alle zentralen Rechenergebnisse und speichert diese im Ordner \enquote{output}.
+
+
+### ZIP erstellen: PDF-Dateien (alle Entscheidungen)
+
+Hinweis: die verpackten PDF-Dateien werden auf die im finalen Datensatz enthaltenen Dokumente beschränkt (Bereinigung um Platzhalter-Dokumente).
+
+
+```{targets tar.zip1}
+
+tar_target(zip.pdf.all,
+           f.tar_zip(x = intersect(files.pdf,
+                                   file.path("pdf",
+                                             gsub("\\.txt",
+                                                  "\\.pdf",
+                                                  dt.bgh.final$doc_id))),
+                     filename = paste(prefix.files,
+                                      "DE_PDF_Datensatz.zip",
+                                      sep = "_"),
+                     dir = "output",
+                     mode = "cherry-pick"),
+           format = "file")
+
+
+```
+
+
+
+### ZIP erstellen: PDF-Dateien (nur Leitsatzentscheidungen)
+
+```{targets tar.zip2}
+
+tar_target(zip.pdf.leitsatz,
+           f.tar_zip(x = intersect(files.pdf,
+                                   file.path("pdf",
+                                             gsub("\\.txt",
+                                                  "\\.pdf",
+                                                  dt.bgh.final[leitsatz == "LE"]$doc_id))),
+                     filename = paste(prefix.files,
+                                      "DE_PDF_Leitsatz-Entscheidungen.zip",
+                                      sep = "_"),
+                     dir = "output",
+                     mode = "cherry-pick"),
+           format = "file")
+```
+
+
+
+
+### ZIP erstellen: PDF-Dateien (nur benannte Entscheidungen)
+
+```{targets tar.zip3}
+tar_target(zip.pdf.benannt,
+                f.tar_zip(x = intersect(files.pdf,
+                                   file.path("pdf",
+                                             gsub("\\.txt",
+                                                  "\\.pdf",
+                                                  dt.bgh.final[is.na(name) == FALSE]$doc_id))),
+                              filename = paste(prefix.files,
+                                               "DE_PDF_Entscheidungen-mit-Namen.zip",
+                                               sep = "_"),
+                              dir = "output",
+                              mode = "cherry-pick"),
+                format = "file")
+```
+
+
+
+
+
+### ZIP erstellen: TXT-Dateien
+
+```{targets tar.zip2}
+tar_target(zip.txt,
+           f.tar_zip(x = intersect(files.txt, file.path("txt", dt.bgh.final$doc_id),
+                     filename = paste(prefix.files,
+                                      "DE_TXT_Datensatz.zip",
+                                      sep = "_"),
+                     dir = "output",
+                     mode = "cherry-pick"),
+           format = "file")
+```
+
+
+### ZIP erstellen: CSV-Datei (voller Datensatz)
+
+
+```{targets tar.zip3}
+tar_target(zip.csv.full,
+                f.tar_zip(csv.full,
+                              filename = gsub("\\.csv", "\\.zip", basename(csv.full)),
+                              dir = "output",
+                              mode = "cherry-pick"),
+                format = "file")
+```
+
+
+
+### ZIP erstellen: CSV-Datei (nur Metadaten)
+
+
+```{targets tar.zip4}
+tar_target(zip.csv.meta,
+                f.tar_zip(csv.meta,
+                              filename = gsub("\\.csv", "\\.zip", basename(csv.meta)),
+                              dir = "output",
+                              mode = "cherry-pick"),
+                format = "file")
+```
+
+
+
+
+### ZIP erstellen: Analyse-Dateien
+
+```{targets tar.zip5}
+tar_target(zip.analysis,
+           f.tar_zip("analysis/",
+                     filename = paste(prefix.files,
+                                      "DE_Analyse.zip",
+                                      sep = "_"),
+                     dir = "output",
+                     mode = "cherry-pick",
+                     report.codebook,    # manually enforced dependency relationship
+                     report.robustness), # manually enforced dependency relationship
+           format = "file")
+```
+
+
+
+
+
+### ZIP erstellen: Source Code
+
+
+```{targets tar.zip6}
+tar_target(zip.source,
+                f.tar_zip(files.source,
+                              filename = paste0(prefix.files,
+                                                "_Source_Code.zip"),
+                              dir = "output",
+                              mode = "mirror"),
+                format = "file")
+```
+
+
+
+
 
 
 
