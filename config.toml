@@ -33,7 +33,6 @@ debug.pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im De
 
 debug.sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
 
-# Im Anschluss werden fünf zufällig ausgewählte Entscheidungen gelöscht um den Wiederholungsversuch zu testen. Nur für Test- und Demonstrationszwecke. 
 
 
 
