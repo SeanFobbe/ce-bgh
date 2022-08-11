@@ -19,6 +19,14 @@ f.var_aktenzeichen <- function(x,
                                gericht){
 
 
+    ## Unit Test
+    test_that("Argumente entsprechen Erwartungen.", {
+        expect_s3_class(x, "data.table")
+        expect_s3_class(az.brd, "data.table")
+        expect_type(gericht, "character")
+    })
+    
+
     ## Datensatz auf relevante Daten reduzieren
     az.gericht <- az.brd[stelle == gericht & position == "hauptzeichen"]
 
