@@ -1,6 +1,6 @@
 #' Entscheidungstyp extrahieren
 #'
-#' Durchsucht den Volltext einer Gerichtsentscheidung auf das Vorhandensein der Wörter "Beschluss" oder "Urteil". Der erste Treffer stellt den Typ der Entscheidung dar.
+#' Durchsucht den Volltext einer Gerichtsentscheidung auf das Vorhandensein der Wörter "Beschluss", "Urteil" oder "Verfügung". Der erste Treffer stellt den Typ der Entscheidung dar.
 
 
 #' @param x Character. Ein Vektor, die den Volltext von Gerichtsentscheidungen enthalten.
