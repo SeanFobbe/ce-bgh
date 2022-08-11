@@ -615,10 +615,10 @@ Die Verbesserungen der vorherigen Schritte werden in dieser Funktion zusammengef
 
 ```{targets tar.enhance11}
 tar_target(dt.bgh.final,
-           f.dataset_finalize(x = dt.bgh.datecleaned,
-                              download.table = dt.download.final,
-                              vars.additional = vars_additional,
-                              varnames = variables.codebook$varname))
+           f.finalize(x = dt.bgh.datecleaned,
+                      download.table = dt.download.final,
+                      vars.additional = vars_additional,
+                      varnames = variables.codebook$varname))
 
 ```
 
