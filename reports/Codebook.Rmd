@@ -182,7 +182,7 @@ ggraph(g,
     theme_void()+
     labs(
         title = paste(prefix.figuretitle,
-                      "| Workflow"),
+                      "| Vollständiger Prozess der Datensatz-Kompilierung"),
         caption = caption
     )+
     theme(
