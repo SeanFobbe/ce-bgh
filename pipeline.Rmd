@@ -601,6 +601,7 @@ tar_target(vars_additional,
                       ecli = var_ecli,
                       praesi = var_praesi,
                       v_praesi = var_vpraesi,
+					  entscheidung_typ = var_entscheidung_typ,
                       var_lingstats,
                       var_constants))
 
