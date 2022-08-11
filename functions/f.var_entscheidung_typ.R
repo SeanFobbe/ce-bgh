@@ -5,7 +5,7 @@
 
 #' @param x Character. Ein Vektor, die den Volltext von Gerichtsentscheidungen enthalten.
 #'
-#' @param return Character. Ein Vektor aller Entscheidungstypen. Entweder "B" für Beschluss oder "U" für Urteil.
+#' @param return Character. Ein Vektor aller Entscheidungstypen. Entweder "B" für Beschluss, "U" für Urteil oder "V" für Verfügung". 
 
 
 f.var_entscheidung_typ <- function(x){
