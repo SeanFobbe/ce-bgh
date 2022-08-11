@@ -3,7 +3,7 @@
 
 ## Version \version
 
-- Neuer Entwurf des gesamten Source Codes im targets framework
+- Neuer Entwurf des gesamten Source Codes im {targets} framework
 - Die Zivilsenate in der Variable "spruchkoerper_db" sind jetzt arabisch nummeriert, damit sie automatisch sortiert werden können. Die originale römische Nummerierung ist weiterhin in der Variable "spruchkoerper_az" zu finden.
 - Variable "berichtigung" ist jetzt entweder mit TRUE oder FALSE codiert
 
