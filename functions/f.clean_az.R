@@ -159,7 +159,7 @@ f.clean_az_bgh <- function(x){
 
     
 
-    ## Unit Test: Argumente
+    ## Unit Test: Ergebnis
     test_that("Ergebnis entspricht Erwartungen.", {
         expect_length(regex.test, 0)
         expect_type(az, "character")
