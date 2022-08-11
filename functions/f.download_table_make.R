@@ -46,8 +46,8 @@ f.download_table_make <- function(x,
 
     for (i in 1:scope[,.N]){
         
-        year <- scope$year[scope.random[i]]
-        page <- scope$page[scope.random[i]]
+        year <- scope$year[i]
+        page <- scope$page[i]
 
         URL  <- paste0("https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/list.py?Gericht=bgh&Art=en&Datum=",
                        year,
