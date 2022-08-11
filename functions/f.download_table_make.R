@@ -116,7 +116,12 @@ f.download_table_make <- function(x,
         datum <- as.character(datum)
         datum <- as.IDate(datum, "%d.%m.%Y")
         list(datum)}]
+
+    ## Bemerkungen bereinigen
     
+    dt.download$bemerkung <- gsub("Leitsaetz|Leitsaz|Leitsazt",
+                                  "Leitsatz",
+                                  dt.download$bemerkung)
 
     return(dt.download)
 
