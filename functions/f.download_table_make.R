@@ -56,9 +56,10 @@ f.download_table_make <- function(x,
                        "&Seite=",
                        page)
         
-        html <- read_html(URL)
+        html <- rvest::read_html(URL)
         
-        url <-  html_nodes(html, "a" )%>% html_attr('href')
+        url <- rvest::html_nodes(html, "a" )
+        url <- rvest::html_attr(url, 'href')
         
         url <- grep ("Blank=1.pdf",
                       url,
