@@ -653,9 +653,9 @@ ggraph(g,
                    repel = TRUE)+
     theme_void()+
     labs(
-        title = paste(prefix.figuretitle,
+        title = paste(tar_read(prefix.figuretitle),
                       "| Workflow"),
-        caption = caption,
+        caption = tar_read(caption),
     )+
     theme(
         text = element_text(size = 14),
