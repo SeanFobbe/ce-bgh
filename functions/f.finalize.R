@@ -16,6 +16,16 @@ f.finalize <- function(x,
                        varnames){
 
 
+    ## Unit Test
+    test_that("Argumente entsprechen Erwartungen.", {
+        expect_s3_class(x, "data.table")
+        expect_s3_class(download.table, "data.table")
+        expect_s3_class(vars.additional, "data.table")
+        expect_type(varnames, "character")
+    })
+    
+    
+
     ## Bind additional vars
     dt.main <- cbind(x,
                      vars.additional)
@@ -53,7 +63,12 @@ f.finalize <- function(x,
     data.table::setcolorder(dt.final, varnames)
 
 
-
+    ## Unit Test
+    test_that("Ergebnis entspricht Erwartungen.", {
+        expect_s3_class(dt.final, "data.table")
+        expect_equal(dt.final[,.N],  x[,.N])
+        expect_equal(dt.final[,.N],  download.table[,.N])
+    })
 
     
     return(dt.final)
