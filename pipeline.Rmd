@@ -155,6 +155,7 @@ tar_option_set(packages = c("tarchetypes",
                             "future.apply"))# Funktionen für Future
 
 tar_option_set(workspace_on_error = TRUE) # Save Workspace on Error
+tar_option_set(format = "qs")
 
 ```
 
@@ -649,7 +650,7 @@ Dieser Abschnitt der Pipeline schreibt den Datensatz und alle Hash-Prüfsummen a
 ### CSV schreiben: Voller Datensatz
 
 ```{targets tar.write1}
-tar_target(csv.full,
+tar_target(csv.final,
            f.tar_fwrite(x = dt.bgh.final,
                         filename = file.path("output",
                                              paste0(prefix.files,
@@ -700,7 +701,7 @@ tar_target(latexdefs,
 
 ```{targets tar.report2}
 tar_target(lingstats.summary,
-                f.lingstats_summary(dt.bgh.full,
+                f.lingstats_summary(dt.bgh.final,
                                     germanvars = TRUE))
 
 ```
@@ -814,9 +815,9 @@ tar_target(zip.txt,
 
 
 ```{targets tar.zip5}
-tar_target(zip.csv.full,
-                f.tar_zip(csv.full,
-                              filename = gsub("\\.csv", "\\.zip", basename(csv.full)),
+tar_target(zip.csv.final,
+                f.tar_zip(csv.final,
+                              filename = gsub("\\.csv", "\\.zip", basename(csv.final)),
                               dir = "output",
                               mode = "cherry-pick"),
                 format = "file")
