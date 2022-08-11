@@ -903,7 +903,7 @@ tar_target(zip.all,
              zip.pdf.leitsatz,
              zip.pdf.benannt,
              zip.txt,
-             zip.csv.full,
+             zip.csv.final,
              zip.csv.meta,
              zip.analysis,
              zip.source))
@@ -1097,12 +1097,12 @@ kable(meta,
 
 ```{r filesize}
 tar_load(zip.all)
-tar_load(csv.full)
+tar_load(csv.final)
 tar_load(csv.meta)
 
 
 files.all <- c(zip.all,
-               csv.full,
+               csv.final,
                csv.meta)
 
 filesize <- round(file.size(files.all) / 10^6, digits = 2)
@@ -1128,8 +1128,8 @@ kable(table.size,
 ## Datensatz in RAM (MB)
 
 ```{r}
-tar_load(dt.bverwg.full)
-print(object.size(dt.bverwg.full),
+tar_load(dt.bverwg.final)
+print(object.size(dt.bverwg.final),
       standard = "SI",
       humanReadable = TRUE,
       units = "MB")
