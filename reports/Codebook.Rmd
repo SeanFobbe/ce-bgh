@@ -81,7 +81,7 @@ Zum Einlesen empfehle ich für **R** das package **data.table** (via CRAN verfü
 
 ```{r eval = FALSE, echo = TRUE}
 library(data.table)
-dt.bverwg <- fread("filename.csv")
+dt.bgh <- fread("filename.csv")
 ```
 
 
@@ -92,7 +92,7 @@ Die **TXT-Dateien** inklusive Metadaten können zum Beispiel mit **R** und dem p
 
 ```{r eval = FALSE, echo = TRUE}
 library(readtext)
-df.bverwg <- readtext("./*.txt",
+df.bgh <- readtext("./*.txt",
                     docvarsfrom = "filenames", 
                     docvarnames = c("gericht",
                                     "datum",
@@ -116,7 +116,7 @@ df.bverwg <- readtext("./*.txt",
 
 ## Beschreibung des Datensatzes
 
-Dieser Datensatz ist eine digitale Zusammenstellung von möglichst allen Entscheidungen, die auf der amtlichen Internetpräsenz des Bundesverwaltungsgerichts (BVerwG) am jeweiligen Stichtag veröffentlicht waren. Die Stichtage für jede Version entsprechen exakt der Versionsnummer.
+Dieser Datensatz ist eine digitale Zusammenstellung von möglichst allen Entscheidungen, die auf der amtlichen Internetpräsenz des Bundesverwaltungsgerichts (BGH) am jeweiligen Stichtag veröffentlicht waren. Die Stichtage für jede Version entsprechen exakt der Versionsnummer.
 
 Zusätzlich zu den aufbereiteten maschinenlesbaren Formaten (TXT und CSV) sind die PDF-Rohdaten enthalten, damit Analyst:innen gegebenenfalls ihre eigene Konvertierung vornehmen können. Die PDF-Rohdaten wurden inhaltlich nicht verändert und nur die Dateinamen angepasst, um die Lesbarkeit für Mensch und Maschine zu verbessern.
 
@@ -133,7 +133,7 @@ Zusätzlich zu den aufbereiteten maschinenlesbaren Formaten (TXT und CSV) sind d
 
 \midrule
 
- Primäre Datenquelle & \url{https://www.bverwg.de}\\
+ Primäre Datenquelle & \url{https://www.bgh.de}\\
  Source Code & \url{\softwareversionurldoi}\\
  Personendaten & \url{\personendatenurldoi}\\
  Registerzeichen & \url{\aktenzeichenurldoi}\\
@@ -158,7 +158,7 @@ Die Daten wurden unter Beachtung des Robot Exclusion Standard (RES) gesammelt. D
 
 
 
-```{r, CE-BVerwG_00_Pipeline_Graph, fig.width = 8, fig.height = 9, fig.pos = "p", fig.cap = "Der vollständige Prozess der Datensatz-Kompilierung."}
+```{r, CE-BGH_00_Pipeline_Graph, fig.width = 8, fig.height = 9, fig.pos = "p", fig.cap = "Der vollständige Prozess der Datensatz-Kompilierung."}
 
 edgelist <- tar_network(targets_only = TRUE)$edges
 setDT(edgelist)
@@ -206,7 +206,7 @@ Nutzer:innen sollten folgende wichtige Grenzen beachten:
 1. Der Datensatz enthält nur das, was das Gericht auch tatsächlich veröffentlicht, nämlich begründete Entscheidungen (\emph{publication bias}).
 2. Es kann aufgrund technischer Grenzen bzw. Fehler sein, dass manche --- im Grunde verfügbare --- Entscheidungen nicht oder nicht korrekt abgerufen werden (\emph{automation bias}).
 3. Es werden nur PDF-Dateien abgerufen (\emph{file type bias}). Manche Entscheidungen sind nur als HTML verfügbar. 
-4. Erst ab dem Jahr 2002 sind begründete Entscheidungen des BVerwG einigermaßen vollständig veröffentlicht (\emph{temporal bias}). Die Frequenztabellen geben hierzu genauer Auskunft.
+4. Erst ab dem Jahr 2002 sind begründete Entscheidungen des BGH einigermaßen vollständig veröffentlicht (\emph{temporal bias}). Die Frequenztabellen geben hierzu genauer Auskunft.
 
 
 
@@ -244,7 +244,7 @@ Die Dateinamen der PDF- und TXT-Dateien enthalten Gerichtsname, Datum (Langform 
 ### Beispiel eines Dateinamens
 
 \begin{verbatim}
- BVerwG_2004-08-12_U_5_C_58_03_NA_0.pdf
+ BGH_2004-08-12_U_5_C_58_03_NA_0.pdf
 \end{verbatim}
 
 
@@ -280,7 +280,7 @@ Variante & Zielgruppe und Beschreibung\\
 
 \endhead
 
-PDF & \textbf{Traditionelle juristische Forschung}. Die PDF-Dokumente wie sie vom BVerwG auf der amtlichen Webseite bereitgestellt werden, jedoch verbessert durch semantisch hochwertige Dateinamen, die der leichteren Auffindbarkeit von Entscheidungen dienen. Die Dateinamen sind so konzipiert, dass sie auch für die traditionelle qualitative juristische Arbeit einen erheblichen Mehrwert bieten. Im Vergleich zu den CSV-Dateien enthalten die Dateinamen nur einen reduzierten Umfang an Metadaten, um Kompatibilitätsprobleme zu vermeiden und die Lesbarkeit zu verbessern.\\
+PDF & \textbf{Traditionelle juristische Forschung}. Die PDF-Dokumente wie sie vom BGH auf der amtlichen Webseite bereitgestellt werden, jedoch verbessert durch semantisch hochwertige Dateinamen, die der leichteren Auffindbarkeit von Entscheidungen dienen. Die Dateinamen sind so konzipiert, dass sie auch für die traditionelle qualitative juristische Arbeit einen erheblichen Mehrwert bieten. Im Vergleich zu den CSV-Dateien enthalten die Dateinamen nur einen reduzierten Umfang an Metadaten, um Kompatibilitätsprobleme zu vermeiden und die Lesbarkeit zu verbessern.\\
  CSV\_Datensatz & \textbf{Legal Tech/Quantitative Forschung}. Diese CSV-Datei ist die für statistische Analysen empfohlene Variante des Datensatzes. Sie enthält den Volltext aller Entscheidungen, sowie alle in diesem Codebook beschriebenen Metadaten.  Jede Spalte entspricht einer Variable, jede Zeile einer Entscheidung. Über Zeilenumbrüche getrennte Wörter wurden zusammengefügt. \\
  CSV\_Metadaten & \textbf{Legal Tech/Quantitative Forschung.} Wie die vorige CSV-Variante, nur ohne die Entscheidungstexte. Sinnvoll für Analyst:innen, die sich nur für die Metadaten interessieren und Speicherplatz sparen wollen.  Jede Spalte entspricht einer Variable, jede Zeile einer Entscheidung.\\
  TXT & \textbf{Subsidiär für alle Zielgruppen}. Diese Variante enthält die vollständigen aus den PDF-Dateien extrahierten Entscheidungstexte, aber nur einen reduzierten Umfang an Metadaten, der dem der PDF-Dateien entspricht. Die TXT-Dateien sind optisch an das Layout der PDF-Dateien angelehnt. Geeignet für qualitativ arbeitende Forscher:innen, die nur wenig Speicherplatz oder eine langsame Internetverbindung zur Verfügung haben oder für quantitativ arbeitende Forscher:innen, die beim Einlesen der CSV-Dateien Probleme haben. Über Zeilenumbrüche getrennte Wörter wurden \emph{nicht} zusammengefügt.\\
@@ -308,7 +308,7 @@ PDF & \textbf{Traditionelle juristische Forschung}. Die PDF-Dokumente wie sie vo
 ## Datenstruktur 
 
 ```{r}
-str(dt.bverwg.meta)
+str(dt.bgh.meta)
 ```
 
 
@@ -354,7 +354,7 @@ kable(variables.codebook,
 
 
 ```{r}
-kbl(az.brd[stelle == "BVerwG" & position == "hauptzeichen",
+kbl(az.brd[stelle == "BGH" & position == "hauptzeichen",
            .(zeichen_original,bedeutung)],
     format = "latex",
     align = c("P{3cm}",
@@ -390,7 +390,7 @@ kbl(az.brd[stelle == "BVerwG" & position == "hauptzeichen",
 
 ```{r}
 
-table.praesi.daten <- presidents[court == "BVerwG",
+table.praesi.daten <- presidents[court == "BGH",
                                  .(name_last,
                                    name_first,
                                    term_begin_date,
@@ -420,7 +420,7 @@ kable(table.praesi.daten,
 
 
 ```{r}
-table.praesi.alter <- presidents[court == "BVerwG",
+table.praesi.alter <- presidents[court == "BGH",
                                  .(name_last,
                                    name_first,
                                    term_begin_age,
@@ -459,7 +459,7 @@ kable(table.praesi.alter[grep("VACANCY",
 ## Lebensdaten
 
 ```{r}
-table.vpraesi.daten <- vpresidents[court == "BVerwG",
+table.vpraesi.daten <- vpresidents[court == "BGH",
                                  .(name_last,
                                    name_first,
                                    term_begin_date,
@@ -488,7 +488,7 @@ kable(table.vpraesi.daten,
 
 
 ```{r}
-table.vpraesi.alter <- vpresidents[court == "BVerwG",
+table.vpraesi.alter <- vpresidents[court == "BGH",
                                  .(name_last,
                                    name_first,
                                    term_begin_age,
@@ -585,8 +585,8 @@ kable(lingstats.summary,
 ## Verteilung Zeichen
 
 
-```{r, CE-BVerwG_09_Density_Zeichen, fig.height = 6, fig.width = 9}
-ggplot(data = dt.bverwg.meta)+
+```{r, CE-BGH_09_Density_Zeichen, fig.height = 6, fig.width = 9}
+ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = zeichen),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -614,8 +614,8 @@ ggplot(data = dt.bverwg.meta)+
 
 ## Verteilung Tokens
 
-```{r,  CE-BVerwG_10_Density_Tokens, fig.height = 6, fig.width = 9}
-ggplot(data = dt.bverwg.meta)+
+```{r,  CE-BGH_10_Density_Tokens, fig.height = 6, fig.width = 9}
+ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = tokens),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -642,8 +642,8 @@ ggplot(data = dt.bverwg.meta)+
 
 ## Verteilung Typen
 
-```{r, CE-BVerwG_11_Density_Typen, fig.height = 6, fig.width = 9}
-ggplot(data = dt.bverwg.meta)+
+```{r, CE-BGH_11_Density_Typen, fig.height = 6, fig.width = 9}
+ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = typen),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -671,8 +671,8 @@ ggplot(data = dt.bverwg.meta)+
 
 ## Verteilung Sätze
 
-```{r, CE-BVerwG_12_Density_Saetze, fig.height = 6, fig.width = 9}
-ggplot(data = dt.bverwg.meta)+
+```{r, CE-BGH_12_Density_Saetze, fig.height = 6, fig.width = 9}
+ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = saetze),
                  fill = "#7e0731")+
     scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),
@@ -710,14 +710,14 @@ ggplot(data = dt.bverwg.meta)+
 
 ```{r}
 
-dt.summary.docvars <- dt.bverwg.meta[,
+dt.summary.docvars <- dt.bgh.meta[,
                                   lapply(.SD, function(x)unclass(summary(na.omit(x)))),
                                   .SDcols = c("entscheidungsjahr",
                                               "eingangsjahr_iso",
                                               "eingangsnummer")]
 
 
-dt.unique.docvars <- dt.bverwg.meta[,
+dt.unique.docvars <- dt.bgh.meta[,
                                  lapply(.SD, function(x)length(unique(na.omit(x)))),
                                  .SDcols = c("entscheidungsjahr",
                                              "eingangsjahr_iso",
@@ -757,7 +757,7 @@ kable(dt.stats.docvars,
 ## Nach Typ der Entscheidung
 
 ```{r}
-freqtable.etyp <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.etyp <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "entscheidung_typ",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -772,7 +772,7 @@ freqtable.etyp.nosum <- freqtable.etyp[-.N]
 
 
 
-```{r, CE-BVerwG_02_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_02_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.etyp.nosum) +
     geom_bar(aes(x = reorder(entscheidung_typ,
                              -N),
@@ -827,7 +827,7 @@ kable(freqtable.etyp,
 
 ```{r}
 
-freqtable.az <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.az <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "spruchkoerper_az",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -843,7 +843,7 @@ freqtable.az.nosum <- freqtable.az[-.N]
 
 
 
-```{r, CE-BVerwG_03_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_03_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.az.nosum) +
     geom_bar(aes(x = reorder(spruchkoerper_az,
                              -N),
@@ -895,7 +895,7 @@ kable(freqtable.az,
 
 ```{r}
 
-freqtable.regz <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.regz <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "registerzeichen",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -911,7 +911,7 @@ freqtable.regz.nosum <- freqtable.regz[-.N]
 
 
 
-```{r, CE-BVerwG_04_Barplot_Registerzeichen, fig.height = 8, fig.width = 10}
+```{r, CE-BGH_04_Barplot_Registerzeichen, fig.height = 8, fig.width = 10}
 ggplot(data = freqtable.regz.nosum) +
     geom_bar(aes(x = reorder(registerzeichen,
                              N),
@@ -961,7 +961,7 @@ kable(freqtable.regz,
 
 ```{r}
 
-freqtable.praesi <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.praesi <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "praesi",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -977,7 +977,7 @@ freqtable.praesi.nosum <- freqtable.praesi[-.N]
 
 
 
-```{r, CE-BVerwG_05_Barplot_PraesidentIn, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_05_Barplot_PraesidentIn, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.praesi.nosum) +
     geom_bar(aes(x = reorder(praesi,
                              N),
@@ -1026,7 +1026,7 @@ kable(freqtable.praesi,
 
 ```{r}
 
-freqtable.vpraesi <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.vpraesi <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "v_praesi",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -1042,7 +1042,7 @@ freqtable.vpraesi.nosum <- freqtable.vpraesi[-.N]
 
 
 
-```{r, CE-BVerwG_06_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_06_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.vpraesi.nosum) +
     geom_bar(aes(x = reorder(v_praesi,
                              N),
@@ -1094,7 +1094,7 @@ kable(freqtable.vpraesi,
 
 ```{r}
 
-freqtable.entscheidungsjahr <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.entscheidungsjahr <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "entscheidungsjahr",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -1110,7 +1110,7 @@ freqtable.entscheidungsjahr.nosum <- freqtable.entscheidungsjahr[-.N]
 
 
 
-```{r, CE-BVerwG_07_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_07_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.entscheidungsjahr.nosum) +
     geom_bar(aes(x = entscheidungsjahr,
                  y = N),
@@ -1156,7 +1156,7 @@ kable(freqtable.entscheidungsjahr,
 
 
 ```{r}
-freqtable.eingangsjahr <- f.fast.freqtable(dt.bverwg.meta,
+freqtable.eingangsjahr <- f.fast.freqtable(dt.bgh.meta,
                                  varlist = "eingangsjahr_iso",
                                  sumrow = TRUE,
                                  output.list = TRUE,
@@ -1169,7 +1169,7 @@ freqtable.eingangsjahr.nosum <- freqtable.eingangsjahr[-.N]
 
 
 
-```{r, CE-BVerwG_08_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_08_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.eingangsjahr.nosum) +
     geom_bar(aes(x = eingangsjahr_iso,
                  y = N),
@@ -1215,7 +1215,7 @@ kable(freqtable.eingangsjahr,
 # Dateigrößen
 
 
-```{r, CE-BVerwG_13_Density_Dateigroessen_PDF, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_13_Density_Dateigroessen_PDF, fig.height = 6, fig.width = 9}
 
 
 pdf.MB <- file.size(files.pdf) / 10^6
@@ -1251,7 +1251,7 @@ ggplot(data = dt.plot,
 
 
 
-```{r, CE-BVerwG_14_Density_Dateigroessen_TXT, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_14_Density_Dateigroessen_TXT, fig.height = 6, fig.width = 9}
 
 txt.MB <- file.size(files.txt) / 10^6
 
