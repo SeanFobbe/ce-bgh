@@ -778,7 +778,7 @@ tar_target(zip.pdf.benannt,
 
 ```{targets tar.zip4}
 tar_target(zip.txt,
-           f.tar_zip(x = intersect(files.txt, file.path("txt", dt.bgh.final$doc_id),
+           f.tar_zip(x = intersect(files.txt, file.path("txt", dt.bgh.final$doc_id)),
                      filename = paste(prefix.files,
                                       "DE_TXT_Datensatz.zip",
                                       sep = "_"),
