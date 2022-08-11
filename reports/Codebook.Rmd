@@ -923,7 +923,7 @@ freqtable.db.nosum <- freqtable.db[-.N]
 ```{r, CE-BGH_07_Barplot_Spruchkoerper_DB, fig.height = 12, fig.width = 8}
 ggplot(data = freqtable.db.nosum) +
     geom_bar(aes(x = reorder(spruchkoerper_db,
-                             -N),
+                             N),
                  y = N),
              stat = "identity",
              fill = "#7e0731",
