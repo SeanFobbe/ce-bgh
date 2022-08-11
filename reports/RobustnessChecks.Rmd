@@ -93,7 +93,7 @@ dt.download.final[, loc := {
 ## Theoretischer Fehlbetrag
 
 ```{r}
-SOLL <- scope[,.N] * 15 
+SOLL <- scope[,.N] * 30 
 IST <- dt.download.final[,.N]
 
 missing.N <- SOLL - IST
@@ -103,41 +103,41 @@ print(missing.N)
 ```
 
 
-## Seiten mit weniger als 15 Entscheidungen anzeigen
+## Seiten mit weniger als 30 Entscheidungen anzeigen
 
 ```{r}
-less15 <- dt.download.final[, .N,  keyby = "loc"][N < 15]
+less30 <- dt.download.final[, .N,  keyby = "loc"][N < 30]
 
-print(less15)
+print(less30)
 ```
 
 
-## Fehlbetrag durch Seiten mit weniger als 15 Entscheidungen
+## Fehlbetrag durch Seiten mit weniger als 30 Entscheidungen
 
 ```{r}
-less15.N <- (length(less15$N) * 15) - sum(less15$N)
-print(less15.N)
+less30.N <- (length(less30$N) * 30) - sum(less30$N)
+print(less30.N)
 ```
 
 ## Tatsächlicher Fehlbetrag
 
- **Test:** Ist der Fehlbetrag vollständig durch Seiten mit weniger als 15 Entscheidungen zu erklären? Falls ja, weisen beide sub-Tests maximal ein Ergebnis von 0 oder ein negatives Ergebnis auf.
+ **Test:** Ist der Fehlbetrag vollständig durch Seiten mit weniger als 30 Entscheidungen zu erklären? Falls ja, weisen beide sub-Tests maximal ein Ergebnis von 0 oder ein negatives Ergebnis auf.
 
 
-### Fehlbetrag der NICHT durch Seiten mit weniger als 15 Entscheidungen erklärbar ist
+### Fehlbetrag der NICHT durch Seiten mit weniger als 30 Entscheidungen erklärbar ist
 
 ```{r}
-print(missing.N - less15.N)
+print(missing.N - less30.N)
 ```
 
 
-### Gegenüberstellung: Anzahl Jahre und Anzahl Seiten mit weniger als 15 Entscheidungen
+### Gegenüberstellung: Anzahl Jahre und Anzahl Seiten mit weniger als 30 Entscheidungen
 
-Für jedes Jahr sollte es eine letzte Seite mit weniger als 15 Entscheidungen geben. Falls zufällig die letzte Seite exakt 15 Entscheidungen hat, wäre das Ergebnis negativ. Ein Ergebnis von 0 oder kleiner bedeutet, dass der Test bestanden wurde. Der Test ist nur aussagekräftig wenn der gesamte Such-Umfang abgefragt wurde.
+Für jedes Jahr sollte es eine letzte Seite mit weniger als 30 Entscheidungen geben. Falls zufällig die letzte Seite exakt 30 Entscheidungen hat, wäre das Ergebnis negativ. Ein Ergebnis von 0 oder kleiner bedeutet, dass der Test bestanden wurde. Der Test ist nur aussagekräftig wenn der gesamte Such-Umfang abgefragt wurde.
 
 ```{r}
 if (config$debug$toggle == FALSE){
-    less15[,.N] - uniqueN(scope$year)
+    less30[,.N] - uniqueN(scope$year)
     }
 ```
 
