@@ -318,10 +318,10 @@ str(dt.bgh.meta)
 ## Hinweise
 
 
-- \textbf{Doppelte Codierung der Spruchkörper} --- Für viele Urteile sind die Spruchkörper doppelt enthalten, einmal aus der Datenbank in menschenlesbarer Form (Variable \enquote{spruchkoerper\_db}), einmal durch das Aktenzeichen (Variable \enquote{spruchkoerper\_az}). Nicht wenige Aktenzeichen enthalten keine separate und einheitliche Angabe des Spruchkörpers, weil sich diese schon aus dem Registerzeichen ergibt, z.B. für Aktenkontrollen in Haftprüfungsverfahren oder Kartellsachen. Die Variable \enquote{spruchkoerper\_db} ermöglicht hier eine einfache Selektion bestimmter Spruchkörper anhand einer einheitlichen Variable, ohne im Detail erst jedes passende Registerzeichen suchen zu müssen.
-- \textbf{Abweichende Codierung der Registerzeichen} --- Die Registerzeichen wurden gekürzt und Sonderzeichen entfernt um die Arbeit mit ihnen zu vereinfachen. Beachten Sie bitte die Gegenüberstellungstabelle unter Punkt \ref{register}.
-- Fehlende Werte sind immer mit \enquote{NA} codiert.
-- Strings können grundsätzlich alle in UTF-8 definierten Zeichen (insbesondere Buchstaben, Zahlen und Sonderzeichen) enthalten.
+- **Doppelte Codierung der Spruchkörper** --- Für viele Urteile sind die Spruchkörper doppelt enthalten, einmal aus der Datenbank in menschenlesbarer Form (Variable \enquote{spruchkoerper\_db}), einmal durch das Aktenzeichen (Variable \enquote{spruchkoerper\_az}). Nicht wenige Aktenzeichen enthalten keine separate und einheitliche Angabe des Spruchkörpers, weil sich diese schon aus dem Registerzeichen ergibt, z.B. für Aktenkontrollen in Haftprüfungsverfahren oder Kartellsachen. Die Variable \enquote{spruchkoerper\_db} ermöglicht hier eine einfache Selektion bestimmter Spruchkörper anhand einer einheitlichen Variable, ohne im Detail erst jedes passende Registerzeichen suchen zu müssen.
+- **Abweichende Codierung der Registerzeichen** --- Die Registerzeichen wurden gekürzt und Sonderzeichen entfernt um die Arbeit mit ihnen zu vereinfachen. Beachten Sie bitte die Gegenüberstellungstabelle unter Punkt \ref{register}.
+- **Fehlende Werte** sind immer mit \enquote{NA} codiert.
+- **Strings** können grundsätzlich alle in UTF-8 definierten Zeichen (insbesondere Buchstaben, Zahlen und Sonderzeichen) enthalten.
 
 
 
