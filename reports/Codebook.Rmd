@@ -1,5 +1,5 @@
 ---
-title: "Codebook | Corpus der Entscheidungen des Bundesverwaltungsgerichts (CE-BVerwG)"
+title: "Codebook | Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH)"
 author: Seán Fobbe
 geometry: margin=3cm
 papersize: a4
@@ -32,7 +32,7 @@ knitr::opts_chunk$set(fig.path = file.path("..", "analysis/"),
 
 ```{r, echo = FALSE}
 tar_load(latexdefs)
-tar_load(dt.bverwg.meta)
+tar_load(dt.bgh.meta)
 tar_load(files.pdf)
 tar_load(files.txt)
 tar_load(variables.codebook)
