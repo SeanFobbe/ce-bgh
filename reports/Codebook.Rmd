@@ -181,7 +181,7 @@ ggraph(g,
     )+
     theme(
         plot.title = element_text(size = 14,
-                                  face = "bold")
+                                  face = "bold"),
         plot.margin = margin(10, 20, 10, 10)
     )
 
