@@ -696,7 +696,29 @@ tar_target(latexdefs,
 
 ```
 
+### Zusammenfassungen linguistischer Kennwerte berechnen
 
+```{targets tar.report2}
+tar_target(lingstats.summary,
+                f.lingstats_summary(dt.bgh.full,
+                                    germanvars = TRUE))
+
+```
+
+
+### Report erstellen: Robustness Checks
+
+```{targets tar.report3}
+tarchetypes::tar_render(report.robustness,
+                        file.path("reports",
+                                  "RobustnessChecks.Rmd"),
+                        output_file = file.path("../output",
+                                                paste0(config$project$shortname,
+                                                       "_",
+                                                       datestamp,
+                                                       "_RobustnessChecks.pdf")))
+
+```
 
 
 
