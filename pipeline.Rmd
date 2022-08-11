@@ -651,7 +651,19 @@ ggraph(g,
     geom_node_text(aes(label = name),
                    size = 2,
                    repel = TRUE)+
-    theme_void()
+    theme_void()+
+    labs(
+        title = paste(prefix.figuretitle,
+                      "| Workflow"),
+        caption = caption,
+    )+
+    theme(
+        text = element_text(size = 14),
+        plot.title = element_text(size = 14,
+                                  face = "bold"),
+        legend.position = "none",
+        plot.margin = margin(10, 20, 10, 10)
+    )
 
 
 ```
