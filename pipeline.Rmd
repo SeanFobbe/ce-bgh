@@ -814,21 +814,23 @@ tar_target(zip.pdf.benannt,
 ```
 
 
+
+
 ### ZIP erstellen: PDF-Dateien (Platzhalter)
 
-```{targets tar.zip99}
+```{targets tar.zip4}
 tar_target(zip.pdf.platzhalter,
-                f.tar_zip(x = intersect(files.pdf,
-                                   file.path("pdf",
-                                             gsub("\\.txt",
-                                                  "\\.pdf",
-                                                  dt.bgh.final[is.na(entscheidung_typ) == TRUE]$doc_id))),
-                              filename = paste(prefix.files,
-                                               "DE_PDF_Platzhalter.zip",
-                                               sep = "_"),
-                              dir = "output",
-                              mode = "cherry-pick"),
-                format = "file")
+           f.tar_zip(x = setdiff(files.pdf,
+                                 file.path("pdf",
+                                           gsub("\\.txt",
+                                                "\\.pdf",
+                                                dt.bgh.final$doc_id))),
+                     filename = paste(prefix.files,
+                                      "DE_PDF_Platzhalter.zip",
+                                      sep = "_"),
+                     dir = "output",
+                     mode = "cherry-pick"),
+           format = "file")
 ```
 
 
@@ -837,7 +839,7 @@ tar_target(zip.pdf.platzhalter,
 
 ### ZIP erstellen: TXT-Dateien
 
-```{targets tar.zip4}
+```{targets tar.zip5}
 tar_target(zip.txt,
            f.tar_zip(x = intersect(files.txt, file.path("txt", dt.bgh.final$doc_id)),
                      filename = paste(prefix.files,
@@ -852,7 +854,7 @@ tar_target(zip.txt,
 ### ZIP erstellen: CSV-Datei (voller Datensatz)
 
 
-```{targets tar.zip5}
+```{targets tar.zip6}
 tar_target(zip.csv.final,
                 f.tar_zip(csv.final,
                               filename = gsub("\\.csv", "\\.zip", basename(csv.final)),
@@ -866,7 +868,7 @@ tar_target(zip.csv.final,
 ### ZIP erstellen: CSV-Datei (nur Metadaten)
 
 
-```{targets tar.zip6}
+```{targets tar.zip7}
 tar_target(zip.csv.meta,
                 f.tar_zip(csv.meta,
                               filename = gsub("\\.csv", "\\.zip", basename(csv.meta)),
@@ -880,7 +882,7 @@ tar_target(zip.csv.meta,
 
 ### ZIP erstellen: Analyse-Dateien
 
-```{targets tar.zip7}
+```{targets tar.zip8}
 tar_target(zip.analysis,
            f.tar_zip("analysis/",
                      filename = paste(prefix.files,
@@ -900,7 +902,7 @@ tar_target(zip.analysis,
 ### ZIP erstellen: Source Code
 
 
-```{targets tar.zip8}
+```{targets tar.zip9}
 tar_target(zip.source,
                 f.tar_zip(files.source,
                               filename = paste0(prefix.files,
