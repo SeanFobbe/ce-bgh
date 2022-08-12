@@ -109,7 +109,6 @@ unlink(grep(datestamp,
 #unlink("output", recursive = TRUE)
 dir.create("output", showWarnings = FALSE)
 dir.create("temp", showWarnings = FALSE)
-dir.create("platzhalter", showWarnings = FALSE)
 
 dir.create(dir.analysis, showWarnings = FALSE)
 
@@ -925,6 +924,7 @@ tar_target(zip.all,
            c(zip.pdf.all,
              zip.pdf.leitsatz,
              zip.pdf.benannt,
+			 zip.pdf.platzhalter,
              zip.txt,
              zip.csv.final,
              zip.csv.meta,
