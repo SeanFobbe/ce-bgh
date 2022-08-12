@@ -88,7 +88,7 @@ f.var_ecli_bgh <- function(x,
                               ":[0-9]{4}:", # Entscheidungsjahr
                               "[0-9]{6}", # Datum
                               "[IVX0-9a-z]*", # Senatsnummer
-                              "[A-Z.]+", # Registerzeichen
+                              "[ÜA-Z.]+", # Registerzeichen
                               "[0-9]+", # Eingangsnummer
                               "\\.[0-9]{2}", # Eingangsjahr
                               "\\.[0-9]"), # Kollisionsziffer
