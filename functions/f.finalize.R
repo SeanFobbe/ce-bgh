@@ -64,7 +64,7 @@ f.finalize <- function(x,
 
     placeholder.txt <- dt.final[is.na(entscheidung_typ) == TRUE &
                                 is.na(name) == TRUE &
-                                is.na(berichtigung) == TRUE]$doc_id
+                                berichtigung == FALSE]$doc_id
 
 
     ## Falsch-positive Dokumente behalten
