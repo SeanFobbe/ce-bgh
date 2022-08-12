@@ -1002,7 +1002,7 @@ setDT(meta)
 meta$MB <- round(meta$bytes / 1e6, digits = 2)
 
 # Gesamter Speicherplatzverbrauch
-sum(meta$MB)
+sum(meta$MB, na.rm = TRUE)
 
 kable(meta[order(type, name)],
       format = "latex",
