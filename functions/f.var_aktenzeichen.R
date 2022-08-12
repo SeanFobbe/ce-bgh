@@ -56,7 +56,7 @@ f.var_aktenzeichen <- function(x,
     
     regex.test <- grep(paste0("[0-9XIVNAa-z]+", # Spruchkörper
                               " ",
-                              "[\\(\\)A-Za-z-]+", # Registerzeichen
+                              "[\\(\\)ÜA-Za-z-]+", # Registerzeichen
                               " ",
                               "[0-9]+", # Eingangsnummer
                               "/",
