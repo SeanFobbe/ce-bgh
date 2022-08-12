@@ -895,7 +895,7 @@ kable(freqtable.az,
 
 
 
-\newpage
+
 
 
 ## Nach Spruchkörper (Datenbank)
