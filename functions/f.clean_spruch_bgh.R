@@ -96,7 +96,7 @@ f.clean_spruch_bgh <- function(x){
 
     ## REGEX-Validierung des Spruchkörpers
 
-    regex.test <- grep("^[0-9A-Za-z-]+$",
+    regex.test <- grep("^[0-9A-Za-zäöüÄÖÜ-]+$",
                        spruch,
                        invert = TRUE,
                        value = TRUE)
