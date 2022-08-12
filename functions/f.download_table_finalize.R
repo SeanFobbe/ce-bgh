@@ -43,7 +43,7 @@ f.download_table_finalize <- function(x,
 
     name <- sub("(.*)\r\n.*",
                 "\\1",
-                x$comment)
+                x$bemerkung)
 
     name[grepl("Leitsatz|Pressemitteilung|Berichtigung",
                name,
