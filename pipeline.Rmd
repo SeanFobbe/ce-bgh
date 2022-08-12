@@ -814,6 +814,24 @@ tar_target(zip.pdf.benannt,
 ```
 
 
+### ZIP erstellen: PDF-Dateien (Platzhalter)
+
+```{targets tar.zip99}
+tar_target(zip.pdf.platzhalter,
+                f.tar_zip(x = intersect(files.pdf,
+                                   file.path("pdf",
+                                             gsub("\\.txt",
+                                                  "\\.pdf",
+                                                  dt.bgh.final[is.na(entscheidung_typ) == TRUE]$doc_id))),
+                              filename = paste(prefix.files,
+                                               "DE_PDF_Platzhalter.zip",
+                                               sep = "_"),
+                              dir = "output",
+                              mode = "cherry-pick"),
+                format = "file")
+```
+
+
 
 
 
