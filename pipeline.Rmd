@@ -363,8 +363,8 @@ tar_target(changelog,
 ```{targets tar.download1}
 
 tarchetypes::tar_age(scope,
-           f.scope(),
-		   age = as.difftime(3, units = "days"))
+                     f.scope(),
+                     age = as.difftime(3, units = "days"))
 
 ```
 	
