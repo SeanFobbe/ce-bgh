@@ -8,6 +8,7 @@
 - Variable "comment" wurde in "bemerkung" umbenannt
 - Variable "berichtigung" ist jetzt entweder mit TRUE oder FALSE codiert
 - Diagramme sind in neuer Reihenfolge nummeriert um die Reihenfolge im Codebook abzubilden
+- Umfang der Datenbankabfrage ist nun vollautomatisiert
 
 
 
