@@ -205,7 +205,7 @@ if (config$cores$max == FALSE){
 
 ```{targets global-functions, tar_globals = TRUE}
 
-lapply(list.files("functions", full.names = TRUE), source)
+list.files("functions", pattern = "\\.R$", full.names = TRUE)
 
 ```
 
