@@ -266,21 +266,6 @@ Mit diesem Abschnitt der Pipeline werden Input-Dateien getrackt und eingelesen. 
 
 
 
-### Scope
-
-Der Umfang der Auswertung der Datenbank des BGH.
-
-
-```{targets tar.file0}
-list(
-    tar_target(file.scope,
-               "data/CE-BGH_Scope.csv",
-               format = "file"),
-    tar_target(scope,
-               fread(file.scope))
-)
-```
-
 
 ### Variablen
 
@@ -369,6 +354,21 @@ tar_target(changelog,
 
 
 ## Download Targets
+
+
+### Maximalen Umfang der Datenbankabfrage bestimmen
+
+
+
+```{targets tar.download1}
+
+tarchetypes::tar_age(scope,
+           f.scope(),
+		   age = as.difftime(3, units = "days"))
+
+```
+	
+
 
 
 ### Vorläufige Download-Tabelle erstellen
