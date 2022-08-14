@@ -90,7 +90,7 @@ f.download_table_make <- function(x,
                                          az,
                                          bemerkung)
 
-        remaining <- length(scope) - i
+        remaining <- nrow(scope) - i
         
         if ((remaining %% progresscount) == 0){
             message(paste(Sys.time(),
