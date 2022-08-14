@@ -360,7 +360,7 @@ tar_target(changelog,
 
 
 
-```{targets tar.download1}
+```{targets tar.download0}
 
 tarchetypes::tar_age(scope,
                      f.scope(),
