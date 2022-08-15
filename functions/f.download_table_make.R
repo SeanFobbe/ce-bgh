@@ -106,9 +106,9 @@ f.download_table_make <- function(x,
 
         ## Sleep
         if((i %% 100) == 0){
-            Sys.sleep(runif(1, 3, 7))
+            Sys.sleep(runif(1, 5, 15))
         }else{
-            Sys.sleep(runif(1, 0.5, 1.5))
+            Sys.sleep(runif(1, 1, 2))
         }    
     }
 
