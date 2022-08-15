@@ -46,10 +46,13 @@ f.download_table_make <- function(x,
     meta.all.list <- vector("list",
                             scope[,.N])
 
-    for (i in 1:scope[,.N]){
+    scope.random <- sample(scope[,.N])
+    
+
+    for (i in seq_along(scope.random)){
         
-        year <- scope$year[i]
-        page <- scope$page[i]
+    year <- scope$year[scope.random[i]]
+    page <- scope$page[scope.random[i]]
 
         URL  <- paste0("https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/list.py?Gericht=bgh&Art=en&Datum=",
                        year,
@@ -90,7 +93,7 @@ f.download_table_make <- function(x,
                                          az,
                                          bemerkung)
 
-        remaining <- nrow(scope) - i
+        remaining <- length(scope.random) - i
 
         ## For debugging
         #message(i)
