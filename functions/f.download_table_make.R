@@ -62,12 +62,12 @@ f.download_table_make <- function(x,
         url <- rvest::html_attr(url, 'href')
         
         url <- grep ("Blank=1.pdf",
-                      url,
-                      ignore.case = TRUE,
-                      value = TRUE)
+                     url,
+                     ignore.case = TRUE,
+                     value = TRUE)
         
         url <- sprintf("https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/%s",
-                        url)
+                       url)
         
 
         datum <- rvest::html_nodes(html, "[class='EDatum']") %>%
@@ -100,9 +100,9 @@ f.download_table_make <- function(x,
         }
 
         if((i %% 100) == 0){
-            Sys.sleep(runif(1, 5, 15))
+            Sys.sleep(runif(1, 3, 7))
         }else{
-            Sys.sleep(runif(1, 1.5, 2.5))
+            Sys.sleep(runif(1, 0.5, 1.5))
         }    
     }
 
