@@ -91,7 +91,9 @@ f.download_table_make <- function(x,
                                          bemerkung)
 
         remaining <- nrow(scope) - i
-        message(i)
+
+        ## For debugging
+        #message(i)
 
         ## Progress Count
         if ((remaining %% progresscount) == 0){
