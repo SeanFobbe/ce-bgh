@@ -91,7 +91,8 @@ f.download_table_make <- function(x,
                                          bemerkung)
 
         remaining <- nrow(scope) - i
-        
+
+        ## Progress Count
         if ((remaining %% progresscount) == 0){
             message(paste(Sys.time(),
                           "| Noch",
@@ -99,6 +100,7 @@ f.download_table_make <- function(x,
                           "verbleibend."))
         }
 
+        ## Sleep
         if((i %% 100) == 0){
             Sys.sleep(runif(1, 3, 7))
         }else{
