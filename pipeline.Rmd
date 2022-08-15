@@ -235,7 +235,6 @@ docvarnames <- c("gericht",
 ```{targets global-sourcefiles, tar_globals = TRUE}
 
 files.source.raw <-  c(list.files(pattern = "\\.R$|\\.toml$|\\.md$|\\.Rmd$"),
-                       "R-fobbe-proto-package",
 					   "reports",
                        "data",
                        "functions",
