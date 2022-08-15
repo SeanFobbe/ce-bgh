@@ -91,7 +91,9 @@ f.clean_spruch_bgh <- function(x){
 
     spruch  <- mgsub::mgsub(spruch,
                             pattern = paste0("-", as.roman(1:30)),
-                            replacement = paste0("-", 1:30))
+                            replacement = paste0("-", formatC(1:30,
+                                                              width = 2,
+                                                              flag = "0")))
 
 
     ## REGEX-Validierung des Spruchkörpers
