@@ -98,6 +98,7 @@ f.download_table_make <- function(x,
                           "| Noch",
                           remaining,
                           "verbleibend."))
+            message(i)
         }
 
         ## Sleep
