@@ -91,6 +91,7 @@ f.download_table_make <- function(x,
                                          bemerkung)
 
         remaining <- nrow(scope) - i
+        message(i)
 
         ## Progress Count
         if ((remaining %% progresscount) == 0){
@@ -98,7 +99,7 @@ f.download_table_make <- function(x,
                           "| Noch",
                           remaining,
                           "verbleibend."))
-            message(i)
+
         }
 
         ## Sleep
