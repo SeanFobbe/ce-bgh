@@ -232,7 +232,7 @@ freqtable.ignore  <-  c("text",
 
 ## Liste zu prüfender Variablen
 
-varlist <- setdiff(names(dt.bgh.meta), freqtable.ignore)
+varlist <- setdiff(names(dt.bgh.final), freqtable.ignore)
 print(varlist)
 
 
