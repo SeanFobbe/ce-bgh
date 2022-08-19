@@ -232,12 +232,7 @@ freqtable.ignore  <-  c("text",
 
 ## Liste zu prüfender Variablen
 
-varlist <- names(dt.bgh.final)
-varlist <- grep(paste(freqtable.ignore,
-                      collapse = "|"),
-                varlist,
-                invert = TRUE,
-                value = TRUE)
+varlist <- setdiff(names(dt.bgh.meta), freqtable.ignore)
 print(varlist)
 
 
