@@ -969,7 +969,7 @@ tar_target(zip.csv.meta,
 tar_target(zip.citations.az,
                 f.tar_zip(graphml.citations.az,
                               filename = paste0(prefix.files,
-                                                "_GraphML_AZ-Zitiernetzwerk.zip"),
+                                                "_DE_GraphML_AZ-Zitiernetzwerk.zip"),
                               dir = "output",
                               mode = "cherry-pick"),
                 format = "file")
