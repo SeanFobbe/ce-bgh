@@ -55,7 +55,7 @@ f.citation_network <- function(dt.bgh.final,
     ##    begin <- Sys.time()
 
     
-    target <- future.apply::future_lapply(x,
+    target <- future.apply::future_lapply(dt.bgh.final$text,
                                           f.extract_aktenzeichen,
                                           future.seed = TRUE)
 
