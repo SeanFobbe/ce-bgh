@@ -4,6 +4,15 @@
 ## Version \version
 
 - Vollständige Aktualisierung der Daten
+- Vereinfachung der Konfigurations-Datei
+
+
+
+
+
+## Version 2022-08-16
+
+- Vollständige Aktualisierung der Daten
 - Neuer Entwurf des gesamten Source Codes im {targets} framework
 - Die Zivilsenate in der Variable "spruchkoerper_db" sind jetzt arabisch nummeriert, damit sie automatisch sortiert werden können. Die originale römische Nummerierung ist weiterhin in der Variable "spruchkoerper_az" zu finden.
 - Variable "comment" wurde in "bemerkung" umbenannt
