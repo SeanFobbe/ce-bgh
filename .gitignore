@@ -1,16 +1,25 @@
-# Project specific files
+# Targets files
 
 _targets/
 _targets_r/
 _targets.R
+
+
+
+
+# Project specific files
+
 pdf/
 txt/
+files/
 analysis/
 output/
 temp/
 markdown/*.pdf
 
 */auto/
+
+
 
 
 
