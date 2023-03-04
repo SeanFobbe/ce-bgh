@@ -1013,10 +1013,9 @@ Die vollständige Liste aller Targets, inklusive ihres Types und ihrer Größe. 
 
 
 
-
 ```{r, pipeline-list}
 
-meta <- tar_meta(fields = c("type", "bytes"), complete_only = TRUE)
+meta <- tar_meta(fields = c("type", "bytes", "format"), complete_only = TRUE)
 setDT(meta)
 meta$MB <- round(meta$bytes / 1e6, digits = 2)
 
@@ -1031,6 +1030,8 @@ kable(meta[order(type, name)],
 
 
 ```
+
+
 
 \newpage
 ## Timing
@@ -1075,19 +1076,30 @@ kable(meta[order(-seconds)],
 ## Warnungen
 
 
-```{r, pipeling-warnings}
+
+```{r, pipline-warnings, results = 'asis'}
 
 meta <- tar_meta(fields = "warnings", complete_only = TRUE)
 setDT(meta)
+meta$warnings <- gsub("(\\.pdf|\\.html?|\\.txt)", "\\1 \n\n", meta$warnings)
 
-kable(meta,
-      format = "latex",
-      align = c("P{4cm}", "p{10cm}"),
-      booktabs = TRUE,
-      longtable = TRUE)
+if (meta[,.N > 0]){
 
+    for(i in 1:meta[,.N]){
+
+        cat(paste("###", meta[i]$name), "\n\n")
+        cat(paste(meta[i]$warnings, "\n\n"))
+        
+    }
+
+}else{
+
+    cat("No warnings to report.")
+
+}
 
 ```
+
 
 
 \newpage
@@ -1098,11 +1110,20 @@ kable(meta,
 meta <- tar_meta(fields = "error", complete_only = TRUE)
 setDT(meta)
 
-kable(meta,
-      format = "latex",
-      align = c("P{4cm}", "p{10cm}"),
-      booktabs = TRUE,
-      longtable = TRUE)
+if (meta[,.N > 0]){
+
+    for(i in 1:meta[,.N]){
+
+        cat(paste("###", meta[i]$name), "\n\n")
+        cat(paste(meta[i]$error, "\n\n"))
+        
+    }
+
+}else{
+
+    cat("No errors to report.")
+
+}
 
 
 ```
@@ -1117,19 +1138,16 @@ kable(meta,
 ## ZIP und CSV-Dateien
 
 
-```{r filesize}
-tar_load(zip.all)
-tar_load(csv.final)
-tar_load(csv.meta)
 
+## ZIP-Dateien
 
-files.all <- c(zip.all,
-               csv.final,
-               csv.meta)
+```{r filesize.zip}
 
-filesize <- round(file.size(files.all) / 10^6, digits = 2)
+files <- list.files("output", pattern = "\\.zip", full.names = TRUE)
 
-table.size <- data.table(basename(files.all),
+filesize <- round(file.size(files) / 10^6, digits = 2)
+
+table.size <- data.table(basename(files),
                          filesize)
 
 
@@ -1144,19 +1162,30 @@ kable(table.size,
 
 ```
 
-
 \newpage
+## CSV-Dateien
 
-## Datensatz in RAM (MB)
+```{r filesize.csv}
 
-```{r}
-tar_load(dt.bgh.final)
-print(object.size(dt.bgh.final),
-      standard = "SI",
-      humanReadable = TRUE,
-      units = "MB")
-      
+files <- list.files("output", pattern = "\\.csv", full.names = TRUE)
+
+filesize <- round(file.size(files) / 10^6, digits = 2)
+
+table.size <- data.table(basename(files),
+                         filesize)
+
+
+kable(table.size,
+      format = "latex",
+      align = c("l", "r"),
+      format.args = list(big.mark = ","),
+      booktabs = TRUE,
+      longtable = TRUE,
+      col.names = c("Datei",
+                    "Größe in MB"))
+
 ```
+
 
 
 
@@ -1177,6 +1206,8 @@ tar_load(files.txt)
 txt.MB <- file.size(files.txt) / 10^6
 sum(txt.MB)
 ```
+
+
 
 
 
