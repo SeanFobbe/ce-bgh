@@ -629,7 +629,7 @@ tar_target(vars_additional,
 Die Verbesserungen der vorherigen Schritte werden in dieser Funktion zusammengefügt um den finalen Datenatz herzustellen.
 
 
-```{targets tar.enhance11}
+```{targets tar.enhance.final}
 tar_target(dt.bgh.final,
            f.finalize(x = dt.bgh.datecleaned,
                       download.table = dt.download.final,
@@ -645,11 +645,30 @@ Hier wird die Text-Variable entfernt, um eine deutlich platzsparendere Variante 
 
 
 
-```{targets tar.enhance14}
+```{targets tar.enhance.meta}
 tar_target(dt.bgh.meta,
                 dt.bgh.final[, !"text"])
 
 ```
+
+
+
+
+
+## Zitations-Analyse
+
+
+
+```{targets tar.citation}
+tar_target(igraph.citations.az,
+           f.citation_network(dt.bgh.final = dt.bgh.final,
+                              az.brd = az.brd,
+                              multicore = config$parallel$citations,
+                              cores = fullcores))
+
+```
+
+
 
 
 
