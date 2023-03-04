@@ -664,7 +664,7 @@ tar_target(igraph.citations.az,
            f.citation_network(dt.bgh.final = dt.bgh.final,
                               az.brd = az.brd,
                               multicore = config$parallel$citations,
-                              cores = fullcores))
+                              cores = fullCores))
 
 ```
 
