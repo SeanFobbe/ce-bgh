@@ -715,7 +715,7 @@ tar_target(graphml.citations.az,
            f.tar_write_graph(graph = igraph.citations.az,
                              file = file.path("output",
                                               paste0(prefix.files, 
-                                                     "_DE_GraphML_Aktenzeichen-Zitate.graphml")),
+                                                     "_DE_GraphML_AZ-Zitiernetzwerk.graphml")),
                              format = "graphml"),
            format = "file")
 
@@ -791,6 +791,46 @@ tarchetypes::tar_render(report.codebook,
 ## ZIP Targets
 
 Diese Abschnitt der Pipeline erstellt ZIP-Archive für alle zentralen Rechenergebnisse und speichert diese im Ordner \enquote{output}.
+
+
+
+
+
+### ZIP erstellen: Analyse-Dateien
+
+```{targets tar.zip.analysis}
+tar_target(zip.analysis,
+           f.tar_zip("analysis/",
+                     filename = paste(prefix.files,
+                                      "DE_Analyse.zip",
+                                      sep = "_"),
+                     dir = "output",
+                     mode = "cherry-pick",
+                     report.codebook,    # manually enforced dependency relationship
+                     report.robustness), # manually enforced dependency relationship
+           format = "file")
+```
+
+
+
+
+
+### ZIP erstellen: Source Code
+
+
+```{targets tar.zip.source}
+tar_target(zip.source,
+                f.tar_zip(files.source,
+                              filename = paste0(prefix.files,
+                                                "_Source_Code.zip"),
+                              dir = "output",
+                              mode = "mirror"),
+                format = "file")
+```
+
+
+
+
 
 
 ### ZIP erstellen: PDF-Dateien (alle Entscheidungen)
@@ -922,38 +962,24 @@ tar_target(zip.csv.meta,
 
 
 
-
-### ZIP erstellen: Analyse-Dateien
-
-```{targets tar.zip8}
-tar_target(zip.analysis,
-           f.tar_zip("analysis/",
-                     filename = paste(prefix.files,
-                                      "DE_Analyse.zip",
-                                      sep = "_"),
-                     dir = "output",
-                     mode = "cherry-pick",
-                     report.codebook,    # manually enforced dependency relationship
-                     report.robustness), # manually enforced dependency relationship
-           format = "file")
-```
+### ZIP erstellen: GraphML
 
 
-
-
-
-### ZIP erstellen: Source Code
-
-
-```{targets tar.zip9}
-tar_target(zip.source,
-                f.tar_zip(files.source,
+```{targets tar.zip.citations.az}
+tar_target(zip.citations.az,
+                f.tar_zip(graphml.citations.az,
                               filename = paste0(prefix.files,
-                                                "_Source_Code.zip"),
+                                                "_GraphML_AZ-Zitiernetzwerk.zip"),
                               dir = "output",
-                              mode = "mirror"),
+                              mode = "cherry-pick"),
                 format = "file")
 ```
+
+
+
+
+
+
 
 
 
