@@ -9,6 +9,7 @@
 - Vereinfachung der Konfigurations-Datei
 - Verbesserte Formatierung von Warnungen und Fehlermeldungen im Compilation Report
 - Verbesserung des Robustness Check Reports
+- Neue Funktion für automatischen clean run (Löschung aller Zwischenergebnisse)
 - Update der Download-Funktion
 - Überflüssige Warnung in f.future_lingsummarize-Funktion entfernt
 - Alle Roh-Dateien werden nun im Unterordner "files" gespeichert
