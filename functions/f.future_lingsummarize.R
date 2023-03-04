@@ -11,40 +11,6 @@
 
 
 
-f.lingsummarize <- function(dt){
-
-    corpus <- corpus(dt)
-    
-    tokens <- tokens(corpus,
-                     what = "word",
-                     remove_punct = FALSE,
-                     remove_symbols = FALSE,
-                     remove_numbers = FALSE,
-                     remove_url = FALSE,
-                     remove_separators = TRUE,
-                     split_hyphens = FALSE,
-                     include_docvars = FALSE,
-                     padding = FALSE
-                     )
-    
-    ntokens <- unname(ntoken(tokens))
-    ntypes  <- unname(ntype(tokens))
-    nsentences <- unname(nsentence(corpus))
-
-    out <- data.table(ntokens,
-                      ntypes,
-                      nsentences)
-    
-    return(out)
-
-    
-}
-
-
-
-
-
-
 f.future_lingsummarize <- function(dt,
                                  chunksperworker = 1,
                                  chunksize = NULL){
@@ -53,7 +19,7 @@ f.future_lingsummarize <- function(dt,
 
     dt <- dt[,.(doc_id, text)]
     
-    nchars <- dt[, lapply(.(text), nchar)]
+    nchars <- dt[, lapply(.(text), nchar)]$V1
     
     print(paste0("Processing ",
                  dt[,.N],
@@ -88,20 +54,6 @@ f.future_lingsummarize <- function(dt,
              "V1",
              "nchars")
 
-
-    if(dt["nchars" == 0, .N] > 0){
-        
-        dt.charnull <- dt["nchars" == 0]
-        dt.charnull$text <- NULL
-        dt.charnull$ntokens <- rep(0, dt.charnull[,.N])
-        dt.charnull$ntypes <- rep(0, dt.charnull[,.N])
-        dt.charnull$nsentences <- rep(0, dt.charnull[,.N])
-
-        summary.corpus <- rbind(summary.corpus,
-                                dt.charnull)
-    }
-
-    
     summary.corpus <- summary.corpus[order(ord)]
 
     
@@ -116,3 +68,42 @@ f.future_lingsummarize <- function(dt,
     return(summary.corpus)
 
 }
+
+
+
+
+
+
+
+
+
+f.lingsummarize <- function(dt){
+
+    corpus <- corpus(dt)
+    
+    tokens <- tokens(corpus,
+                     what = "word",
+                     remove_punct = FALSE,
+                     remove_symbols = FALSE,
+                     remove_numbers = FALSE,
+                     remove_url = FALSE,
+                     remove_separators = TRUE,
+                     split_hyphens = FALSE,
+                     include_docvars = FALSE,
+                     padding = FALSE
+                     )
+    
+    ntokens <- unname(ntoken(tokens))
+    ntypes  <- unname(ntype(tokens))
+    nsentences <- suppressWarnings(unname(nsentence(corpus)))
+
+    out <- data.table(ntokens,
+                      ntypes,
+                      nsentences)
+    
+    return(out)
+
+    
+}
+
+
