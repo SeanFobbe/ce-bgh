@@ -1,4 +1,4 @@
-#' f.citation_network
+#' f.citation_network  - EXPERIMENTELL!
 #'
 #' Zitationsnetzwerk für den BGH erstellen.
 #'
