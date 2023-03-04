@@ -1,4 +1,4 @@
-#' f.sammlungen
+#' f.var_sammlungen
 #'
 #' Extrahiert aus BGH-Entscheidungen Hinweise auf die Veröffentlichung der Entscheidung in einer Sammlung, aktuell nur für BGHsSt, BGHR und Nachschlagewerk.
 #'
@@ -21,7 +21,7 @@
 
 
 
-f.sammlungen <- function(text){
+f.var_sammlungen <- function(text){
 
     text.sub <- substr(text, 1, 1000)
     
