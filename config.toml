@@ -28,7 +28,7 @@ aktenzeichen = "10.5281/zenodo.4569564"
 
 [debug]
 
-toggle = false   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
+toggle = true   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
 
 pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
 
