@@ -500,7 +500,7 @@ Das Aktenzeichen wird aus seinen Komponenten berechnet.
 
 ```{targets tar.enhance3}
 tar_target(var_aktenzeichen,
-                f.var_aktenzeichen(dt.bgh.datecleaned,
+                f.var_aktenzeichen(x = dt.bgh.datecleaned,
                                    az.brd = az.brd,
                                    gericht = "BGH"))
 ```
