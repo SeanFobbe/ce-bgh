@@ -34,7 +34,7 @@ pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debuggin
 
 sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
 
-
+cleanrun = false # Löscht vor jedem Run alle gespeicherten Zwischen- und Endergebnisse (Hinweis: ist unabhängig von debug.toggle, aber idR für Debugging nützlich)
 
 
 [cores]
