@@ -22,6 +22,9 @@ ecli,String,"(Nur CSV-Datei) \textbf{Experimentell!} Der European Case Law Ident
 praesi,String,(Nur CSV-Datei) Der Nachname des oder der Präsident:in in dessen/deren Amtszeit das Datum der Entscheidung fällt.
 v\_praesi,String,(Nur CSV-Datei) Der Nachname des oder der Vize-Präsident:in in dessen/deren Amtszeit das Datum der Entscheidung fällt.
 bemerkung,String,"Zusätzliche Bemerkungen aus der Datenbank des Bundesgerichtshofs. Enthält in der Regel Informationen dazu ob es sich um eine Leitsatzentscheidung handelt, welchen Eigennamen die Entscheidung trägt und wann welche Pressemitteilung darüber herausgegeben wurde."
+bghst,Binary,"(Nur CSV-Datei) Ob die Entscheidung in die amtliche Sammlung BGHSt aufgenommen wird. \enquote{1} falls ja, \enquote{0} falls nein."
+bghr,Binary,"(Nur CSV-Datei) Ob die Entscheidung in die Sammlung BGHR aufgenommen wird. \enquote{1} falls ja, \enquote{0} falls nein."
+nachschlagewerk,Binary,"(Nur CSV-Datei) Ob die Entscheidung in das Nachschlagewerk aufgenommen wird. \enquote{1} falls ja, \enquote{0} falls nein."
 berichtigung,Logical,"(Nur CSV-Datei) Eine Angabe ob es sich um einen Berichtigungsbeschluss handelt, TRUE wenn ja, sonst FALSE. Wurde durch den Autor des Datensatzes aus der Variable \enquote{bemerkung} extrahiert."
 zeichen,Integer,(Nur CSV-Datei) Die Anzahl Zeichen eines Dokumentes.
 tokens,Integer,(Nur CSV-Datei) Die Anzahl Tokens (beliebige Zeichenfolge getrennt durch whitespace) eines Dokumentes. Diese Zahl kann je nach Tokenizer und verwendeten Einstellungen erheblich schwanken. Für diese Berechnung wurde eine reine Tokenisierung ohne Entfernung von Inhalten durchgeführt. Benutzen Sie diesen Wert eher als Anhaltspunkt für die Größenordnung denn als exakte Aussage und führen sie ggf. mit ihrer eigenen Software eine Kontroll-Rechnung durch.
