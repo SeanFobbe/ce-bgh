@@ -97,8 +97,8 @@ f.citation_network <- function(dt.bgh.final,
 
     ## Convert Parallel Edges to Weights
     
-    E(g)$weight <- 1
-    g <- simplify(g, edge.attr.comb = list(weight = "sum"))
+    igraph::E(g)$weight <- 1
+    g <- igraph::simplify(g, edge.attr.comb = list(weight = "sum"))
 
 
     return(g)
