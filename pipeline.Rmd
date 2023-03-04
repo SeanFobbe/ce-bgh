@@ -472,7 +472,7 @@ Dieser Abschnitt der Pipeline berechnet diverse Verbesserungen für den Datensat
 Das Datum wird im ISO-Format standardisiert und die Variablen \enquote{entscheidungsjahr} und \enquote{eingangsjahr\_iso} hinzugefügt.
 
 
-```{targets tar.enhance1}
+```{targets tar.enhance.dates}
 tar_target(dt.bgh.datecleaned,
                 f.clean_dates(dt.bgh))
 ```
@@ -482,7 +482,7 @@ tar_target(dt.bgh.datecleaned,
 
 Die Variable \enquote{verfahrensart} wird aus den Registerzeichen berechnet.
 
-```{targets tar.enhance2}
+```{targets tar.enhance.verfahrensart}
 tar_target(var_verfahrensart,
                 f.var_verfahrensart(dt.bgh.datecleaned$registerzeichen,
                                     az.brd = az.brd,
@@ -498,7 +498,7 @@ tar_target(var_verfahrensart,
 Das Aktenzeichen wird aus seinen Komponenten berechnet.
 
 
-```{targets tar.enhance3}
+```{targets tar.enhance.az}
 tar_target(var_aktenzeichen,
                 f.var_aktenzeichen(x = dt.bgh.datecleaned,
                                    az.brd = az.brd,
@@ -513,7 +513,7 @@ Die ECLI wird aus ihren Komponenten berechnet.
 
 
 
-```{targets tar.enhance4}
+```{targets tar.enhance.ecli}
 tar_target(var_ecli,
            f.var_ecli_bgh(x = dt.bgh.datecleaned,
                           az.brd = az.brd))
@@ -525,7 +525,7 @@ tar_target(var_ecli,
 ### Variable erstellen: \enquote{praesi}
 
 
-```{targets tar.enhance5}
+```{targets tar.enhance.praesi}
 tar_target(var_praesi,
            f.presidents(datum = dt.bgh.datecleaned$datum,
                         gericht = "BGH",
@@ -535,7 +535,7 @@ tar_target(var_praesi,
 ### Variable erstellen: \enquote{vpraesi}
 
 
-```{targets tar.enhance6}
+```{targets tar.enhance.vpraesi}
 tar_target(var_vpraesi,
            f.presidents(datum = dt.bgh.datecleaned$datum,
                         gericht = "BGH",
@@ -552,9 +552,19 @@ tar_target(var_vpraesi,
 Der Typ der Entscheidung wird aus dem Text extrahiert.
 
 
-```{targets tar.enhance7}
+```{targets tar.enhance.entschtyp}
 tar_target(var_entscheidung_typ,
                 f.var_entscheidung_typ(dt.bgh.datecleaned$text))
+```
+
+
+### Variablen erstellen: \enquote{bghst, bghr, nachschlagewerk}
+
+```{targets tar.enhance.sammlungen}
+
+tar_target(var_sammlungen,
+                f.var_sammlungen(dt.bgh.datecleaned$text))
+
 ```
 
 
@@ -565,7 +575,7 @@ Berechnung klassischer linguistischer Kennzahlen.
 
 
 
-```{targets tar.enhance8}
+```{targets tar.enhance.lingstats}
 tar_target(var_lingstats,
                 f.lingstats(dt.bgh.datecleaned,
                             multicore = config$parallel$lingsummarize,
@@ -583,7 +593,7 @@ Konstanten die dem Datensatz wichtige Herkunftsinformationen hinzufügen. Darunt
 
 
 
-```{targets tar.enhance9}
+```{targets tar.enhance.constants}
 tar_target(var_constants,
            data.frame(version = as.character(datestamp),
                       doi_concept = config$doi$data$concept,
@@ -598,7 +608,7 @@ tar_target(var_constants,
 
 ### Zusätzliche Variablen zusammenführen
 
-```{targets tar.enhance10}
+```{targets tar.enhance.unify}
 tar_target(vars_additional,
            data.table(verfahrensart = var_verfahrensart,
                       aktenzeichen = var_aktenzeichen,
@@ -607,6 +617,7 @@ tar_target(vars_additional,
                       v_praesi = var_vpraesi,
 					  entscheidung_typ = var_entscheidung_typ,
                       var_lingstats,
+					  var_sammlungen,
                       var_constants))
 
 ```
