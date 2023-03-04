@@ -47,6 +47,7 @@ number = 8   # Die Anzahl Rechenkerne, die verwendet werden soll; wird nur berü
 
 extractPDF = true
 lingsummarize = true
+citations = true
 multihashes = true
 
 
