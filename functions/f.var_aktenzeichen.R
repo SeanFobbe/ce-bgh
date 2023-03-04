@@ -63,8 +63,8 @@ f.var_aktenzeichen <- function(x,
 
     if(gericht == "BGH"){
         
-        regex.test <- grep(paste0("[0-9XIVNAa-z]+", # Spruchkörper
-                                  " ",
+        regex.test <- grep(paste0("[0-9XIVNAa-z]*", # Spruchkörper
+                                  " *",
                                   "[\\(\\)ÜA-Za-z-]+", # Registerzeichen
                                   " ",
                                   "[0-9]+", # Eingangsnummer
