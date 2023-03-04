@@ -707,6 +707,20 @@ tar_target(csv.meta,
 ```
 
 
+### GraphML schreiben: Aktenzeichen-Netzwerke
+
+```{targets tar.write.graphs.az}
+
+tar_target(graphml.citations.az, 
+           f.tar_write_graph(graph = igraph.citations.az,
+                             file = file.path("output",
+                                              paste0(prefix.files, 
+                                                     "_DE_GraphML_Aktenzeichen-Zitate.graphml")),
+                             format = "graphml"),
+           format = "file")
+
+```
+
 
 
 
