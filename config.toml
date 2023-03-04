@@ -1,64 +1,71 @@
-# Project
+[project]
 
-project.fullname = "Corpus der Entscheidungen des Bundesgerichtshofs"
-project.shortname = "CE-BGH"
-project.author = "Seán Fobbe"
-
-
-
-# License
-
-license.data = "Creative Commons Zero 1.0 Universal"
-license.code = "MIT-0"
+fullname = "Corpus der Entscheidungen des Bundesgerichtshofs"
+shortname = "CE-BGH"
+author = "Seán Fobbe"
 
 
 
-# Digital Object Identifier (DOI)
+[license]
 
-doi.data.concept = "10.5281/zenodo.3942742" # checked
-doi.data.version = "10.5281/zenodo.6982046" # checked
-
-doi.software.concept = "10.5281/zenodo.4705864" # checked
-doi.software.version = "10.5281/zenodo.6982047" # checked
-
-doi.personendaten = "10.5281/zenodo.4568682"
-doi.aktenzeichen = "10.5281/zenodo.4569564"
-
-
-# Debugging
-
-debug.toggle = false   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
-
-debug.pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
-
-debug.sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
+data = "Creative Commons Zero 1.0 Universal"
+code = "MIT-0"
 
 
 
+[doi] # Digital Object Identifier
 
-# Parallelization
+data.concept = "10.5281/zenodo.3942742" # checked
+data.version = "10.5281/zenodo.6982046" # checked
 
-cores.max = true  # Ob die maximale Anzahl an logischen Kernen genutzt werden soll; Möglichkeiten sind "true" oder "false"
-cores.number = 8   # Die Anzahl Rechenkerne, die verwendet werden soll; wird nur berücksichtigt falls "cores.max" auf "false" steht
+software.concept = "10.5281/zenodo.4705864" # checked
+software.version = "10.5281/zenodo.6982047" # checked
 
-
-parallel.extractPDF = true
-parallel.lingsummarize = true
-parallel.multihashes = true
-
-
-
-# Download
-download.timeout = 600			# Timeout für Downloads
+personendaten = "10.5281/zenodo.4568682"
+aktenzeichen = "10.5281/zenodo.4569564"
 
 
 
-# Quanteda
-quanteda.tokens_locale = "de_DE" # Locale in denen Tokens analyisert werden
+[debug]
+
+toggle = false   # Ob Debugging aktiv ist; Möglichkeiten sind "true" oder "false"
+
+pages = 50      # Die Anzahl der zufällig ausgewählten Seiten, die im Debugging-Modus berücksichtigt werden sollen (jede Seite enthält idR 30 Entscheidungen). Muss mindestens 10 betragen.
+
+sample = 500   # Die Anzahl der zufällig ausgewählten Entscheidungen, die im Debugging-Modus berücksichtigt werden sollen
 
 
 
-# Knitr
-fig.format = [ "pdf", "png" ] 	# Ausgabe-Format für Diagramme
-fig.dpi = 300     	 	# Auflösung für Diagramme
-fig.align = "center"    	# Ausrichtung von Diagrammen im Compilation Report
+
+[cores]
+
+max = true  # Ob die maximale Anzahl an logischen Kernen genutzt werden soll; Möglichkeiten sind "true" oder "false"
+number = 8   # Die Anzahl Rechenkerne, die verwendet werden soll; wird nur berücksichtigt falls "cores.max" auf "false" steht
+
+
+[parallel]
+
+extractPDF = true
+lingsummarize = true
+multihashes = true
+
+
+
+[download]
+
+timeout = 300			# Timeout für Downloads
+
+
+
+
+[quanteda]
+
+tokens_locale = "de_DE" # Locale in denen Tokens analyisert werden
+
+
+
+[fig] # Knitr
+
+format = [ "pdf", "png" ] 	# Ausgabe-Format für Diagramme
+dpi = 300     	 	# Auflösung für Diagramme
+align = "center"    	# Ausrichtung von Diagrammen im Compilation Report
