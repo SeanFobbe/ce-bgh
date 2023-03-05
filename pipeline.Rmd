@@ -414,8 +414,7 @@ Abfrage der Datenbank des BGH und erstellen der vorläufigen Download-Tabelle.
 
 ```{targets tar.download.make}
 tar_target(dt.download,
-           f.download_table_make(x = scope,
-                                 ))
+           f.download_table_make(files.html = files.html))
 
 ```
 	
