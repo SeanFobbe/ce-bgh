@@ -85,7 +85,7 @@ f.clean_az_bgh <- function(x){
     az <- gsub("RiZ_", "NA_RiZ_", az)
     az <- gsub("RiSt_\\(R\\)_", "NA_RiStR_", az)
     az <- gsub("RiSt_\\(B\\)_", "NA_RiStB_", az)
-
+    az <- gsub("^RiSt_", "NA_RiSt_", az)
 
     az <- gsub("WpSt_\\(R\\)_", "NA_WpStR_", az)
     az <- gsub("WpSt_\\(B\\)_", "NA_WpStB_", az)
