@@ -1,12 +1,16 @@
 #' Vorläufige Download-Tabelle erstellen
 
-#' Diese Funktion wertet die Entscheidungsdatenbank des Bundespatentgerichts aus und sammelt Links zu den Entscheidungsvolltexten und verbindet sie mit den in der Datenbank angegebenen Metadaten.
+#' Diese Funktion wertet die Entscheidungsdatenbank des Bundesgerichtshofs aus und sammelt Links zu den Entscheidungsvolltexten und verbindet sie mit den in der Datenbank angegebenen Metadaten.
 
-#' @param x Data.table. Der Umfang der Datenbankseiten, der berücksichtigt werden soll. Ist im Datensatz im Ordner data/ dokumentiert.
+#' @param files.html String. Pfade zu den HTML-Dateien der Datenbankseiten des BGH.
+
+#' @return Data.table. Eine Tabelle mit allen URLs zu PDFs und in der Datenbank verfügbaren Metadaten.
 
 
 
-#' @return Data.table. Eine Tabelle mit allen URLs und in der Datenbank verfügbaren Metadaten.
+## DEBUGGING
+
+## files.html <- list.files("files/html", full.names = TRUE)
 
 
 
@@ -14,51 +18,35 @@
 f.download_table_make <- function(files.html){
 
 
-
-#    files.html <- list.files("files/html", full.names =T)
-
-    
-
-
     ## Metadaten extrahieren
 
+    list <- lapply(files.html,
+                   f.parse_html_bgh)
 
+    dt <- rbindlist(list)
 
+    
+    ## Datum bereinigen
+    dt[, datum := {
+        datum <- as.character(datum)
+        datum <- as.IDate(datum, "%d.%m.%Y")
+        list(datum)}]
 
+    
+    ## Bemerkungen bereinigen
+    
+    dt$bemerkung <- gsub("Leitsaetz|Leitsaz|Leitsazt",
+                                  "Leitsatz",
+                                  dt$bemerkung)
 
-        
-        
-        ## Datum bereinigen
-        dt.download[, datum := {
-            datum <- as.character(datum)
-            datum <- as.IDate(datum, "%d.%m.%Y")
-            list(datum)}]
-
-        ## Bemerkungen bereinigen
-        
-        dt.download$bemerkung <- gsub("Leitsaetz|Leitsaz|Leitsazt",
-                                      "Leitsatz",
-                                      dt.download$bemerkung)
-
-        return(dt.download)
-
-    }
-
+    return(dt)
+    
 }
 
 
 
 
-
 f.parse_html_bgh <- function(file){
-
-
-    ## Extract year and page from filename
-
-    year <- gsub("([0-9]{4})-[0-9]{4}\\.html", "\\1", basename(file))
-    year <- rep(year, length(url))
-    page <- gsub("[0-9]{4}-([0-9]{4})\\.html", "\\1", basename(file))
-    page <- rep(page, length(url))
 
     
     ## Read HTML
@@ -94,7 +82,12 @@ f.parse_html_bgh <- function(file){
     bemerkung <- rvest::html_text(bemerkung, trim = TRUE)
 
 
-    
+    ## Extract year and page from filename
+
+    year <- gsub("([0-9]{4})-[0-9]{4}\\.html", "\\1", basename(file))
+    year <- rep(year, length(url))
+    page <- gsub("[0-9]{4}-([0-9]{4})\\.html", "\\1", basename(file))
+    page <- rep(page, length(url))
 
 
 
