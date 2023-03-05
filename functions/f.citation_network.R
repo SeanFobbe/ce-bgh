@@ -100,7 +100,7 @@ f.citation_network <- function(dt.bgh.final,
 
     ## Extract Senate and Registerzeichen
     
-    g.names <- attr(V(g), "names")
+    g.names <- igraph::attr(igraph::V(g), "names")
     g.regz <- gsub("[IVXa-d0-9 ]*([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
     g.senat <- gsub("([IVXa-d0-9]*) *([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
 
