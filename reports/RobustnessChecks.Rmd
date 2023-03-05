@@ -35,9 +35,10 @@ knitr::opts_chunk$set(fig.path = file.path("..", "analysis/"),
 
 ```{r}
 tar_load(latexdefs)
-tar_load(scope)
+tar_load(dt.scope)
 tar_load(dt.download.final)
 tar_load(dt.bgh.final)
+tar_load(files.html)
 tar_load(files.pdf)
 tar_load(files.txt)
 
@@ -98,31 +99,16 @@ ggraph(g,
 ## Genauen Such-Umfang berechnen
 
 ```{r}
-    scope <- f.extend(scope$year,
-                      scope$pagemax0)
+
+## SOLL
+year <- gsub("([0-9]{4})-[0-9]{4}\\.html", "\\1", basename(dt.scope$file))
+page <- gsub("[0-9]{4}-([0-9]{4})\\.html", "\\1", basename(dt.scope$file))
+loc <- paste0(year, "-", page)
+
+scope.test <- data.table(year, page, loc)
 
 
-    scope <- rbindlist(scope)
-
-    setnames(scope,
-             c("year",
-               "page"))
-```
-
-
-## Locator einfügen
-
-```{r}
-
-
-scope[, loc := {
-    loc <- paste0(year,
-                  "-",
-                  page)
-    list(loc)
-}]
-
-
+## IST
 dt.download.final[, loc := {
     loc <- paste0(year,
                   "-",
@@ -131,14 +117,14 @@ dt.download.final[, loc := {
 }]
 
 
-
 ```
+
 
 
 ## Theoretischer Fehlbetrag
 
 ```{r}
-SOLL <- scope[,.N] * 30 
+SOLL <- scope.test[,.N] * 30 
 IST <- dt.download.final[,.N]
 
 missing.N <- SOLL - IST
@@ -182,7 +168,7 @@ Für jedes Jahr sollte es eine letzte Seite mit weniger als 30 Entscheidungen ge
 
 ```{r}
 if (config$debug$toggle == FALSE){
-    less30[,.N] - uniqueN(scope$year)
+    less30[,.N] - uniqueN(scope.test$year)
     }
 ```
 
@@ -193,13 +179,22 @@ Dieser Test zeigt an, ob alle Jahr/Seiten-Kombinationen auch in den Daten vorhan
 
 
 ```{r}
-setdiff(scope$loc,
+setdiff(scope.test$loc,
         dt.download.final$loc)
 ```
 
 
 
-# Vollständigkeit der Texte
+# Vollständigkeit von Download und Konvertierung
+
+
+
+## Download: Fehlende HTML-Dateien
+
+```{r}
+setdiff(dt.scope$filename,
+        basename(files.html))
+```
 
 
 ## Download: Fehlende PDF-Dateien
@@ -208,6 +203,7 @@ setdiff(scope$loc,
 setdiff(dt.download.final$doc_id,
         basename(files.pdf))
 ```
+
 
 ## Konvertierung: Fehlende TXT-Dateien
 
