@@ -25,10 +25,6 @@ f.scope  <- function(debug.toggle = FALSE,
 
     pagemax0 <- unlist(lapply(url.all, f.findmax))
     
-#    dt <- data.table(year,
-#                     pagemax0)
-
-
     scope <- f.extend(year, pagemax0)
     scope <- rbindlist(scope)
     
