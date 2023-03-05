@@ -105,8 +105,8 @@ f.citation_network <- function(dt.bgh.final,
     g.senat <- gsub("([IVXa-d0-9]*) *([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
 
     ## Set Vertex Attributes
-    g <- set_vertex_attr(g, "registerzeichen", index = V(g), g.regz)
-    g <- set_vertex_attr(g, "senat", index = V(g), g.senat)
+    g <- igraph::set_vertex_attr(g, "registerzeichen", index = igraph::V(g), g.regz)
+    g <- igraph::set_vertex_attr(g, "senat", index = igraph::V(g), g.senat)
 
     
     
