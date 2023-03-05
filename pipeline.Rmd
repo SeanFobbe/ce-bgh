@@ -86,7 +86,7 @@ dir.analysis <- paste0(getwd(),
 
 ## Aufräumen
 
-Löscht Dateien im Output-Ordner, die nicht vom heutigen Tag sind.
+Löscht Dateien im Output-Ordner, die nicht aktuell genug sind.
 
 
 ```{r}
@@ -96,6 +96,18 @@ unlink(grep(datestamp,
                        full.names = TRUE),
             invert = TRUE,
             value = TRUE))
+
+
+files.html <- list.files("files/html", full.names = TRUE)
+
+
+if(length(files.html) > 0){
+
+    delete <- sort(files.html, decreasing = TRUE)[1:10]
+    unlink(delete)
+
+}
+
 
 
 ```
