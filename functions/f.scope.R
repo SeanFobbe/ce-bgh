@@ -1,8 +1,12 @@
+#' f.scope
 
 
 #' Maximalen Umfang der Datenbankabfrage für BGH bestimmen.
-#'
-#' @return Data.table. Enthält das jeweilige Jahr und den maximalen Seitenumfang.
+#' 
+#' @param debug.toggle Logical. Ob der Debugging-Modus aktiviert werden soll. Im Debugging-Modus wird nur eine reduzierte Anzahl Datenbankseiten ausgewertet. Jede Seite enthält idR 30 Entscheidungen.
+#' @param debug.pages Integer. Anzahl der auszuwertenden Datenbankseiten.
+#' 
+#' @return Data.table. Enthält die URL und den Dateinamen für alle relevanten Datenbankseiten.
 
 
 
