@@ -65,7 +65,7 @@ f.scope  <- function(debug.toggle = FALSE,
 
 
     
-    return(dt)
+    return(dt.return)
     
 
 }
