@@ -21,17 +21,17 @@ f.citation_network <- function(dt.bgh.final,
     
     ## Create Registerzeichen REGEX
 
-    registerzeichen.regex <- paste0(az.brd[stelle == "BGH"]$zeichen_original, collapse = "|")
+    registerzeichen.bgh <- paste0(az.brd[stelle == "BGH"]$zeichen_original, collapse = "|")
 
     registerzeichen.regex <- gsub("\\(",
                                   " \\*\\\\\\(",
-                                  registerzeichen.regex)
+                                  registerzeichen.bgh)
 
-    registerzeichen.regex <- gsub("\\)",
+    registerzeichen.regex.raw <- gsub("\\)",
                                   "\\\\\\)",
                                   registerzeichen.regex)
 
-    registerzeichen.regex <- paste0("(", registerzeichen.regex, ")")
+    registerzeichen.regex <- paste0("(", registerzeichen.regex.raw, ")")
 
 
 
@@ -83,16 +83,13 @@ f.citation_network <- function(dt.bgh.final,
                       dt$target)
 
 
-    ## Remove self-citations
-    
+    ## Remove self-citations    
     dt <- dt[!(dt$source == dt$target)]
 
 
 
     ## Create Graph
-
-    g  <- igraph::graph.data.frame(dt,
-                                   directed = TRUE)
+    g  <- igraph::graph.data.frame(dt, directed = TRUE)
 
 
     ## Convert Parallel Edges to Weights
@@ -101,6 +98,18 @@ f.citation_network <- function(dt.bgh.final,
     g <- igraph::simplify(g, edge.attr.comb = list(weight = "sum"))
 
 
+    ## Extract Senate and Registerzeichen
+    
+    g.names <- attr(V(g), "names")
+    g.regz <- gsub("[IVXa-d0-9 ]*([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
+    g.senat <- gsub("([IVXa-d0-9]*) *([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
+
+    ## Set Vertex Attributes
+    g <- set_vertex_attr(g, "registerzeichen", index = V(g), g.regz)
+    g <- set_vertex_attr(g, "senat", index = V(g), g.senat)
+
+    
+    
     return(g)
 
 
