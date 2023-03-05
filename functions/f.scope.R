@@ -6,7 +6,8 @@
 
 
 
-f.scope  <- function(){
+f.scope  <- function(debug.toggle = FALSE,
+                     debug.pages = 50){
 
 
     year <- 2000:format(Sys.Date(), "%Y")
@@ -20,9 +21,50 @@ f.scope  <- function(){
 
     pagemax0 <- unlist(lapply(url.all, f.findmax))
     
-    dt <- data.table(year,
-                     pagemax0)
+#    dt <- data.table(year,
+#                     pagemax0)
 
+
+    scope <- f.extend(year, pagemax0)
+    scope <- rbindlist(scope)
+    
+    setnames(scope,
+             c("year",
+               "page"))
+
+
+    
+    ## [Debugging Modus] Reduzierung des Such-Umfangs
+
+    if (debug.toggle == TRUE){
+        scope <- scope[sample(scope[,.N], debug.pages)][order(year, page)]
+    }
+
+
+
+
+    url  <- paste0("https://juris.bundesgerichtshof.de/cgi-bin/rechtsprechung/list.py?Gericht=bgh&Art=en&Datum=",
+                   scope$year,
+                   "&Seite=",
+                   scope$page,
+                   "&Sort=1")
+
+
+    filename <- paste0(scope$year,
+                       "-",
+                       formatC(scope$page,
+                               width = 4,
+                               flag = 0),
+                       ".html")
+    
+
+
+
+    dt.return <- data.table(url,
+                            filename)
+
+
+    
     return(dt)
     
 
@@ -48,3 +90,23 @@ f.findmax <- function(x){
 
     
 }
+
+
+
+
+    
+
+
+
+#' Diese Funktion nimmt eine ganzzahlige y-Variable als Maximum einer Sequenz von 1 bis y und weist ihr in einer data.table jeweils immer die gleiche x-Variable zu.
+
+f.extend <- function(x, y, begin = 0){
+    y.ext <- begin:y
+    x.ext <- rep(x, length(y.ext))
+    dt.out <- list(data.table(x.ext, y.ext))
+    return(dt.out)
+}
+
+f.extend <- Vectorize(f.extend)
+
+
