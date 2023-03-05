@@ -14,6 +14,7 @@
 - Update der Download-Funktion
 - Überflüssige Warnung in f.future_lingsummarize-Funktion entfernt
 - Alle Roh-Dateien werden nun im Unterordner "files" gespeichert
+- Korrektur für RiSt-Aktenzeichen eingefügt
 
 
 
