@@ -272,7 +272,7 @@ Mit diesem Abschnitt der Pipeline werden Input-Dateien getrackt und eingelesen. 
 Die Variablen des Datensatzes, inklusive ihrer Erläuterung.
 
 
-```{targets tar.file1}
+```{targets tar.file.var}
 list(
     tar_target(file.variables.codebook,
                "data/CE-BGH_Variables.csv",
@@ -290,7 +290,7 @@ Die Tabelle der Registerzeichen und der ihnen zugeordneten Verfahrensarten stamm
 
 `
 
-```{targets tar.file2}
+```{targets tar.file.az}
 list(
     tar_target(file.az.brd,
            "data/AZ-BRD_1-0-1_DE_Registerzeichen_Datensatz.csv",
@@ -305,7 +305,7 @@ list(
  Die Personendaten stammen aus folgendem Datensatz: \enquote{Seán Fobbe and Tilko Swalve (2021). Presidents and Vice-Presidents of the Federal Courts of Germany (PVP-FCG). Version 2021-04-08. Zenodo. DOI: 10.5281/zenodo.4568682}.
 
 
-```{targets tar.file3}
+```{targets tar.file.presi}
 list(
     tar_target(file.presidents,
            "data/PVP-FCG_2021-04-08_GermanFederalCourts_Presidents.csv",
@@ -317,7 +317,7 @@ list(
 
 
 
-```{targets tar.file4}
+```{targets tar.file.vpresi}
 list(
     tar_target(file.vpresidents,
            "data/PVP-FCG_2021-04-08_GermanFederalCourts_VicePresidents.csv",
@@ -334,7 +334,7 @@ list(
 
 Dies sind alle Dateien, die den Source Code für den Datensatz bereitstellen.
 
-```{targets tar.file5}
+```{targets tar.file.source}
 tar_target(files.source,
            files.source.raw,
            format = "file")
@@ -345,7 +345,7 @@ tar_target(files.source,
 
 ### Changelog
 
-```{targets tar.file6}
+```{targets tar.file.changelog}
 tar_target(changelog,
            "CHANGELOG.md",
            format = "file")
@@ -430,7 +430,7 @@ Die bereinigten Variablen werden hier mit der vorläufigen Download-Tabelle zusa
 
 
 
-```{targets tar.download3}
+```{targets tar.download.final}
 
 tar_target(dt.download.final,
            f.download_table_finalize(x = dt.download,
@@ -443,7 +443,7 @@ tar_target(dt.download.final,
 ### Download durchführen
 
 
-```{targets tar.download4}
+```{targets tar.download.pdf}
 tar_target(files.pdf,
                 f.download(url = dt.download.final$url,
                            filename = dt.download.final$doc_id,
@@ -705,7 +705,7 @@ Dieser Abschnitt der Pipeline schreibt den Datensatz und alle Hash-Prüfsummen a
 
 ### CSV schreiben: Voller Datensatz
 
-```{targets tar.write1}
+```{targets tar.write.final}
 tar_target(csv.final,
            f.tar_fwrite(x = dt.bgh.final,
                         filename = file.path("output",
@@ -720,7 +720,7 @@ tar_target(csv.final,
 ### CSV schreiben: Metadaten
 
 
-```{targets tar.write2}
+```{targets tar.write.meta}
 tar_target(csv.meta,
            f.tar_fwrite(x = dt.bgh.meta,
                         filename = file.path("output",
@@ -758,7 +758,7 @@ Dieser Abschnitt der Pipeline erstellt die finalen Berichte (Codebook und Robust
 
 Um Variablen aus der Pipeline in die LaTeX-Kompilierung einzuführen, müssen diese als .tex-Datei auf die Festplatte geschrieben werden.
 
-```{targets tar.report1}
+```{targets tar.report.latexdefs}
 tar_target(latexdefs,
                 f.latexdefs(config,
                             dir = "temp",
@@ -769,7 +769,7 @@ tar_target(latexdefs,
 
 ### Zusammenfassungen linguistischer Kennwerte berechnen
 
-```{targets tar.report2}
+```{targets tar.report.lingstat.summ}
 tar_target(lingstats.summary,
                 f.lingstats_summary(dt.bgh.final,
                                     germanvars = TRUE))
@@ -779,7 +779,7 @@ tar_target(lingstats.summary,
 
 ### Report erstellen: Robustness Checks
 
-```{targets tar.report3}
+```{targets tar.report.robustness}
 tarchetypes::tar_render(report.robustness,
                         file.path("reports",
                                   "RobustnessChecks.Rmd"),
@@ -797,7 +797,7 @@ tarchetypes::tar_render(report.robustness,
 
 
 
-```{targets tar.report4}
+```{targets tar.report.codebook}
 tarchetypes::tar_render(report.codebook,
                         file.path("reports",
                                   "Codebook.Rmd"),
@@ -862,7 +862,7 @@ tar_target(zip.source,
 Hinweis: die verpackten PDF-Dateien werden auf die im finalen Datensatz enthaltenen Dokumente beschränkt (Bereinigung um Platzhalter-Dokumente).
 
 
-```{targets tar.zip1}
+```{targets tar.zip.pdf.all}
 
 tar_target(zip.pdf.all,
            f.tar_zip(x = intersect(files.pdf,
@@ -884,7 +884,7 @@ tar_target(zip.pdf.all,
 
 ### ZIP erstellen: PDF-Dateien (nur Leitsatzentscheidungen)
 
-```{targets tar.zip2}
+```{targets tar.zip.pdf.leit}
 
 tar_target(zip.pdf.leitsatz,
            f.tar_zip(x = intersect(files.pdf,
@@ -905,7 +905,7 @@ tar_target(zip.pdf.leitsatz,
 
 ### ZIP erstellen: PDF-Dateien (nur benannte Entscheidungen)
 
-```{targets tar.zip3}
+```{targets tar.zip.pdf.named}
 tar_target(zip.pdf.benannt,
                 f.tar_zip(x = intersect(files.pdf,
                                    file.path("pdf",
@@ -925,7 +925,7 @@ tar_target(zip.pdf.benannt,
 
 ### ZIP erstellen: PDF-Dateien (Platzhalter)
 
-```{targets tar.zip4}
+```{targets tar.zip.pdf.placeholder}
 tar_target(zip.pdf.platzhalter,
            f.tar_zip(x = setdiff(files.pdf,
                                  file.path("pdf",
@@ -946,7 +946,7 @@ tar_target(zip.pdf.platzhalter,
 
 ### ZIP erstellen: TXT-Dateien
 
-```{targets tar.zip5}
+```{targets tar.zip.txt}
 tar_target(zip.txt,
            f.tar_zip(x = intersect(files.txt, file.path("txt", dt.bgh.final$doc_id)),
                      filename = paste(prefix.files,
@@ -961,7 +961,7 @@ tar_target(zip.txt,
 ### ZIP erstellen: CSV-Datei (voller Datensatz)
 
 
-```{targets tar.zip6}
+```{targets tar.zip.csv.full}
 tar_target(zip.csv.final,
                 f.tar_zip(csv.final,
                               filename = gsub("\\.csv", "\\.zip", basename(csv.final)),
@@ -975,7 +975,7 @@ tar_target(zip.csv.final,
 ### ZIP erstellen: CSV-Datei (nur Metadaten)
 
 
-```{targets tar.zip7}
+```{targets tar.zip.csv.meta}
 tar_target(zip.csv.meta,
                 f.tar_zip(csv.meta,
                               filename = gsub("\\.csv", "\\.zip", basename(csv.meta)),
@@ -989,7 +989,7 @@ tar_target(zip.csv.meta,
 ### ZIP erstellen: GraphML
 
 
-```{targets tar.zip.citations.az}
+```{targets tar.zip.graphml}
 tar_target(zip.citations.az,
                 f.tar_zip(graphml.citations.az,
                               filename = paste0(prefix.files,
@@ -1013,13 +1013,14 @@ tar_target(zip.citations.az,
 ### Zu hashende ZIP-Archive definieren
 
 
-```{targets tar.hashes1}
+```{targets tar.hashes.all}
 tar_target(zip.all,
            c(zip.pdf.all,
              zip.pdf.leitsatz,
              zip.pdf.benannt,
 			 zip.pdf.platzhalter,
              zip.txt,
+			 zip.citations.az,
              zip.csv.final,
              zip.csv.meta,
              zip.analysis,
@@ -1029,7 +1030,7 @@ tar_target(zip.all,
 ### Kryptographische Hashes berechnen
 
 
-```{targets tar.hashes2}
+```{targets tar.hashes.calc}
 tar_target(hashes,
            f.tar_multihashes(c(zip.all,
                                report.codebook[1],
@@ -1043,7 +1044,7 @@ tar_target(hashes,
 ### CSV schreiben: Kryptographische Hashes
 
 
-```{targets tar.hashes3}
+```{targets tar.hashes.csv}
 tar_target(csv.hashes,
            f.tar_fwrite(x = hashes,
                         filename = file.path("output",
