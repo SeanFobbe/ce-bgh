@@ -4,6 +4,7 @@
 ## Version \version
 
 - Vollständige Aktualisierung der Daten
+- NEU und experimentell: Zitations-Netzwerk zwischen allen Aktenzeichen des Bundesgerichtshofs als GraphML zur freien Verwendung
 - Gesamte Laufzeitumgebung mit Docker versionskontrolliert
 - Aktenzeichen aus dem Eingangszeitraum 2000 bis 2009 nun korrekt mit führender Null formatiert (z.B. 1 BvR 44/02 statt 1 BvR 44/2)
 - Vereinfachung der Konfigurations-Datei
@@ -13,7 +14,6 @@
 - Update der Download-Funktion
 - Überflüssige Warnung in f.future_lingsummarize-Funktion entfernt
 - Alle Roh-Dateien werden nun im Unterordner "files" gespeichert
-- Experimentell: Zitations-Netzwerk zwischen allen Aktenzeichen des Bundesgerichtshofs im Datensatz
 
 
 
