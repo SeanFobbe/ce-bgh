@@ -98,15 +98,15 @@ unlink(grep(datestamp,
             value = TRUE))
 
 
-files.html <- list.files("files/html", full.names = TRUE)
+## files.html <- list.files("files/html", full.names = TRUE)
 
 
-if(length(files.html) > 0){
+## if(length(files.html) > 0){
 
-    delete <- sort(files.html, decreasing = TRUE)[1:10]
-    unlink(delete)
+##     delete <- sort(files.html, decreasing = TRUE)[1:10]
+##     unlink(delete)
 
-}
+## }
 
 
 
