@@ -68,4 +68,4 @@ f.clean_graph <- function(g,
 
 ## DEBUGGING
 ##g <- tar_read(igraph.citations.az)
-regz.final[!regz.correct]
+##regz.final[!regz.correct]
