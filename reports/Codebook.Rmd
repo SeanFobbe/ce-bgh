@@ -732,7 +732,7 @@ g <- igraph::subgraph(igraph.citations.cleaned, index)
 
 ggraph(g, "kk") + 
     geom_edge_diagonal(colour = "#7e0731")+
-    geom_node_point(size = 1,
+    geom_node_point(size = 0.5,
                     color = "white")+
     theme_void()+
     labs(
