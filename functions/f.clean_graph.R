@@ -6,8 +6,7 @@
 #' @param az.brd Ein data.frame oder data.table mit dem Datensatz "Seán Fobbe (2021). Aktenzeichen der Bundesrepublik Deutschland (AZ-BRD). Version 1.0.1. Zenodo. DOI: 10.5281/zenodo.4569564."
 
 
-## DEBUGGING
-#g <- tar_read(igraph.citations.az)
+
 
 
 f.clean_graph <- function(g,
@@ -37,6 +36,14 @@ f.clean_graph <- function(g,
     
     ## Extract Senate and Registerzeichen
     g.regz <- gsub("[IVXa-d0-9 ]*([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
+    g.regz <- gsub("AwZ", "AnwZ", g.regz)
+    g.regz <- gsub("AwSt", "AnwSt", g.regz)
+    g.regz <- gsub("\\(Aw\\)", "\\(Anw\\)", g.regz)
+    g.regz <- gsub("E(VR|ZR|VZ|ZB)", "En\\1", g.regz)
+    ## g.regz <- gsub("EZR", "EnZR", g.regz)
+    ## g.regz <- gsub("EVZ", "EnVZ", g.regz)
+    ## g.regz <- gsub("EVZ", "EnVZ", g.regz)
+    
     g.senat <- gsub("([IVXa-d0-9]*) *([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
 
     ## Set Vertex Attributes
@@ -51,10 +58,14 @@ f.clean_graph <- function(g,
     g <- igraph::delete_vertices(g, !regz.correct)
 
 
-    warning(paste("Warnung:", sum(!regz.correct), "nodes entfernt, weil Registerzeichen fehlerhaft."))
+    warning(paste("Warnung!", sum(!regz.correct), "Nodes entfernt, weil Registerzeichen fehlerhaft."))
     
     
     return(g)
 
     
 }
+
+## DEBUGGING
+##g <- tar_read(igraph.citations.az)
+regz.final[!regz.correct]
