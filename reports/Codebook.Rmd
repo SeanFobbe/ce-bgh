@@ -724,7 +724,13 @@ Beachten Sie auch bitte folgende Punkte:
 
 ```{r, CE-BGH_15_Zitate_Graph_karmesinrot, fig.width = 12, fig.height = 14, fig.pos = "p", fig.cap = "Das Zitationsnetzwerk (Aktenzeichen) des 1. Senats"}
 
-ggraph(igraph.citations.cleaned,
+
+index <- which(V(igraph.citations.cleaned)$senat == " I"
+
+g <- subgraph(igraph.citations.cleaned, index)
+
+
+ggraph(g,
        'sugiyama') + 
     geom_edge_diagonal(colour = "#7e0731")+
     geom_node_point(size = 2,
