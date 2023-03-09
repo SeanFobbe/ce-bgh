@@ -737,7 +737,7 @@ ggraph(g, "kk") +
     theme_void()+
     labs(
         title = paste(prefix.figuretitle,
-                      "| Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Senats des Bundesgerichthofs (Kamada Kawai-Layout)"),
+                      "| Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Senats des Bundesgerichthofs"),
         caption = caption
     )+
     theme(
