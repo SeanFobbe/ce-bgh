@@ -287,6 +287,7 @@ PDF & \textbf{Traditionelle juristische Forschung}. Die PDF-Dokumente wie sie vo
  CSV\_Datensatz & \textbf{Legal Tech/Quantitative Forschung}. Diese CSV-Datei ist die für statistische Analysen empfohlene Variante des Datensatzes. Sie enthält den Volltext aller Entscheidungen, sowie alle in diesem Codebook beschriebenen Metadaten.  Jede Spalte entspricht einer Variable, jede Zeile einer Entscheidung. Über Zeilenumbrüche getrennte Wörter wurden zusammengefügt. \\
  CSV\_Metadaten & \textbf{Legal Tech/Quantitative Forschung.} Wie die vorige CSV-Variante, nur ohne die Entscheidungstexte. Sinnvoll für Analyst:innen, die sich nur für die Metadaten interessieren und Speicherplatz sparen wollen.  Jede Spalte entspricht einer Variable, jede Zeile einer Entscheidung.\\
  TXT & \textbf{Subsidiär für alle Zielgruppen}. Diese Variante enthält die vollständigen aus den PDF-Dateien extrahierten Entscheidungstexte, aber nur einen reduzierten Umfang an Metadaten, der dem der PDF-Dateien entspricht. Die TXT-Dateien sind optisch an das Layout der PDF-Dateien angelehnt. Geeignet für qualitativ arbeitende Forscher:innen, die nur wenig Speicherplatz oder eine langsame Internetverbindung zur Verfügung haben oder für quantitativ arbeitende Forscher:innen, die beim Einlesen der CSV-Dateien Probleme haben. Über Zeilenumbrüche getrennte Wörter wurden \emph{nicht} zusammengefügt.\\
+  Netzwerke & \textbf{Alle Lehrenden und Forschenden.} EXPERIMENTELL! Das Zitationsnetzwerk des BGH. Umfasst sind nur Zitate von Aktenzeichen des BGH zu Aktenzeichen des BGH (d.h. zwischen Verfahren). Eine Auflösung auf Ebene einzelner Entscheidungen ist geplant. Kann mit statistischer Software oder aber auch GUI-Anwendungen wie Gephi analysiert werden.\\
  ANALYSE & \textbf{Alle Lehrenden und Forschenden.} Dieses Archiv enthält alle während dem Kompilierungs- und Prüfprozess erstellten Tabellen (CSV) und Diagramme (PDF, PNG) im Original. Sie sind inhaltsgleich mit den in diesem Codebook verwendeten Tabellen und Diagrammen. Das PDF-Format eignet sich besonders für die Verwendung in gedruckten Publikationen, das PNG-Format besonders für die Darstellung im Internet. Analyst:innen mit fortgeschrittenen Kenntnissen in R können auch auf den Source Code zurückgreifen. Empfohlen für Nutzer:innen die einzelne Inhalte aus dem Codebook für andere Zwecke (z.B. Präsentationen, eigene Publikationen) weiterverwenden möchten.\\
 
 
@@ -705,6 +706,48 @@ ggplot(data = dt.bgh.meta)+
 
 
 
+# Zitations-Netzwerke
+
+Im Datensatz sind ab 2023 auch Zitate zwischen einzelnen Verfahren des BGH enthalten. Aus den Vollexten der BGH-Entscheidungen wurden alle Aktenzeichen des BGH extrahiert und mit dem Aktenzeichen der zitierenden Entscheidung verbunden.
+
+**Achtung:** Es handelt sich nicht um Zitate von Entscheidung zu Entscheidung, sondern von Aktenzeichen zu Aktenzeichen. Die Auflösung der Zitate auf Entscheidungsebene ist geplant und wird in Zukunft mitveröffentlicht.
+
+Beachten Sie auch bitte folgende Punkte:
+
+- Das gesamte Netzwerk ist sehr groß (ca. 85.000 Knoten, ca. 300.000 Kanten) und die Analyse ist daher ohne weitere Einschränkungen rechenintensiv und anspruchsvoll. In der Regel sollten Sie das Netzwerk auf die für Sie interessanten Teile reduzieren.
+- Zur Reduktion des Netzwerks auf eine handliche Größe stelle ich zwei Variablen bereit: den Senat und das Registerzeichen. Sie könnten beispielsweise über das Registerzeichen nur die Strafsenate betrachten oder über die Senatsangabe nur den Zivilsenat mit der für Sie interessanten Spezialmaterie
+- Die Extraktion mit *regular expressions* ist nicht perfekt. Es kann daher sein, dass Zitate fehlen, wenn sie nicht als solche erkannt wurden, wegen Tippfehlern, ungewöhnlichem Textumfeld etc. Es ist aktuell unklar wieviele Zitate fehlen könnten, weil es keinen Goldstandard zum Abgleich gibt. Wenn Ihnen größere Fehlbestände auffallen, melden Sie sich bitte.
+
+
+
+
+```{r, CE-BGH_15_Zitate_Graph_karmesinrot, fig.width = 12, fig.height = 14, fig.pos = "p", fig.cap = "Das Zitationsnetzwerk (Aktenzeichen) des 1. Senats"}
+
+ggraph(g,
+       'sugiyama') + 
+    geom_edge_diagonal(colour = "#7e0731")+
+    geom_node_point(size = 2,
+                    color = "white")+
+    geom_node_text(aes(label = name),
+                   color = "white",
+                   size = 2,
+                   repel = TRUE)+
+    theme_void()+
+    labs(
+        title = paste(prefix.figuretitle,
+                      "| Das Zitationsnetzwerk (Aktenzeichen) des 1. Senats"),
+        caption = caption
+    )+
+    theme(
+        plot.title = element_text(size = 14,
+                                  face = "bold",
+                                  color = "white"),                        
+        plot.background = element_rect(fill = "black"),
+        plot.caption = element_text(color = "white"),
+        plot.margin = margin(10, 20, 10, 10)
+    )
+
+```
 
 
 
