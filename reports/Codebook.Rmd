@@ -718,6 +718,7 @@ Beachten Sie auch bitte folgende Punkte:
 - Das gesamte Netzwerk ist sehr groß (ca. 85.000 Knoten, ca. 300.000 Kanten) und die Analyse ist daher ohne weitere Einschränkungen rechenintensiv und anspruchsvoll. In der Regel sollten Sie das Netzwerk auf die für Sie interessanten Teile reduzieren.
 - Zur Reduktion des Netzwerks auf eine handliche Größe stelle ich zwei Variablen bereit: den Senat und das Registerzeichen. Sie könnten beispielsweise über das Registerzeichen nur die Strafsenate betrachten oder über die Senatsangabe nur den Zivilsenat mit der für Sie interessanten Spezialmaterie
 - Die Extraktion mit *regular expressions* ist nicht perfekt. Es kann daher sein, dass Zitate fehlen, wenn sie nicht als solche erkannt wurden, wegen Tippfehlern, ungewöhnlichem Textumfeld etc. Es ist aktuell unklar wieviele Zitate fehlen könnten, weil es keinen Goldstandard zum Abgleich gibt. Wenn Ihnen größere Fehlbestände auffallen, melden Sie sich bitte.
+- Alle Knoten die nach der Extraktion kein gültiges Aktenzeichen des BGH enthalten wurden entfernt, das betrifft nur eine kleine zweistellige Zahl (siehe Compilation Report für den genauen Wert)
 
 
 
