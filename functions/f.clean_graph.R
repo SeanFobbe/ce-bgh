@@ -44,11 +44,11 @@ f.clean_graph <- function(g,
     g <- igraph::set_vertex_attr(g, "senat", index = igraph::V(g), g.senat)
 
 
-    regz.final <- vertex_attr(g, "registerzeichen")
+    regz.final <- igraph::vertex_attr(g, "registerzeichen")
 
     regz.correct <- regz.final %in% az.brd$zeichen_original
 
-    g <- delete_vertices(g, !regz.correct)
+    g <- igraph::delete_vertices(g, !regz.correct)
 
 
     warning(paste("Warnung:", sum(!regz.correct), "nodes entfernt, weil Registerzeichen fehlerhaft."))
