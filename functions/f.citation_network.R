@@ -92,23 +92,7 @@ f.citation_network <- function(dt.bgh.final,
     g  <- igraph::graph.data.frame(dt, directed = TRUE)
 
 
-    ## Convert Parallel Edges to Weights
-    
-    igraph::E(g)$weight <- 1
-    g <- igraph::simplify(g, edge.attr.comb = list(weight = "sum"))
 
-
-    ## Extract Senate and Registerzeichen
-    
-    g.names <- attr(igraph::V(g), "names")
-    g.regz <- gsub("[IVXa-d0-9 ]*([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
-    g.senat <- gsub("([IVXa-d0-9]*) *([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
-
-    ## Set Vertex Attributes
-    g <- igraph::set_vertex_attr(g, "registerzeichen", index = igraph::V(g), g.regz)
-    g <- igraph::set_vertex_attr(g, "senat", index = igraph::V(g), g.senat)
-
-    
     
     return(g)
 
@@ -123,7 +107,7 @@ f.citation_network <- function(dt.bgh.final,
 f.extract_aktenzeichen <- function(x){
 
     list <- stringi::stri_extract_all(x,
-                                      regex = paste0("[0-9XIVa-z]{0,5}", # Spruchkörper
+                                      regex = paste0("[0-9XIVa-d]{0,5}", # Spruchkörper
                                                      " *",
                                                      registerzeichen.regex, # Registerzeichen
                                                      " ",
