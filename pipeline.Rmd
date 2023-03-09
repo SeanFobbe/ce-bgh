@@ -694,12 +694,20 @@ tar_target(dt.bgh.meta,
 
 
 
-```{targets tar.citation}
-tar_target(igraph.citations.az,
+```{targets tar.citation.extract}
+tar_target(igraph.citations.raw,
            f.citation_network(dt.bgh.final = dt.bgh.final,
                               az.brd = az.brd,
                               multicore = config$parallel$citations,
                               cores = fullCores))
+
+```
+
+
+```{targets tar.citation.clean}
+tar_target(igraph.citations.cleaned,
+           f.clean_graph(g = igraph.citations.raw,
+                              az.brd = az.brd))
 
 ```
 
@@ -747,10 +755,10 @@ tar_target(csv.meta,
 ```{targets tar.write.graphs.az}
 
 tar_target(graphml.citations.az, 
-           f.tar_write_graph(graph = igraph.citations.az,
+           f.tar_write_graph(graph = igraph.citations.cleaned,
                              file = file.path("output",
                                               paste0(prefix.files, 
-                                                     "_DE_GraphML_AZ-Zitiernetzwerk.graphml")),
+                                                     "_DE_Zitationsnetzwerk-AZ.graphml")),
                              format = "graphml"),
            format = "file")
 
@@ -1004,7 +1012,7 @@ tar_target(zip.csv.meta,
 tar_target(zip.citations.az,
                 f.tar_zip(graphml.citations.az,
                               filename = paste0(prefix.files,
-                                                "_DE_GraphML_AZ-Zitiernetzwerk.zip"),
+                                                "_DE_GraphML_Netzwerke.zip"),
                               dir = "output",
                               mode = "cherry-pick"),
                 format = "file")
