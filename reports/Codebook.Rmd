@@ -722,23 +722,22 @@ Beachten Sie auch bitte folgende Punkte:
 
 
 
-```{r, CE-BGH_15_Zitate_Graph_karmesinrot, fig.width = 12, fig.height = 14, fig.pos = "p", fig.cap = "Das Zitationsnetzwerk (Aktenzeichen) des 1. Senats"}
+```{r, CE-BGH_15_Zitate_Graph_karmesinrot, fig.width = 12, fig.height = 14, fig.pos = "p", fig.cap = "Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Senats des Bundesgerichthofs (Kamada Kawai-Layout)"}
 
+# Options: kk very nice, lgl, drl, gfr; gem veeeery slow; fr not nice
 
-index <- which(igraph::V(igraph.citations.cleaned)$senat == "VI")
+index <- which(igraph::V(igraph.citations.cleaned)$senat == "XI")
 
 g <- igraph::subgraph(igraph.citations.cleaned, index)
 
-
-ggraph(g,
-       'sugiyama') + 
+ggraph(g, "kk") + 
     geom_edge_diagonal(colour = "#7e0731")+
-    geom_node_point(size = 2,
+    geom_node_point(size = 1,
                     color = "white")+
     theme_void()+
     labs(
         title = paste(prefix.figuretitle,
-                      "| Das Zitationsnetzwerk (Aktenzeichen) des 1. Senats"),
+                      "| Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Senats des Bundesgerichthofs (Kamada Kawai-Layout)"),
         caption = caption
     )+
     theme(
@@ -749,6 +748,8 @@ ggraph(g,
         plot.caption = element_text(color = "white"),
         plot.margin = margin(10, 20, 10, 10)
     )
+
+
 
 ```
 
