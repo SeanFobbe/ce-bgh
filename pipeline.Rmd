@@ -243,24 +243,22 @@ docvarnames <- c("gericht",
 ```
 
 
+
 ## ZIP-Datei für Source definieren
 
 ```{targets global-sourcefiles, tar_globals = TRUE}
 
-files.source.raw <-  c(list.files(pattern = "\\.R$|\\.toml$|\\.md$|\\.Rmd$"),
+files.source.raw <-  c(list.files(pattern = "\\.R$|\\.toml$|\\.R?md$|\\.yaml|\\.sh|\\.txt"),
+                       "Dockerfile",
 					   "reports",
                        "data",
                        "functions",
                        "tex",
                        "gpg",
-                       "buttons",
-                       list.files(pattern = "renv\\.lock|\\.Rprofile",
-                                  all.files = TRUE),
-                       list.files("renv",
-                                  pattern = "activate\\.R",
-                                  full.names = TRUE))
+                       "buttons")
 
 ```
+
 
 
 
