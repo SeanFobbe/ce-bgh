@@ -4,6 +4,14 @@
 ## Version \version
 
 - Vollständige Aktualisierung der Daten
+- Neue Variable für BGHZ
+- Variable "bghr" wird nun korrekt extrahiert
+
+
+
+## Version 2023-03-10
+
+- Vollständige Aktualisierung der Daten
 - NEU Zitations-Netzwerk zwischen allen Aktenzeichen des Bundesgerichtshofs als GraphML zur freien Verwendung (EXPERIMENTELL!)
 - Gesamte Laufzeitumgebung mit Docker versionskontrolliert
 - Aktenzeichen aus dem Eingangszeitraum 2000 bis 2009 nun korrekt mit führender Null formatiert (z.B. 1 BvR 44/02 statt 1 BvR 44/2)
