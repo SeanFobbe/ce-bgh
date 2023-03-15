@@ -29,7 +29,11 @@ f.var_sammlungen <- function(text){
                    text.sub,
                    ignore.case = TRUE) * 1
 
-    bghr <- grepl("BGHSt: *ja",
+    bghz <- grepl("BGHZ: *ja",
+                   text.sub,
+                   ignore.case = TRUE) * 1
+        
+    bghr <- grepl("BGHR: *ja",
                   text.sub,
                   ignore.case = TRUE) * 1
 
@@ -38,6 +42,7 @@ f.var_sammlungen <- function(text){
                              ignore.case = TRUE) * 1
 
     dt.return <- data.table(bghst,
+                            bghz,
                             bghr,
                             nachschlagewerk)
 
