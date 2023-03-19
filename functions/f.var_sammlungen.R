@@ -1,10 +1,10 @@
 #' f.var_sammlungen
 #'
-#' Extrahiert aus BGH-Entscheidungen Hinweise auf die Veröffentlichung der Entscheidung in einer Sammlung, aktuell nur für BGHsSt, BGHR und Nachschlagewerk.
+#' Extrahiert aus BGH-Entscheidungen Hinweise auf die Veröffentlichung der Entscheidung in einer Sammlung, aktuell nur für BGHSt, BGHZ, BGHR und Nachschlagewerk.
 #'
 #' @param text String. Ein Vektor aus Texten von BGH-Entscheidungen.
 #'
-#' @return Data.table. Eine Tabelle mit Variablen für BGHst, BGHR und Nachschlagewerk. Falls enthalten, mit 1 codiert, sonst mit 0.
+#' @return Data.table. Eine Tabelle mit Variablen für BGHSt, BGHZ, BGHR und Nachschlagewerk. Falls enthalten, mit 1 codiert, sonst mit 0.
 #'
 
 
