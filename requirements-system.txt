@@ -1,3 +1,4 @@
+git
 pip
 python3
 libatlas3-base
