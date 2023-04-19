@@ -6,6 +6,7 @@
 - Vollständige Aktualisierung der Daten
 - Neue Variable für BGHZ
 - Variable "bghr" wird nun korrekt extrahiert
+- Source-Archiv wird nun aus dem Git-Manifest gebildet
 
 
 
