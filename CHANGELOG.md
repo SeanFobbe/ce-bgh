@@ -7,7 +7,9 @@
 - Neue Variable für BGHZ
 - Variable "bghr" wird nun korrekt extrahiert
 - Source-Archiv wird nun aus dem Git-Manifest gebildet
-
+- Anpassung von Compose File an Debian 11
+- Docker Zeitzone auf Berlin eingestellt
+- Vereinfachung der Repository-Struktur
 
 
 ## Version 2023-03-10
