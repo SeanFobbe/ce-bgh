@@ -4,7 +4,8 @@
 ## Version \version
 
 - Vollständige Aktualisierung der Daten
-- Neue Variable für BGHZ
+- Neu: Variable für BGHZ
+- R-Version auf 4.4.0 aktualisiert (wegen CVE-2024-27322)
 - Variable "bghr" wird nun korrekt extrahiert
 - Source-Archiv wird nun aus dem Git-Manifest gebildet
 - Anpassung von Compose File an Debian 11
