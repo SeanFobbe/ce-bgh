@@ -3,8 +3,9 @@
 
 ## Version \version
 
+- LIZENZÄNDERUNG: Source Code jetzt unter GNU General Public License Version 3 (GPLv3) oder später lizenziert
+- NEU: Variable für BGHZ
 - Vollständige Aktualisierung der Daten
-- Neu: Variable für BGHZ
 - R-Version auf 4.4.0 aktualisiert (wegen CVE-2024-27322)
 - Variable "bghr" wird nun korrekt extrahiert
 - Source-Archiv wird nun aus dem Git-Manifest gebildet
