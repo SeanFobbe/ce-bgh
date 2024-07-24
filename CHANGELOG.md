@@ -11,7 +11,7 @@
 - Anpassung von Compose File an Debian 11
 - Docker Zeitzone auf Berlin eingestellt
 - Vereinfachung der Repository-Struktur
-
+- Python Toolchain entfernt
 
 ## Version 2023-03-10
 
