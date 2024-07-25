@@ -13,6 +13,9 @@
 - Docker Zeitzone auf Berlin eingestellt
 - Vereinfachung der Repository-Struktur
 - Python Toolchain entfernt
+- Zusätzliches Lösch-Skript mit Docker-Integration
+
+
 
 ## Version 2023-03-10
 
