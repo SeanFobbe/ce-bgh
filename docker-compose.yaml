@@ -3,7 +3,7 @@ version: "3.7"
 services:
   ce-bgh:
     container_name: ce-bgh
-    image: ce-bgh:4.2.2
+    image: ce-bgh:4.4.0
     tty: true
     volumes:
       - .:/ce-bgh
