@@ -136,18 +136,18 @@ f.clean_az_bgh <- function(x){
 
     ## Strenge REGEX-Validierung des Aktenzeichens
 
-    regex.test <- grep(paste0("[0-9A-Za]+", # Senatsnummer
-                              "_",
-                              "[A-Za-zÜ]+", # Registerzeichen
-                              "_",
-                              "[0-9]+", # Eingangsnummer
-                              "_",
-                              "[0-9]{2}", # Eingangsjahr
-                              "_",
-                              "[A-Za-z]+"), # Kollision
-                       az,
-                       invert = TRUE,
-                       value = TRUE)
+    regex.fails <- grep(paste0("[0-9A-Za]+", # Senatsnummer
+                               "_",
+                               "[A-Za-zÜ]+", # Registerzeichen
+                               "_",
+                               "[0-9]+", # Eingangsnummer
+                               "_",
+                               "[0-9]{2}", # Eingangsjahr
+                               "_",
+                               "[A-Za-z]+"), # Kollision
+                        az,
+                        invert = TRUE,
+                        value = TRUE)
 
 
     if (length(regex.test) != 0){
@@ -156,7 +156,7 @@ f.clean_az_bgh <- function(x){
         warning(paste0(regex.test, collapse = ", "))
     }
 
-    
+
 
     ## Unit Tests
 
@@ -170,7 +170,7 @@ f.clean_az_bgh <- function(x){
     })
     
     test_that("Result complies with substantive expectations.", {
-        expect_length(regex.test, 0)
+        expect_length(regex.fails, 0)
     })
 
 
