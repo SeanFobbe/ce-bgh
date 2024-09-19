@@ -159,7 +159,7 @@ f.clean_az_bgh <- function(x){
     if (length(regex.fails) != 0){
 
         warning("Folgende Aktenzeichen sind fehlerhaft:")
-        warning(paste0(regex.test, collapse = ", "))
+        warning(paste0(regex.fails, collapse = ", "))
     }
 
 
