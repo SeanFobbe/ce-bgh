@@ -159,13 +159,26 @@ f.clean_az_bgh <- function(x){
 
     
 
-    ## Unit Test: Ergebnis
-    test_that("Ergebnis entspricht Erwartungen.", {
-        expect_length(regex.test, 0)
-        expect_type(az, "character")
-        expect_length(az, length(x))
+    ## Unit Tests
 
+
+    test_that("Result is of type 'character'.", {
+        expect_type(az, "character")
     })
+
+    test_that("Result is of expected length.", {
+        expect_length(az, length(x))
+    })
+    
+    test_that("Result passed substantive REGEX test.", {
+        expect_length(regex.test, 0)
+    })
+
+
+    
+
+    
+
 
     return(az)
 
