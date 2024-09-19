@@ -12,7 +12,7 @@
 f.clean_spruch_bgh <- function(x){
 
     ## Unit Test: Argumente
-    test_that("Argumente entsprechen Erwartungen.", {
+    test_that("Input is of correct type", {
         expect_type(x, "character")
 
     })
