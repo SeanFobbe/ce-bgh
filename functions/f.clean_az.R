@@ -170,3 +170,12 @@ f.clean_az_bgh <- function(x){
     return(az)
 
 }
+
+
+
+## DEBUGGING CODE
+
+## library(testthat)
+
+## x <- tar_read(dt.download)$az
+
