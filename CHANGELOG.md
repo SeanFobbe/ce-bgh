@@ -15,7 +15,7 @@
 - Python Toolchain entfernt
 - Zusätzliches Lösch-Skript mit Docker-Integration
 - Verbesserung von Warnmeldungen und Unit Tests
-
+- Erweiterung der automatischen Korrektur der Aktenzeichen
 
 
 ## Version 2023-03-10
