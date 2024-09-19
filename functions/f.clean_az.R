@@ -169,7 +169,7 @@ f.clean_az_bgh <- function(x){
         expect_length(az, length(x))
     })
     
-    test_that("Result passed substantive REGEX test.", {
+    test_that("Result complies with substantive expectations.", {
         expect_length(regex.test, 0)
     })
 
