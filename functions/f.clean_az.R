@@ -11,9 +11,8 @@
 f.clean_az_bgh <- function(x){
 
     ## Unit Test: Argumente
-    test_that("Argumente entsprechen Erwartungen.", {
+    test_that("Input has correct type", {
         expect_type(x, "character")
-
     })
     
 
