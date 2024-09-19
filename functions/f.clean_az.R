@@ -69,6 +69,7 @@ f.clean_az_bgh <- function(x){
     az <- gsub("KRB_", "NA_KRB_", az)
     az <- gsub("KZB_", "NA_KZB_", az)
     az <- gsub("KVR_", "NA_KVR_", az)
+    az <- gsub("KVB_", "NA_KVB_", az)
 
     az <- gsub("LwZA_", "NA_LwZA_", az)
     az <- gsub("LwZR_", "NA_LwZR_", az)
@@ -94,6 +95,11 @@ f.clean_az_bgh <- function(x){
     az <- gsub("V_I_", "VI_", az)
     az <- gsub("XA", "Xa", az)
 
+
+    ## Dopplungen bereinigen
+
+    az <- gsub("_+", "_", az)
+    
 
     ## Einzelne Fehler bereinigen
 
@@ -150,7 +156,7 @@ f.clean_az_bgh <- function(x){
                         value = TRUE)
 
 
-    if (length(regex.test) != 0){
+    if (length(regex.fails) != 0){
 
         warning("Folgende Aktenzeichen sind fehlerhaft:")
         warning(paste0(regex.test, collapse = ", "))
