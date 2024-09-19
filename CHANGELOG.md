@@ -14,6 +14,7 @@
 - Vereinfachung der Repository-Struktur
 - Python Toolchain entfernt
 - Zusätzliches Lösch-Skript mit Docker-Integration
+- Verbesserung von Warnmeldungen und Unit Tests
 
 
 
