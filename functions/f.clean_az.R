@@ -166,7 +166,6 @@ f.clean_az_bgh <- function(x){
 
     ## Unit Tests
 
-
     test_that("Result is of type 'character'.", {
         expect_type(az, "character")
     })
