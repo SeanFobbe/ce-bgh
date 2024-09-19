@@ -75,7 +75,7 @@ f.clean_az_bgh <- function(x){
     az <- gsub("LwZR_", "NA_LwZR_", az)
     az <- gsub("LwZB", "NA_LwZB", az)
 
-    az <- gsub("NotSt_\\(B\\)", "NA_NotStB", az)
+    az <- gsub("NotSt_?\\(B\\)", "NA_NotStB", az)
     az <- gsub("NotSt_\\(Brfg\\)", "NA_NotStBrfg", az)
     az <- gsub("NotZ_\\(Brfg\\)", "NA_NotZBrfg", az)
     az <- gsub("NotZ_", "NA_NotZ_", az)
@@ -178,9 +178,6 @@ f.clean_az_bgh <- function(x){
     test_that("Result complies with substantive expectations.", {
         expect_length(regex.fails, 0)
     })
-
-
-    
 
     
 
