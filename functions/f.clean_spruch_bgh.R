@@ -111,15 +111,22 @@ f.clean_spruch_bgh <- function(x){
         warning(regex.test)
     }
 
+
     
+    ## Unit Tests
 
-    ## Unit Test: Ergebnis
-    test_that("Ergebnis entspricht Erwartungen.", {
-        expect_length(regex.test, 0)
+    test_that("Result is of type 'character'.", {
         expect_type(spruch, "character")
-        expect_length(spruch, length(x))
-
     })
+
+    test_that("Result is of expected length.", {
+        expect_length(spruch, length(x))
+    })
+    
+    test_that("Result complies with substantive expectations.", {
+        expect_length(regex.fails, 0)
+    })
+
 
     
 
