@@ -22,7 +22,7 @@ f.lingstats <- function(x,
     ## Set Future Strategy
     if(multicore == TRUE){
 
-        plan("multicore",
+        plan("multisession",
              workers = cores)
         
     }else{
@@ -74,14 +74,14 @@ f.lingstats <- function(x,
 
 
 f.future_lingsummarize <- function(dt,
-                                 chunksperworker = 1,
-                                 chunksize = NULL){
+                                   chunksperworker = 1,
+                                   chunksize = NULL){
 
     begin.dopar <- Sys.time()
 
     dt <- dt[,.(doc_id, text)]
     
-    nchars <- dt[, lapply(.(text), nchar)]$V1
+    nchars <- nchar(dt$text)
     
     print(paste0("Processing ",
                  dt[,.N],
