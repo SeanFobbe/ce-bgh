@@ -13,6 +13,8 @@
 
 f.lingsummarize <- function(dt){
 
+    tryCatch({
+    
     corpus <- corpus(dt)
     
     tokens <- tokens(corpus,
@@ -36,6 +38,13 @@ f.lingsummarize <- function(dt){
                       nsentences)
     
     return(out)
+    
+        },
+    error = function(cond) {
+        return(data.table(ntokens = NA,
+                      ntypes = NA,
+                      nsentences = NA))}
+    )
 
     
 }
