@@ -16,5 +16,6 @@ libjpeg-dev
 libgif-dev
 librsvg2-dev
 libglpk-dev
+libtbb-dev
 tesseract-ocr
 tesseract-ocr-deu
