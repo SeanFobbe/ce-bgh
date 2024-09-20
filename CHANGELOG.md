@@ -16,7 +16,7 @@
 - Zusätzliches Lösch-Skript mit Docker-Integration
 - Verbesserung von Warnmeldungen und Unit Tests
 - Erweiterung der automatischen Korrektur der Aktenzeichen
-
+- Extraktion von PDFs ignoriert fehlerhafte PDFs
 
 ## Version 2023-03-10
 
