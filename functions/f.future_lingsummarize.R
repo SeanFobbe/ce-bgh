@@ -14,36 +14,36 @@
 f.lingsummarize <- function(dt){
 
     tryCatch({
-    
-    corpus <- corpus(dt)
-    
-    tokens <- tokens(corpus,
-                     what = "word",
-                     remove_punct = FALSE,
-                     remove_symbols = FALSE,
-                     remove_numbers = FALSE,
-                     remove_url = FALSE,
-                     remove_separators = TRUE,
-                     split_hyphens = FALSE,
-                     include_docvars = FALSE,
-                     padding = FALSE
-                     )
-    
-    ntokens <- unname(ntoken(tokens))
-    ntypes  <- unname(ntype(tokens))
-    nsentences <- unname(nsentence(corpus))
+        
+        corpus <- corpus(dt)
+        
+        tokens <- tokens(corpus,
+                         what = "word",
+                         remove_punct = FALSE,
+                         remove_symbols = FALSE,
+                         remove_numbers = FALSE,
+                         remove_url = FALSE,
+                         remove_separators = TRUE,
+                         split_hyphens = FALSE,
+                         include_docvars = FALSE,
+                         padding = FALSE
+                         )
+        
+        ntokens <- unname(ntoken(tokens))
+        ntypes  <- unname(ntype(tokens))
+        nsentences <- unname(nsentence(corpus))
 
-    out <- data.table(ntokens,
-                      ntypes,
-                      nsentences)
-    
-    return(out)
-    
-        },
+        out <- data.table(ntokens,
+                          ntypes,
+                          nsentences)
+        
+        return(out)
+        
+    },
     error = function(cond) {
         return(data.table(ntokens = NA,
-                      ntypes = NA,
-                      nsentences = NA))}
+                          ntypes = NA,
+                          nsentences = NA))}
     )
 
     
