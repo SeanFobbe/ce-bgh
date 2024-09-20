@@ -46,7 +46,7 @@ number = 8   # Die Anzahl Rechenkerne, die verwendet werden soll; wird nur berü
 [parallel]
 
 extractPDF = true
-lingsummarize = true
+lingsummarize = false
 citations = true
 multihashes = true
 
