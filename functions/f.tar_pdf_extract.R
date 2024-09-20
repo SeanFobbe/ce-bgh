@@ -7,17 +7,30 @@
 
 f.tar_pdf_extract <- function(x,
                               outputdir = "txt",
+                              multicore = TRUE,
                               cores = parallel::detectCores()){
-    
+
+    ## Remove and recreate target directory
     unlink(outputdir, recursive = TRUE)
     dir.create(outputdir)
 
-    plan(multicore,
-         workers = cores)
-    
+    ## Parallel Computing Settings
+    if(multicore == TRUE){
+
+        plan("multicore",
+             workers = cores)
+        
+    }else{
+
+        plan("sequential")
+
+    }
+
+    ## Extract Files
     pdf_extract(x,
                 outputdir = outputdir)
 
+    ## Return Value
     files.txt <- list.files(outputdir, pattern = "\\.txt", full.names = TRUE)
 
     return(files.txt)
