@@ -77,7 +77,7 @@ f.future_lingsummarize <- function(dt,
                                    chunksperworker = 1,
                                    chunksize = NULL){
 
-    begin.dopar <- Sys.time()
+    begin <- Sys.time()
 
     dt <- dt[,.(doc_id, text)]
     
@@ -105,8 +105,8 @@ f.future_lingsummarize <- function(dt,
 
     
 
-    end.dopar <- Sys.time()
-    duration.dopar <- end.dopar - begin.dopar
+    end <- Sys.time()
+    duration <- end - begin
 
 
     summary.corpus <- cbind(nchars[ord],
@@ -134,12 +134,12 @@ f.future_lingsummarize <- function(dt,
 
     
     print(paste0("Runtime was ",
-                 round(duration.dopar,
+                 round(duration,
                        digits = 2),
                  " ",
-                 attributes(duration.dopar)$units,
+                 attributes(duration)$units,
                  ". Ended at ",
-                 end.dopar, "."))
+                 end, "."))
     
     return(summary.corpus)
 
