@@ -75,19 +75,24 @@ f.lingstats <- function(x,
 
 f.future_lingsummarize <- function(dt,
                                    chunksperworker = 1,
-                                   chunksize = NULL){
+                                   chunksize = NULL,
+                                   quiet = FALSE){
 
     begin <- Sys.time()
 
     dt <- dt[,.(doc_id, text)]
     
     nchars <- nchar(dt$text)
+
+    if(quiet == FALSE){
     
-    print(paste0("Processing ",
+    message(paste0("Processing ",
                  dt[,.N],
                  " documents with a total length of ",
                  sum(nchars),
                  " characters."))
+
+    }
 
     
     ord <- order(-nchars)
@@ -104,20 +109,24 @@ f.future_lingsummarize <- function(dt,
     result.dt <- rbindlist(result.list)
 
     
+    summary.corpus <- result.dt[order(ord)]
+
+
     end <- Sys.time()
     duration <- end - begin
 
-    
-    summary.corpus <- result.dt[order(ord)]
 
+    if(quiet == FALSE){
     
-    print(paste0("Runtime was ",
+    message(paste0("Runtime was ",
                  round(duration,
                        digits = 2),
                  " ",
                  attributes(duration)$units,
                  ". Ended at ",
                  end, "."))
+
+    }
     
     return(summary.corpus)
 
