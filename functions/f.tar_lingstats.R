@@ -127,6 +127,10 @@ f.future_lingsummarize <- function(dt,
                  end, "."))
 
     }
+
+    if (nrow(dt) != nrow(summary.corpus)){
+        stop("Number of input and output rows are unequal.")
+    }
     
     return(summary.corpus)
 
