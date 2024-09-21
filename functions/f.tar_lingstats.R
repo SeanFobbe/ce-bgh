@@ -22,7 +22,7 @@ f.lingstats <- function(x,
     ## Set Future Strategy
     if(multicore == TRUE){
 
-        plan(future.callr::callr,
+        plan("multicore",
              workers = cores)
         
     }else{
