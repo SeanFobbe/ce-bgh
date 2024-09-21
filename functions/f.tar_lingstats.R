@@ -109,7 +109,7 @@ f.future_lingsummarize <- function(dt,
     duration <- end - begin
 
     
-    summary.corpus <- summary.corpus[order(ord)]
+    summary.corpus <- result.dt[order(ord)]
 
     
     print(paste0("Runtime was ",
