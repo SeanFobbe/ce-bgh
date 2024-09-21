@@ -89,7 +89,7 @@ f.future_lingsummarize <- function(dt,
     message(paste0("Processing ",
                  dt[,.N],
                  " documents with a total length of ",
-                 sum(nchars),
+                 format(sum(nchars), big.mark = ","),
                  " characters."))
 
     }
