@@ -1,6 +1,6 @@
 #' Parallel computation of linguistic statistics
 
-#' Iterated parallel computation of characters, tokens, types and sentences for each document of a given data table. Compatible with targets framework.
+#' Iterated parallel computation of characters, tokens, types and sentences for each document of a given data table. Assumes quanteda 4.0.0 or higher. Compatible with targets framework. 
 
 #' @param x Data.table. Must contain texts in a "text" variable and document names in a "doc_id" variable.
 #' @param multicore Logical. Whether to process each document sequentially or to use multiple cores. Defaults to TRUE.
@@ -22,7 +22,7 @@ f.lingstats <- function(x,
     ## Set Future Strategy
     if(multicore == TRUE){
 
-        plan("multisession",
+        plan(future.callr::callr,
              workers = cores)
         
     }else{
@@ -156,22 +156,35 @@ f.lingsummarize <- function(dt){
         
         corpus <- corpus(dt)
         
-        tokens <- tokens(corpus,
-                         what = "word",
-                         remove_punct = FALSE,
-                         remove_symbols = FALSE,
-                         remove_numbers = FALSE,
-                         remove_url = FALSE,
-                         remove_separators = TRUE,
-                         split_hyphens = FALSE,
-                         include_docvars = FALSE,
-                         padding = FALSE
-                         )
-        
-        ntokens <- unname(ntoken(tokens))
-        ntypes  <- unname(ntype(tokens))
-        nsentences <- unname(nsentence(corpus))
+        tokens.words <- tokens(corpus,
+                               what = "word",
+                               remove_punct = FALSE,
+                               remove_symbols = FALSE,
+                               remove_numbers = FALSE,
+                               remove_url = FALSE,
+                               remove_separators = TRUE,
+                               split_hyphens = FALSE,
+                               include_docvars = FALSE,
+                               padding = FALSE
+                               )
 
+        tokens.sentences <- tokens(corpus,
+                                   what = "sentence",
+                                   remove_punct = FALSE,
+                                   remove_symbols = FALSE,
+                                   remove_numbers = FALSE,
+                                   remove_url = FALSE,
+                                   remove_separators = TRUE,
+                                   split_hyphens = FALSE,
+                                   include_docvars = FALSE,
+                                   padding = FALSE
+                                   )
+        
+        ntokens <- unname(ntoken(tokens.words))
+        ntypes  <- unname(ntype(tokens.words))
+        nsentences <- unname(lengths(tokens.sentences))
+
+        
         out <- data.table(ntokens,
                           ntypes,
                           nsentences)
