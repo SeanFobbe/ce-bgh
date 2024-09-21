@@ -108,16 +108,6 @@ f.future_lingsummarize <- function(dt,
     end <- Sys.time()
     duration <- end - begin
 
-
-    summary.corpus <- cbind(nchars[ord],
-                            result.dt)
-
-    setnames(summary.corpus,
-             "V1",
-             "nchars")
-
-
-
     
     summary.corpus <- summary.corpus[order(ord)]
 
@@ -142,7 +132,8 @@ f.future_lingsummarize <- function(dt,
 f.lingsummarize <- function(dt){
 
     tryCatch({
-        
+
+        nchars <- nchar(dt$text)
         corpus <- corpus(dt)
         
         tokens.words <- tokens(corpus,
@@ -159,7 +150,8 @@ f.lingsummarize <- function(dt){
 
         if(unname(lengths(tokens.words)) == 0){
 
-            out <- data.table(ntokens = 0,
+            out <- data.table(nchars,
+                              ntokens = 0,
                               ntypes = 0,
                               nsentences = 0)
             
@@ -182,7 +174,8 @@ f.lingsummarize <- function(dt){
             nsentences <- unname(lengths(tokens.sentences))
 
             
-            out <- data.table(ntokens,
+            out <- data.table(nchars,
+                              ntokens,
                               ntypes,
                               nsentences)
 
