@@ -168,26 +168,36 @@ f.lingsummarize <- function(dt){
                                padding = FALSE
                                )
 
-        tokens.sentences <- tokens(corpus,
-                                   what = "sentence",
-                                   remove_punct = FALSE,
-                                   remove_symbols = FALSE,
-                                   remove_numbers = FALSE,
-                                   remove_url = FALSE,
-                                   remove_separators = TRUE,
-                                   split_hyphens = FALSE,
-                                   include_docvars = FALSE,
-                                   padding = FALSE
-                                   )
-        
-        ntokens <- unname(ntoken(tokens.words))
-        ntypes  <- unname(ntype(tokens.words))
-        nsentences <- unname(lengths(tokens.sentences))
+        if(unname(lengths(tokens.words)) == 0){
 
-        
-        out <- data.table(ntokens,
-                          ntypes,
-                          nsentences)
+            out <- data.table(ntokens = 0,
+                              ntypes = 0,
+                              nsentences = 0)
+            
+        }else{            
+
+            tokens.sentences <- tokens(corpus,
+                                       what = "sentence",
+                                       remove_punct = FALSE,
+                                       remove_symbols = FALSE,
+                                       remove_numbers = FALSE,
+                                       remove_url = FALSE,
+                                       remove_separators = TRUE,
+                                       split_hyphens = FALSE,
+                                       include_docvars = FALSE,
+                                       padding = FALSE
+                                       )
+            
+            ntokens <- unname(ntoken(tokens.words))
+            ntypes  <- unname(ntype(tokens.words))
+            nsentences <- unname(lengths(tokens.sentences))
+
+            
+            out <- data.table(ntokens,
+                              ntypes,
+                              nsentences)
+
+        }
         
         return(out)
         
