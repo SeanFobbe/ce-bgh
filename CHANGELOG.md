@@ -17,6 +17,7 @@
 - Verbesserung von Warnmeldungen und Unit Tests
 - Erweiterung der automatischen Korrektur der Aktenzeichen
 - Extraktion von PDFs ignoriert fehlerhafte PDFs
+- Fix für Segmentation Fault bei Zählung von Types bei leeren Dokumenten
 
 ## Version 2023-03-10
 
