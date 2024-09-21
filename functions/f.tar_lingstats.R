@@ -104,7 +104,6 @@ f.future_lingsummarize <- function(dt,
     result.dt <- rbindlist(result.list)
 
     
-
     end <- Sys.time()
     duration <- end - begin
 
