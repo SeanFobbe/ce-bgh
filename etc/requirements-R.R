@@ -1,6 +1,7 @@
 pkgs <- c("data.table",
           "future",
           "future.apply",
+          "future.callr",
           "targets",
           "tarchetypes",
           "qs",
