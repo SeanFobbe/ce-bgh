@@ -36,7 +36,7 @@ f.lingstats <- function(x,
     
 
     ## Perform Calculations
-    lingstats <- f.future_lingsummarize(x)
+    lingstats <- f.future_lingsummarize(x, quiet = TRUE)
 
 
     ## Optional: Set German variable names
