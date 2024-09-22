@@ -114,10 +114,12 @@ f.finalize <- function(x,
         expect_equal(dt.final[,.N],  x[,.N] - length(placeholder.txt))
     })
 
-    ## test_that("Number of output docs are equal to downloaded docs minus placeholders.", {
-    ##     expect_equal(dt.final[,.N],  download.table[,.N]  - length(placeholder.txt))
-    ## }) ## DEACTIVATED, fails if TXT conversion is not perfect
+    test_that("Number of output docs are equal to downloaded docs minus placeholders.", {
+        expect_lte(dt.final[,.N],  download.table[,.N]  - length(placeholder.txt))
+    }) ## weakened from equality to LTE, otherwise  fails if TXT conversion is not perfect
 
+
+    
     
     return(dt.final)
     
