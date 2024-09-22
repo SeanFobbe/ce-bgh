@@ -159,7 +159,7 @@ f.finalize <- function(x,
     })
  
     test_that("Registerzeichen contain only expected values", {
-        expect_setequal(dt.final$registerzeichen,
+        expect_in(dt.final$registerzeichen,
                         c("AnwZB", "AnwZ", "AnwStR", "AnwZP", "AnwZBrfg", "AnwStB", "ARAnw",
                           "AK", "RiZR", "RiStR", "RiZB", "ARRi", "RiStB", "RiZ", "RiSt", "BGs",
                           "GSSt", "GSZ", "ZR", "KVR", "KZB", "KZR", "KRB", "KVZ", "EnVR",
@@ -174,7 +174,19 @@ f.finalize <- function(x,
         expect_true(all(dt.final$eingangsnummer > 0))
         expect_true(all(dt.final$eingangsnummer < 1e4))
     })
-    
+
+    test_that("Logical variables contain only TRUE/FALSE.", {
+        expect_type(dt.final$berichtigung, "logical")
+    })
+
+    test_that("Dummy variables contain only 0 and 1.", {
+        expect_setequal(dt.final$bghz, c(0, 1))
+        expect_setequal(dt.final$bghr, c(0, 1))
+        expect_setequal(dt.final$bghst, c(0, 1))
+        expect_setequal(dt.final$nachschlagewerk, c(0, 1))
+    })
+
+
     
     return(dt.final)
     
