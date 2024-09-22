@@ -113,3 +113,14 @@ f.finalize <- function(x,
     return(dt.final)
     
 }
+
+
+
+## DEBUGGING CODE
+
+
+
+## x <- tar_read(dt.bgh.datecleaned)
+## download.table <- tar_read(dt.download.final)
+## vars.additional <- tar_read(vars_additional)
+## varnames <- tar_read(variables.codebook)$varname
