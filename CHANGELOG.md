@@ -14,7 +14,8 @@
 - Vereinfachung der Repository-Struktur
 - Python Toolchain entfernt
 - Zusätzliches Lösch-Skript mit Docker-Integration
-- Verbesserung von Warnmeldungen und Unit Tests
+- Verbesserung von Warnmeldungen
+- Erweiterung der Unit Tests
 - Erweiterung der automatischen Korrektur der Aktenzeichen
 - Extraktion von PDFs ignoriert fehlerhafte PDFs
 - Fix für Segmentation Fault bei Zählung von Types bei leeren Dokumenten
