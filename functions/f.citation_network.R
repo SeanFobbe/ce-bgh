@@ -17,24 +17,6 @@ f.citation_network <- function(dt.bgh.final,
                                multicore = TRUE,
                                cores = parallel::detectCores()){
 
-
-    
-    ## Create Registerzeichen REGEX
-
-    registerzeichen.bgh <- paste0(az.brd[stelle == "BGH"]$zeichen_original, collapse = "|")
-
-    registerzeichen.regex <- gsub("\\(",
-                                  " \\*\\\\\\(",
-                                  registerzeichen.bgh)
-
-    registerzeichen.regex.raw <- gsub("\\)",
-                                  "\\\\\\)",
-                                  registerzeichen.regex)
-
-    registerzeichen.regex <- paste0("(", registerzeichen.regex.raw, ")")
-
-
-
     ## Parallel Settings
 
     if(multicore == TRUE){
@@ -48,6 +30,54 @@ f.citation_network <- function(dt.bgh.final,
 
     }
 
+
+    ## Create Registerzeichen REGEX
+
+    ## registerzeichen.bgh <- paste0(az.brd[stelle == "BGH"]$zeichen_original, collapse = "|")
+
+    ## registerzeichen.regex <- gsub("\\(",
+    ##                               " \\*\\\\\\(",
+    ##                               registerzeichen.bgh)
+
+    ## registerzeichen.regex.raw <- gsub("\\)",
+    ##                               "\\\\\\)",
+    ##                               registerzeichen.regex)
+
+    ## registerzeichen.regex <- paste0("(", registerzeichen.regex.raw, ")")
+
+
+    
+    ## Create Senat REGEX
+
+    regex.senat <-  paste0("(",
+                           paste0(c(1:6, as.character(utils::as.roman(1:15))),
+                                  collapse = "|"),
+                           ")")
+
+    ## Create Registerzeichen REGEX
+    
+    regex.regz.numbered <- paste0("(", paste0(c("BGs", "ZR", "StR", "ARs", "ZB", "ZA",
+                                                "ARsVollz", "ARVS", "ARZ", "ZRÜ", "ARVZ"),
+                                              collapse = "|"),
+                                  ")")
+    
+    ## Create final AZ REGEX
+
+    regex.az <- paste0(regex.senat, # Spruchkörper
+                       "\\s*",
+                       regex.regz.numbered, # Registerzeichen
+                       "\\s*",
+                       "[0-9]{1,5}", # Eingangsnummer
+                       "/",
+                       "[0-9]{2}" # Eingangsjahr
+                       )
+
+    begin <- Sys.time()
+    target.az <- stringi::stri_extract_all(dt.bgh.final$text[1:1000],
+                                           regex = regex.az)
+
+    end <- Sys.time()
+    end-begin
     
     
     ## Extract Citations: Future
@@ -100,17 +130,27 @@ f.citation_network <- function(dt.bgh.final,
 }
 
 
+x <- sample(dt.bgh.final$aktenzeichen, 1000)
 
 
+f.extract_aktenzeichen(x)
 
 
 f.extract_aktenzeichen <- function(x){
 
+
+    ## Create Senat REGEX
+
+    senat.regex <-  paste0("(",
+                           paste0(c(1:6, as.character(utils::as.roman(1:15))),
+                                  collapse = "|"),
+                           ")")
+    
     list <- stringi::stri_extract_all(x,
-                                      regex = paste0("[0-9XIVa-d]{0,5}", # Spruchkörper
-                                                     " *",
+                                      regex = paste0(senat.regex, # Spruchkörper
+                                                     "\\s*",
                                                      registerzeichen.regex, # Registerzeichen
-                                                     " ",
+                                                     "\\s*",
                                                      "[0-9]+", # Eingangsnummer
                                                      "/",
                                                      "[0-9]{2}" # Eingangsjahr
