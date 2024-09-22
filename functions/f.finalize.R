@@ -96,9 +96,11 @@ f.finalize <- function(x,
 
 
 
-    ## Unit Test: Check variables and set column order
-    
+    ## Unit Test: Check if all variables are documented
     varnames <- gsub("\\\\", "", varnames) # Remove LaTeX escape characters
+    stopifnot(length(setdiff(names(dt.final), varnames)) == 0)
+    
+    ## Order variables as in Codebook
     data.table::setcolorder(dt.final, varnames)
 
 
