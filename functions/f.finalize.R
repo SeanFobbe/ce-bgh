@@ -118,7 +118,62 @@ f.finalize <- function(x,
         expect_lte(dt.final[,.N],  download.table[,.N]  - length(placeholder.txt))
     }) ## weakened from equality to LTE, otherwise  fails if TXT conversion is not perfect
 
+    test_that("Date is plausible", {
+        expect_true(all(dt.final$datum > "2000-01-01"))
+        expect_true(all(dt.final$datum <= Sys.Date()))
+    })
 
+    test_that("Year is plausible", {
+        expect_true(all(dt.final$entscheidungsjahr >= 2000))
+        expect_true(all(dt.final$entscheidungsjahr <= year(Sys.Date())))
+    })
+
+    test_that("Spruchkörper_db contains only expected values.", {
+        expect_in(dt.final$spruchkoerper_db,
+                        c(paste0("Strafsenat-", 1:6),
+                          paste0("Zivilsenat-", formatC(1:15, width = 2, flag = "0")),
+                          paste0("Zivilsenat-", formatC(1:15, width = 2, flag = "0"), "a"),
+                          "Anwaltsenat",
+                          "DienstgerichtBund",
+                          "Ermittlungsrichter",
+                          "GrosserStrafsenat",
+                          "GrosserZivilsenat",
+                          "Kartellsenat",    
+                          "Landwirtschaftsenat",
+                          "Notarsenat",
+                          "Patentanwaltsenat",
+                          "Steuerberatersenat",
+                          "VereinigteGrosseSenate",
+                          "Wirtschaftsprüfersenat"))
+    })
+
+   
+    test_that("Spruchkörper_az contains only expected values.", {
+        expect_in(dt.final$spruchkoerper_az,
+                        c(1:6,
+                          as.character(utils::as.roman(1:15)),
+                          "VIa",
+                          "IXa",
+                          "Xa",
+                          NA))
+    })
+ 
+    test_that("Registerzeichen contain only expected values", {
+        expect_setequal(dt.final$registerzeichen,
+                        c("AnwZB", "AnwZ", "AnwStR", "AnwZP", "AnwZBrfg", "AnwStB", "ARAnw",
+                          "AK", "RiZR", "RiStR", "RiZB", "ARRi", "RiStB", "RiZ", "RiSt", "BGs",
+                          "GSSt", "GSZ", "ZR", "KVR", "KZB", "KZR", "KRB", "KVZ", "EnVR",
+                          "EnZR", "EnVZ", "EnZB", "KVB", "BLw", "LwZR", "LwZB", "LwZA", "NotZ",
+                          "NotStB", "NotZBrfg", "NotStBrfg", "ARNot", "PatAnwZ", "PatAnwStB",
+                          "PatAnwStR", "StbStR", "StbStB", "StR", "ARs", "StB", "ZB", "ZA",
+                          "ARsVollz", "ARVS", "VGS", "WpStR", "WpStB", "ARZ", "ZRÜ", "ARVZ"))
+                                                   
+    })
+    
+    test_that("Eingangsnummern are plausible", {
+        expect_true(all(dt.final$eingangsnummer > 0))
+        expect_true(all(dt.final$eingangsnummer < 1e4))
+    })
     
     
     return(dt.final)
