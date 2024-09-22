@@ -121,7 +121,8 @@ f.finalize <- function(x,
 ## DEBUGGING CODE
 
 
-
+## library(testthat)
+## library(data.table)
 ## x <- tar_read(dt.bgh.datecleaned)
 ## download.table <- tar_read(dt.download.final)
 ## vars.additional <- tar_read(vars_additional)
