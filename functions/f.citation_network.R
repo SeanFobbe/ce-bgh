@@ -4,8 +4,6 @@
 #'
 #' @param dt.bgh.final Data.table. Der finale BGH-Datensatz.
 #' @param az.brd Ein data.frame oder data.table mit dem Datensatz "Seán Fobbe (2021). Aktenzeichen der Bundesrepublik Deutschland (AZ-BRD). Version 1.0.1. Zenodo. DOI: 10.5281/zenodo.4569564."
-#' @param multictore Logical. Parallelisierung aktivieren.
-#' @param cores Integer. Anzahl cores für Parallelisierung.
 #'
 #' @return Igraph object. Alle Zitate zwischen Aktenzeichen in den Entscheidungen des BGH.
 
