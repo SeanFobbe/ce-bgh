@@ -103,7 +103,7 @@ f.citation_network_bgh <- function(dt.bgh.final,
     ## Extract BGHZ citation blocks
     regex.eblocks <- "BGHZ[\\s\\d\\[\\];,\\.<>Rnfu-]+"
     
-    target.eblocks <- stringi::stri_extract_all(dt.final$text,
+    target.eblocks <- stringi::stri_extract_all(dt.bgh.final$text,
                                                 regex = regex.eblocks,
                                                 case_insensitive = TRUE)
     
@@ -128,7 +128,7 @@ f.citation_network_bgh <- function(dt.bgh.final,
     ## Extract BGHSt citation blocks
     regex.eblocks <- "BGHSt[\\s\\d\\[\\];,\\.<>Rnfu-]+"
     
-    target.eblocks <- stringi::stri_extract_all(dt.final$text,
+    target.eblocks <- stringi::stri_extract_all(dt.bgh.final$text,
                                                 regex = regex.eblocks,
                                                 case_insensitive = TRUE)
     
