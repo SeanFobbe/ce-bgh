@@ -26,22 +26,31 @@ f.citation_network <- function(dt.bgh.final,
     ## Create Registerzeichen REGEX for Number Senates
 
     regz.numbersenate <- c("BGs", "ZR", "StR", "ARs", "ZB", "ZA",
-                           "ARsVollz", "ARVS", "ARZ", "ZRÜ", "ARVZ")
+                           "ARsVollz", "ARVS", "ARZ", "ZR(Ü)", "ARVZ")
+
+    regz.numbersenate <- gsub("\\(",
+                                    " \\*\\\\\\(",
+                                    regz.numbersenate)
+
+    regz.numbersenate <- gsub("\\)",
+                                    "\\\\\\)",
+                                    regz.numbersenate)
+    
     
     regex.regz.numbersenate <- paste0("(", paste0(regz.numbersenate,
-                                              collapse = "|"),
-                                  ")")
+                                                  collapse = "|"),
+                                      ")")
     
     ## Create FULL Number Senate AZ REGEX
 
     regex.az.numbersenate <- paste0(regex.senat, # Spruchkörper
-                                "\\s*",
-                                regex.regz.numbersenate, # Registerzeichen
-                                "\\s*",
-                                "[0-9]{1,5}", # Eingangsnummer
-                                "/",
-                                "[0-9]{2}" # Eingangsjahr
-                                )
+                                    "\\s*",
+                                    regex.regz.numbersenate, # Registerzeichen
+                                    "\\s*",
+                                    "[0-9]{1,5}", # Eingangsnummer
+                                    "/",
+                                    "[0-9]{2}" # Eingangsjahr
+                                    )
 
 
     ## Create Registerzeichen REGEX for Letter Senates
@@ -53,12 +62,12 @@ f.citation_network <- function(dt.bgh.final,
                                       collapse = "|")
     
     regex.regz.lettersenate <- gsub("\\(",
-                                  " \\*\\\\\\(",
-                                  regex.regz.lettersenate)
+                                    " \\*\\\\\\(",
+                                    regex.regz.lettersenate)
 
     regex.regz.lettersenate <- gsub("\\)",
-                                  "\\\\\\)",
-                                  regex.regz.lettersenate)
+                                    "\\\\\\)",
+                                    regex.regz.lettersenate)
 
     
     regex.regz.lettersenate <- paste0("(", regex.regz.lettersenate, ")")
@@ -107,35 +116,77 @@ f.citation_network <- function(dt.bgh.final,
     setnames(dt.az.lettersenate, new = c("source", "target"))
 
 
-    ## Create Edgelist
+    ## Combine Tables
+    dt <- rbind(dt.az.numbersenate,
+                dt.az.lettersenate)
+
+    ## Remove non-citations
+    dt <- dt[!is.na(target)]
     
-    source <- dt.bgh.final$aktenzeichen
-    
-    bind <- mapply(cbind, source, target)
+    ## Clean whitespace
+    dt$source <- gsub("\\s+", " ", dt$source)
+    dt$target <- gsub("\\s+", " ", dt$target)
 
-    bind2 <- lapply(bind, as.data.table)
+    dt$source <- trimws(dt$source)
+    dt$target <- trimws(dt$target)
 
-    dt <- rbindlist(bind2)
-
-    setnames(dt, new = c("source", "target"))
-
-
-    dt$target <- gsub(" \\(",
-                      "\\(",
-                      dt$target)
-
+    dt$source <- gsub(" \\(", "\\(", dt$source)
+    dt$target <- gsub(" \\(", "\\(", dt$target)
 
     ## Remove self-citations    
     dt <- dt[!(dt$source == dt$target)]
 
-
-
-    ## Create Graph
-    g  <- igraph::graph.data.frame(dt, directed = TRUE)
-
-
+    
+    ## Create Graph Object
+    g  <- igraph::graph_from_data_frame(dt,
+                                        directed = TRUE)
 
     
+    ## Convert Parallel Edges to Weights
+    igraph::E(g)$weight <- 1
+    g <- igraph::simplify(g, edge.attr.comb = list(weight = "sum"))
+
+
+    ## Extract Senate
+    g.names <- igraph::vertex_attr(g, "name")
+    
+    g.senat <- stringi::stri_extract_all(g.names,
+                                         regex = "^[0-6IXV]{1,4}a?")
+    g.senat <- unlist(g.senat)
+
+    stopifnot(length(g.names) == length(g.senat))
+    
+
+    ## Extract Registerzeichen
+
+    g.regz <- stringi::stri_extract_all(g.names,
+                                        regex = " ([A-Za-z\\(\\)]+) ")
+
+    g.regz <- gsub("[IVXa-d0-9 ]*([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
+
+    g.regz <- unlist(g.regz)
+
+    stopifnot(length(g.names) == length(g.regz))
+    
+    ## Set Vertex Attributes
+    g <- igraph::set_vertex_attr(g, "registerzeichen", index = igraph::V(g), g.regz)
+    g <- igraph::set_vertex_attr(g, "senat", index = igraph::V(g), g.senat)
+
+
+    ## Delete incorrect Registerzeichen Nodes
+    regz.final <- igraph::vertex_attr(g, "registerzeichen")
+    regz.correct <- regz.final %in% az.brd$zeichen_original
+    g <- igraph::delete_vertices(g, !regz.correct)
+
+    if (sum(!regz.correct) > 0){
+        warning(paste("Warnung!",
+                      sum(!regz.correct),
+                      "Nodes entfernt, weil Registerzeichen fehlerhaft."))
+
+    }
+
+    
+  
     return(g)
 
 
