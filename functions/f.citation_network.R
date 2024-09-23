@@ -10,8 +10,8 @@
 
 
 
-f.citation_network <- function(dt.bgh.final,
-                               az.brd){
+f.citation_network_bgh <- function(dt.bgh.final,
+                                   az.brd){
 
     
     ## Create Number Senate REGEX
