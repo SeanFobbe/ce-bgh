@@ -243,10 +243,20 @@ f.citation_network <- function(dt.bgh.final,
     g.regz <- unlist(g.regz)
 
     stopifnot(length(g.names) == length(g.regz))
+
+    ## Extract BGHZ
+    g.bghz <- grepl("BGHZ", g.names, ignore.case = TRUE)
+
+
+    ## Extract BGHSt
+    g.bghst <- grepl("BGHSt", g.names, ignore.case = TRUE)
+    
     
     ## Set Vertex Attributes
     g <- igraph::set_vertex_attr(g, "registerzeichen", index = igraph::V(g), g.regz)
     g <- igraph::set_vertex_attr(g, "senat", index = igraph::V(g), g.senat)
+    g <- igraph::set_vertex_attr(g, "BGHZ", index = igraph::V(g), g.bghz)
+    g <- igraph::set_vertex_attr(g, "BGHSt", index = igraph::V(g), g.bghst)
 
 
     ## Delete incorrect Registerzeichen Nodes
