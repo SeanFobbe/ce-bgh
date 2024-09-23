@@ -13,86 +13,84 @@
 
 
 f.citation_network <- function(dt.bgh.final,
-                               az.brd,
-                               multicore = TRUE,
-                               cores = parallel::detectCores()){
-
-    ## Parallel Settings
-
-    if(multicore == TRUE){
-
-        plan("multicore",
-             workers = cores)
-        
-    }else{
-
-        plan("sequential")
-
-    }
-
-
-    ## Create Registerzeichen REGEX
-
-    ## registerzeichen.bgh <- paste0(az.brd[stelle == "BGH"]$zeichen_original, collapse = "|")
-
-    ## registerzeichen.regex <- gsub("\\(",
-    ##                               " \\*\\\\\\(",
-    ##                               registerzeichen.bgh)
-
-    ## registerzeichen.regex.raw <- gsub("\\)",
-    ##                               "\\\\\\)",
-    ##                               registerzeichen.regex)
-
-    ## registerzeichen.regex <- paste0("(", registerzeichen.regex.raw, ")")
-
+                               az.brd){
 
     
-    ## Create Senat REGEX
+    ## Create Number Senate REGEX
 
     regex.senat <-  paste0("(",
                            paste0(c(1:6, as.character(utils::as.roman(1:15))),
                                   collapse = "|"),
                            ")")
 
-    ## Create Registerzeichen REGEX
+    ## Create Registerzeichen REGEX for Number Senates
+
+    regz.numbersenate <- c("BGs", "ZR", "StR", "ARs", "ZB", "ZA",
+                           "ARsVollz", "ARVS", "ARZ", "ZRÜ", "ARVZ")
     
-    regex.regz.numbered <- paste0("(", paste0(c("BGs", "ZR", "StR", "ARs", "ZB", "ZA",
-                                                "ARsVollz", "ARVS", "ARZ", "ZRÜ", "ARVZ"),
+    regex.regz.numbersenate <- paste0("(", paste0(regz.numbersenate,
                                               collapse = "|"),
                                   ")")
     
-    ## Create final AZ REGEX
+    ## Create FULL Number Senate AZ REGEX
 
-    regex.az <- paste0(regex.senat, # Spruchkörper
-                       "\\s*",
-                       regex.regz.numbered, # Registerzeichen
-                       "\\s*",
-                       "[0-9]{1,5}", # Eingangsnummer
-                       "/",
-                       "[0-9]{2}" # Eingangsjahr
-                       )
+    regex.az.numbersenate <- paste0(regex.senat, # Spruchkörper
+                                "\\s*",
+                                regex.regz.numbersenate, # Registerzeichen
+                                "\\s*",
+                                "[0-9]{1,5}", # Eingangsnummer
+                                "/",
+                                "[0-9]{2}" # Eingangsjahr
+                                )
 
-    begin <- Sys.time()
-    target.az <- stringi::stri_extract_all(dt.bgh.final$text[1:1000],
-                                           regex = regex.az)
 
-    end <- Sys.time()
-    end-begin
+    ## Create Registerzeichen REGEX for Letter Senates
+
+    regz.lettersenate <- setdiff(az.brd[stelle == "BGH"]$zeichen_original,
+                                 regz.numbersenate)
+
+    regex.regz.lettersenate <- paste0(regz.lettersenate,
+                                      collapse = "|")
+    
+    regex.regz.lettersenate <- gsub("\\(",
+                                  " \\*\\\\\\(",
+                                  regex.regz.lettersenate)
+
+    regex.regz.lettersenate <- gsub("\\)",
+                                  "\\\\\\)",
+                                  regex.regz.lettersenate)
+
+    
+    regex.regz.lettersenate <- paste0("(", regex.regz.lettersenate, ")")
     
     
-    ## Extract Citations: Future
+    ## Create FULL Letter Senate AZ REGEX
+
+    regex.az.lettersenate <- paste0(regex.regz.lettersenate, # Registerzeichen
+                                    "\\s*",
+                                    "[0-9]{1,5}", # Eingangsnummer
+                                    "/",
+                                    "[0-9]{2}" # Eingangsjahr
+                                    )
     
-    ##    begin <- Sys.time()
+
+
 
     
-    target <- future.apply::future_lapply(dt.bgh.final$text,
-                                          f.extract_aktenzeichen,
-                                          future.seed = TRUE)
+    ## begin <- Sys.time()
 
+    target.az.numbersenate <- stringi::stri_extract_all(dt.bgh.final$text,
+                                                        regex = regex.az.numbersenate)
+    
+    target.az.lettersenate <- stringi::stri_extract_all(dt.bgh.final$text,
+                                                        regex = regex.az.lettersenate)
+    
 
-
-    ##   end <- Sys.time()
-    ##  end-begin
+    
+    ## end <- Sys.time()
+    ## end-begin
+    
+    
 
 
     ## Create Edgelist
