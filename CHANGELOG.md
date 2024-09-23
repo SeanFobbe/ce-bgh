@@ -3,9 +3,11 @@
 
 ## Version \version
 
-- LIZENZÄNDERUNG: Source Code jetzt unter GNU General Public License Version 3 (GPLv3) oder später lizenziert
-- NEU: Variable für BGHZ
 - Vollständige Aktualisierung der Daten
+- LIZENZÄNDERUNG: Source Code jetzt unter GNU General Public License Version 3 (GPLv3) oder später lizenziert
+- NEU: Zitationsnetzwerk Aktenzeichen-zu-BGHZ und Aktenzeichen zu BGHSt
+- NEU: Variable für BGHZ
+- Extraktion von Zitaten für Aktenzeichen-zu-Aktenzeichen komplett überarbeitet
 - R-Version auf 4.4.0 aktualisiert (wegen CVE-2024-27322)
 - Variable "bghr" wird nun korrekt extrahiert
 - Source-Archiv wird nun aus dem Git-Manifest gebildet
