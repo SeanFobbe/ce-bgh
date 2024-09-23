@@ -687,21 +687,19 @@ tar_target(dt.bgh.meta,
 
 
 ```{targets tar.citation.extract}
-tar_target(igraph.citations.raw,
-           f.citation_network(dt.bgh.final = dt.bgh.final,
-                              az.brd = az.brd,
-                              multicore = config$parallel$citations,
-                              cores = fullCores))
-
-```
-
-
-```{targets tar.citation.clean}
 tar_target(igraph.citations.cleaned,
-           f.clean_graph(g = igraph.citations.raw,
+           f.citation_network(dt.bgh.final = dt.bgh.final,
                               az.brd = az.brd))
 
 ```
+
+
+<!-- ```{targets tar.citation.clean} -->
+<!-- tar_target(igraph.citations.cleaned, -->
+<!--            f.clean_graph(g = igraph.citations.raw, -->
+<!--                               az.brd = az.brd)) -->
+
+<!-- ``` -->
 
 
 
