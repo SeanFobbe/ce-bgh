@@ -85,6 +85,7 @@ f.citation_network <- function(dt.bgh.final,
 
 
 
+    ## Extract Citations (Numbered and Lettered Senates)
     
     ## begin <- Sys.time()
 
@@ -98,6 +99,59 @@ f.citation_network <- function(dt.bgh.final,
     
     ## end <- Sys.time()
     ## end-begin
+
+
+    
+    ## Extract BGHZ citation blocks
+    regex.eblocks <- "BGHZ[\\s\\d\\[\\];,\\.<>Rnfu-]+"
+    
+    target.eblocks <- stringi::stri_extract_all(dt.final$text,
+                                                regex = regex.eblocks,
+                                                case_insensitive = TRUE)
+    
+    target.eblocks <- lapply(target.eblocks, paste0, collapse = " ")
+    target.eblocks <- lapply(target.eblocks, # Fix case typos
+                             gsub,
+                             pattern = "BGHZ",
+                             replacement = "BGHZ",
+                             ignore.case = TRUE)
+
+    ## Extract individual BGHZ citations from blocks
+    regex.bghz.cite <- paste0("(BGHZ|;)\\s*", # hooks
+                              "\\d{1,3},\\s*", # Volume
+                              "\\d{1,3}") # Page
+
+
+    target.bghz <- stringi::stri_extract_all(target.eblocks,
+                                             regex = regex.bghz.cite)
+
+
+
+    ## Extract BGHSt citation blocks
+    regex.eblocks <- "BGHSt[\\s\\d\\[\\];,\\.<>Rnfu-]+"
+    
+    target.eblocks <- stringi::stri_extract_all(dt.final$text,
+                                                regex = regex.eblocks,
+                                                case_insensitive = TRUE)
+    
+    target.eblocks <- lapply(target.eblocks, paste0, collapse = " ")
+    target.eblocks <- lapply(target.eblocks, # Fix case typos
+                             gsub,
+                             pattern = "BGHSt",
+                             replacement = "BGHSt",
+                             ignore.case = TRUE)
+
+    ## Extract individual BGHSt citations from blocks
+    regex.bghst.cite <- paste0("(BGHSt|;)\\s*", # hooks
+                              "\\d{1,3},\\s*", # Volume
+                              "\\d{1,3}") # Page
+
+
+    target.bghst <- stringi::stri_extract_all(target.eblocks,
+                                             regex = regex.bghst.cite)
+
+    
+
     
 
     ## Define source Aktenzeichen
@@ -115,10 +169,30 @@ f.citation_network <- function(dt.bgh.final,
     dt.az.lettersenate <- rbindlist(bind)
     setnames(dt.az.lettersenate, new = c("source", "target"))
 
+    ## [BGHZ] Combine source Aktenzeichen and target BGHZ
+    bind <- mapply(cbind, source, target.bghz)
+    bind <- lapply(bind, as.data.table)
+    dt.bghz <- rbindlist(bind)
+    setnames(dt.bghz, new = c("source", "target"))
+    
+    dt.bghz$target <-  gsub(";", "BGHZ", dt.bghz$target) # Clean BGHZ hooks
 
+
+    ## [BGHSt] Combine source Aktenzeichen and target BGHSt
+    bind <- mapply(cbind, source, target.bghst)
+    bind <- lapply(bind, as.data.table)
+    dt.bghst <- rbindlist(bind)
+    setnames(dt.bghst, new = c("source", "target"))
+    
+    dt.bghst$target <-  gsub(";", "BGHSt", dt.bghst$target) # Clean BGHSt hooks
+    
+    
+    
     ## Combine Tables
     dt <- rbind(dt.az.numbersenate,
-                dt.az.lettersenate)
+                dt.az.lettersenate,
+                dt.bghz,
+                dt.bghst)
 
     ## Remove non-citations
     dt <- dt[!is.na(target)]
@@ -147,6 +221,7 @@ f.citation_network <- function(dt.bgh.final,
     g <- igraph::simplify(g, edge.attr.comb = list(weight = "sum"))
 
 
+    
     ## Extract Senate
     g.names <- igraph::vertex_attr(g, "name")
     
@@ -157,8 +232,9 @@ f.citation_network <- function(dt.bgh.final,
     stopifnot(length(g.names) == length(g.senat))
     
 
-    ## Extract Registerzeichen
 
+    
+    ## Extract Registerzeichen
     g.regz <- stringi::stri_extract_all(g.names,
                                         regex = " ([A-Za-z\\(\\)]+) ")
 
@@ -174,18 +250,17 @@ f.citation_network <- function(dt.bgh.final,
 
 
     ## Delete incorrect Registerzeichen Nodes
-    regz.final <- igraph::vertex_attr(g, "registerzeichen")
-    regz.correct <- regz.final %in% az.brd$zeichen_original
-    g <- igraph::delete_vertices(g, !regz.correct)
+    ## regz.final <- igraph::vertex_attr(g, "registerzeichen")
+    ## regz.correct <- regz.final %in% az.brd$zeichen_original
+    ## g <- igraph::delete_vertices(g, !regz.correct)
 
-    if (sum(!regz.correct) > 0){
-        warning(paste("Warnung!",
-                      sum(!regz.correct),
-                      "Nodes entfernt, weil Registerzeichen fehlerhaft."))
+    ## if (sum(!regz.correct) > 0){
+    ##     warning(paste("Warnung!",
+    ##                   sum(!regz.correct),
+    ##                   "Nodes entfernt, weil Registerzeichen fehlerhaft."))
 
-    }
+    ## }
 
-    
   
     return(g)
 
