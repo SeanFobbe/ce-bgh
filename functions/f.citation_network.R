@@ -90,7 +90,21 @@ f.citation_network <- function(dt.bgh.final,
     ## end <- Sys.time()
     ## end-begin
     
+
+    ## Define source Aktenzeichen
+    source <- dt.bgh.final$aktenzeichen
     
+    ## [Number Senates] Combine source Aktenzeichen and target Aktenzeichen 
+    bind <- mapply(cbind, source, target.az.numbersenate)
+    bind <- lapply(bind, as.data.table)
+    dt.az.numbersenate <- rbindlist(bind)
+    setnames(dt.az.numbersenate, new = c("source", "target"))
+
+    ## [Letter Senates] Combine source Aktenzeichen and target Aktenzeichen 
+    bind <- mapply(cbind, source, target.az.lettersenate)
+    bind <- lapply(bind, as.data.table)
+    dt.az.lettersenate <- rbindlist(bind)
+    setnames(dt.az.lettersenate, new = c("source", "target"))
 
 
     ## Create Edgelist
@@ -128,39 +142,16 @@ f.citation_network <- function(dt.bgh.final,
 }
 
 
-x <- sample(dt.bgh.final$aktenzeichen, 1000)
 
 
-f.extract_aktenzeichen(x)
+#' Debugging
 
-
-f.extract_aktenzeichen <- function(x){
-
-
-    ## Create Senat REGEX
-
-    senat.regex <-  paste0("(",
-                           paste0(c(1:6, as.character(utils::as.roman(1:15))),
-                                  collapse = "|"),
-                           ")")
-    
-    list <- stringi::stri_extract_all(x,
-                                      regex = paste0(senat.regex, # Spruchkörper
-                                                     "\\s*",
-                                                     registerzeichen.regex, # Registerzeichen
-                                                     "\\s*",
-                                                     "[0-9]+", # Eingangsnummer
-                                                     "/",
-                                                     "[0-9]{2}" # Eingangsjahr
-                                                     ))
-
-    vec <- list[[1]]
-    vec <- trimws(vec)
-
-    return(vec)
-}
-
-
+## library(data.table)
+## library(stringi)
+## library(igraph)
+## tar_load(dt.bgh.final)
+## tar_load(az.brd)
+        
 
 
 
@@ -185,12 +176,6 @@ f.extract_aktenzeichen <- function(x){
 
 
 
-
-#' Debugging
-
-## tar_load(dt.bgh.final)
-## tar_load(az.brd)
-        
 
 
 ## png("output/test1.png", width = 12, height = 12, res = 300, units = "in")
