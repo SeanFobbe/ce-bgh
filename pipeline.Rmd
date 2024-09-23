@@ -685,7 +685,6 @@ tar_target(dt.bgh.meta,
 ## Zitations-Analyse
 
 
-
 ```{targets tar.citation.extract}
 tar_target(igraph.citations.cleaned,
            f.citation_network_bgh(dt.bgh.final = dt.bgh.final,
