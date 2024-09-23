@@ -29,12 +29,12 @@ f.citation_network <- function(dt.bgh.final,
                            "ARsVollz", "ARVS", "ARZ", "ZR(Ü)", "ARVZ")
 
     regz.numbersenate <- gsub("\\(",
-                                    " \\*\\\\\\(",
-                                    regz.numbersenate)
+                              " \\*\\\\\\(",
+                              regz.numbersenate)
 
     regz.numbersenate <- gsub("\\)",
-                                    "\\\\\\)",
-                                    regz.numbersenate)
+                              "\\\\\\)",
+                              regz.numbersenate)
     
     
     regex.regz.numbersenate <- paste0("(", paste0(regz.numbersenate,
@@ -143,12 +143,12 @@ f.citation_network <- function(dt.bgh.final,
 
     ## Extract individual BGHSt citations from blocks
     regex.bghst.cite <- paste0("(BGHSt|;)\\s*", # hooks
-                              "\\d{1,3},\\s*", # Volume
-                              "\\d{1,3}") # Page
+                               "\\d{1,3},\\s*", # Volume
+                               "\\d{1,3}") # Page
 
 
     target.bghst <- stringi::stri_extract_all(target.eblocks,
-                                             regex = regex.bghst.cite)
+                                              regex = regex.bghst.cite)
 
     
 
@@ -271,7 +271,7 @@ f.citation_network <- function(dt.bgh.final,
 
     ## }
 
-  
+    
     return(g)
 
 
