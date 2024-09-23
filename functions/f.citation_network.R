@@ -233,13 +233,15 @@ f.citation_network_bgh <- function(dt.bgh.final,
 
     
     ## Extract Registerzeichen
-    g.regz <- stringi::stri_extract_all(g.names,
-                                        regex = " ([A-Za-z\\(\\)]+) ")
-
+    ## g.regz <- stringi::stri_extract_all(g.names,
+    ##                                     regex = " ([A-Za-z\\(\\)]+) ")
+    ## g.regz <- unlist(g.regz)
+    
     g.regz <- gsub("[IVXa-d0-9 ]*([A-Za-z\\(\\)]+) *[0-9]+/[0-9]+", "\\1", g.names)
+    g.regz[grep("BGH(Z|St)", g.regz)] <- NA
+    g.regz[grep("ZR\\(Ü\\)", g.regz)] <- "ZR(Ü)"
 
-    g.regz <- unlist(g.regz)
-
+    
     stopifnot(length(g.names) == length(g.regz))
 
     ## Extract BGHZ
