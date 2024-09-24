@@ -22,6 +22,7 @@
 - Extraktion von PDFs ignoriert fehlerhafte PDFs
 - Fix für Segmentation Fault bei Zählung von Types bei leeren Dokumenten
 - Fix für gitconfig-Problem
+- Diagramme nicht mehr nummeriert, sondern nach Typ geordnet
 
 
 
