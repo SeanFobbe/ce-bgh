@@ -739,7 +739,7 @@ Das Zitationsnetzwerk wird als GraphML-Datei angeboten und kann z.B. einfach in 
 \ra{1.1}
 ```{r}
 
-g <- igraph_citations
+g <- igraph.citations.cleaned
 
 
 dt.g <- data.table(Metric = c("Number of Nodes",
