@@ -164,7 +164,7 @@ Die Daten wurden unter Beachtung des Robot Exclusion Standard (RES) gesammelt. D
 
 
 
-```{r, CE-BGH_00_Pipeline_Graph, fig.width = 12, fig.height = 18, fig.pos = "p", fig.cap = "Der vollständige Prozess der Datensatz-Kompilierung."}
+```{r, CE-BGH_Pipeline_Graph, fig.width = 12, fig.height = 18, fig.pos = "p", fig.cap = "Der vollständige Prozess der Datensatz-Kompilierung."}
 
 edgelist <- tar_network(targets_only = TRUE)$edges
 setDT(edgelist)
@@ -594,7 +594,7 @@ kable(lingstats.summary,
 ## Verteilung Zeichen
 
 
-```{r, CE-BGH_01_Density_Zeichen, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Density_Zeichen, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = zeichen),
                  fill = "#7e0731")+
@@ -623,7 +623,7 @@ ggplot(data = dt.bgh.meta)+
 
 ## Verteilung Tokens
 
-```{r,  CE-BGH_02_Density_Tokens, fig.height = 6, fig.width = 9}
+```{r,  CE-BGH_Density_Tokens, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = tokens),
                  fill = "#7e0731")+
@@ -651,7 +651,7 @@ ggplot(data = dt.bgh.meta)+
 
 ## Verteilung Typen
 
-```{r, CE-BGH_03_Density_Typen, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Density_Typen, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = typen),
                  fill = "#7e0731")+
@@ -680,7 +680,7 @@ ggplot(data = dt.bgh.meta)+
 
 ## Verteilung Sätze
 
-```{r, CE-BGH_04_Density_Saetze, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Density_Saetze, fig.height = 6, fig.width = 9}
 ggplot(data = dt.bgh.meta)+
     geom_density(aes(x = saetze),
                  fill = "#7e0731")+
@@ -867,7 +867,7 @@ Die Extraktion mit regulären Ausdrücken hat Grenzen. Insbesondere folgende Pro
 
 
 
-```{r, CE-BGH_15_Zitate_Graph_karmesinrot, fig.width = 28, fig.height = 16, fig.pos = "p", dpi = 150, dev = "png", fig.cap = "Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Zivilsenats des Bundesgerichthofs (Sugiyama Layout)"}
+```{r, CE-BGH_Zitate_Graph_karmesinrot, fig.width = 28, fig.height = 16, fig.pos = "p", dpi = 150, dev = "png", fig.cap = "Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Zivilsenats des Bundesgerichthofs (Sugiyama Layout)"}
 
 # Options: sugiyama best, kk very nice, lgl, drl, gfr; gem veeeery slow; fr not nice; sugiyama 20 width 16 height
 
@@ -972,7 +972,7 @@ freqtable.etyp.nosum <- freqtable.etyp[-.N]
 
 
 
-```{r, CE-BGH_05_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Barplot_Entscheidungstyp, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.etyp.nosum) +
     geom_bar(aes(x = reorder(entscheidung_typ,
                              -N),
@@ -1043,7 +1043,7 @@ freqtable.az.nosum <- freqtable.az[-.N]
 
 
 
-```{r, CE-BGH_06_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Barplot_Spruchkoerper_AZ, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.az.nosum) +
     geom_bar(aes(x = reorder(spruchkoerper_az,
                              -N),
@@ -1111,7 +1111,7 @@ freqtable.db.nosum <- freqtable.db[-.N]
 
 
 
-```{r, CE-BGH_07_Barplot_Spruchkoerper_DB, fig.height = 12, fig.width = 8}
+```{r, CE-BGH_Barplot_Spruchkoerper_DB, fig.height = 12, fig.width = 8}
 ggplot(data = freqtable.db.nosum) +
     geom_bar(aes(x = reorder(spruchkoerper_db,
                              N),
@@ -1179,7 +1179,7 @@ freqtable.regz.nosum <- freqtable.regz[-.N]
 
 
 
-```{r, CE-BGH_08_Barplot_Registerzeichen, fig.height = 14, fig.width = 10}
+```{r, CE-BGH_Barplot_Registerzeichen, fig.height = 14, fig.width = 10}
 ggplot(data = freqtable.regz.nosum) +
     geom_bar(aes(x = reorder(registerzeichen,
                              N),
@@ -1245,7 +1245,7 @@ freqtable.praesi.nosum <- freqtable.praesi[-.N]
 
 
 
-```{r, CE-BGH_09_Barplot_PraesidentIn, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Barplot_PraesidentIn, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.praesi.nosum) +
     geom_bar(aes(x = reorder(praesi,
                              N),
@@ -1310,7 +1310,7 @@ freqtable.vpraesi.nosum <- freqtable.vpraesi[-.N]
 
 
 
-```{r, CE-BGH_10_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Barplot_VizePraesidentIn, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.vpraesi.nosum) +
     geom_bar(aes(x = reorder(v_praesi,
                              N),
@@ -1378,7 +1378,7 @@ freqtable.entscheidungsjahr.nosum <- freqtable.entscheidungsjahr[-.N]
 
 
 
-```{r, CE-BGH_11_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Barplot_Entscheidungsjahr, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.entscheidungsjahr.nosum) +
     geom_bar(aes(x = entscheidungsjahr,
                  y = N),
@@ -1437,7 +1437,7 @@ freqtable.eingangsjahr.nosum <- freqtable.eingangsjahr[-.N]
 
 
 
-```{r, CE-BGH_12_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Barplot_EingangsjahrISO, fig.height = 6, fig.width = 9}
 ggplot(data = freqtable.eingangsjahr.nosum) +
     geom_bar(aes(x = eingangsjahr_iso,
                  y = N),
@@ -1483,7 +1483,7 @@ kable(freqtable.eingangsjahr,
 # Dateigrößen
 
 
-```{r, CE-BGH_13_Density_Dateigroessen_PDF, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Density_Dateigroessen_PDF, fig.height = 6, fig.width = 9}
 
 
 pdf.MB <- file.size(files.pdf) / 10^6
@@ -1519,7 +1519,7 @@ ggplot(data = dt.plot,
 
 
 
-```{r, CE-BGH_14_Density_Dateigroessen_TXT, fig.height = 6, fig.width = 9}
+```{r, CE-BGH_Density_Dateigroessen_TXT, fig.height = 6, fig.width = 9}
 
 txt.MB <- file.size(files.txt) / 10^6
 
