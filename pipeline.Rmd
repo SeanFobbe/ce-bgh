@@ -748,7 +748,7 @@ tar_target(graphml.citations.az,
            f.tar_write_graph(graph = igraph.citations.cleaned,
                              file = file.path("output",
                                               paste0(prefix.files, 
-                                                     "_DE_Zitationsnetzwerk-AZ.graphml")),
+                                                     "_DE_Zitationsnetzwerk.graphml")),
                              format = "graphml"),
            format = "file")
 
