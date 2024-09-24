@@ -707,18 +707,87 @@ ggplot(data = dt.bgh.meta)+
 
 
 
-# Zitations-Netzwerke
+# Zitationsnetzwerk des Bundesgerichtshofs (Beta)
 
-Im Datensatz sind ab 2023 auch Zitate zwischen einzelnen Verfahren des BGH enthalten. Aus den Vollexten der BGH-Entscheidungen wurden alle Aktenzeichen des BGH extrahiert und mit dem Aktenzeichen der zitierenden Entscheidung verbunden.
+Der Datensatz enthält zusätzlich eine spezialisierte Variante, die Zitate des BVerfG aus den Entscheidungstexten zu seiner eigenen Rechtsprechung extrahiert und in strukturierter Form aufbereitet.
 
-**Achtung:** Es handelt sich nicht um Zitate von Entscheidung zu Entscheidung, sondern von Aktenzeichen zu Aktenzeichen. Die Auflösung der Zitate auf Entscheidungsebene ist geplant und wird in Zukunft mitveröffentlicht.
+Diese Variante ist noch in der Beta-Testphase. Folgende Rechtsprechungszitate sind enthalten:
+
+- Zitate von Aktenzeichen zu Aktenzeichen
+- Zitate von Aktenzeichen zu BGHZ
+- Zitate von Aktenzeichen zu BGHSt
+
+**Achtung:** Zitierende Entscheidungen können nur solche sein, für die im Korpus der Volltext dokumentiert ist (d.h. normalerweise ab 2000). Zitierte Entscheidungen können aus der gesamten Rechtsprechung stammen (d.h. aus allen Jahren).
+
+Zitate unter Angabe des Aktenzeichens sind weniger genau als Zitate zu konkreten Entscheidungen (bei denen Datum und ggf. Kollisionsziffer nötig sind). Sie stellen aber eine gute Näherung dar. Die Auflösung der Zitate auf Entscheidungsebene ist geplant und wird in Zukunft mitveröffentlicht.
+
+Eingehende BGHZ- und BGHSt-Zitate können exakt einer eingehenden Entscheidung zugeordnet werden. Die Quell-Dokumente sind jedoch nur mit dem Aktenzeichen hinterlegt, um eine Konkordanz mit dem Rest des Datensatzes herzustellen. Die Auflösung von Quell-Dokumenten nach BGHZ/BGHSt ist mir leider nicht möglich, da ich aktuell keine Entsprechungstabelle zwischen amtlichen Sammlungen und Aktenzeichen/Datum-Zitaten habe.
+
 
 Beachten Sie auch bitte folgende Punkte:
 
-- Das gesamte Netzwerk ist sehr groß (ca. 85.000 Knoten, ca. 300.000 Kanten) und die Analyse ist daher ohne weitere Einschränkungen rechenintensiv und anspruchsvoll. In der Regel sollten Sie das Netzwerk auf die für Sie interessanten Teile reduzieren.
+- Das gesamte Netzwerk ist sehr groß und die Analyse ist daher ohne weitere Einschränkungen rechenintensiv und anspruchsvoll. In der Regel sollten Sie das Netzwerk auf die für Sie interessanten Teile reduzieren.
 - Zur Reduktion des Netzwerks auf eine handliche Größe stelle ich zwei Variablen bereit: den Senat und das Registerzeichen. Sie könnten beispielsweise über das Registerzeichen nur die Strafsenate betrachten oder über die Senatsangabe nur den Zivilsenat mit der für Sie interessanten Spezialmaterie
 - Die Extraktion mit *regular expressions* ist nicht perfekt. Es kann daher sein, dass Zitate fehlen, wenn sie nicht als solche erkannt wurden, wegen Tippfehlern, ungewöhnlichem Textumfeld etc. Es ist aktuell unklar wieviele Zitate fehlen könnten, weil es keinen Goldstandard zum Abgleich gibt. Wenn Ihnen größere Fehlbestände auffallen, melden Sie sich bitte.
-- Alle Knoten die nach der Extraktion kein gültiges Aktenzeichen des BGH enthalten wurden entfernt, das betrifft nur eine kleine zweistellige Zahl (siehe Compilation Report für den genauen Wert)
+
+Das Zitationsnetzwerk wird als GraphML-Datei angeboten und kann z.B. einfach in graphische Software wie Gephi\footnote{\url{https://gephi.github.io/}} importiert und ohne Programmierkenntnisse genutzt werden. Formal handelt sich um einen gewichteten, gerichteten Graphen (Digraph). Die Anzahl der Knoten gibt die Anzahl der BGHZ-Entscheidungen, BGHSt-Entscheidungen und Aktenzeichen mit eingehenden und/oder ausgehenden Zitaten an. Die Anzahl der Kanten gibt die Anzahl der Knoten-Paare mit mindestens einem Zitat an. Die Gewichte der Kanten geben die Anzahl der Zitate zwischen Knoten an. Die Ausgangsstärke gibt die Summe aller einfachen Zitate an.
+
+
+
+\bigskip
+
+\ra{1.1}
+```{r}
+
+g <- igraph_citations
+
+
+dt.g <- data.table(Metric = c("Number of Nodes",
+                              "Number of Edges",
+                              "Strength (Out)",
+                              "Mean Degree",
+                              "Max Degree",
+                              "Min Degree",
+                              "Mean In-Degree",
+                              "Max In-Degree",
+                              "Min In-Degree",
+                              "Mean Out-Degree",
+                              "Max Out-Degree",
+                              "Min Out-Degree",
+                              "Diameter",
+                              "Radius",
+                              "Assortativity (Degree)",
+                              "Mean Distance"),
+                   Value = c(vcount(g),
+                             ecount(g),
+                             sum(strength(g, mode = "out")),
+                             mean(degree(g, mode = "all")),
+                             max(degree(g, mode = "all")),
+                             min(degree(g, mode = "all")),
+                             mean(degree(g, mode = "in")),
+                             max(degree(g, mode = "in")),
+                             min(degree(g, mode = "in")),
+                             mean(degree(g, mode = "out")),
+                             max(degree(g, mode = "out")),
+                             min(degree(g, mode = "out")),
+                             diameter(g),
+                             radius(g),
+                             assortativity_degree(g),
+                             mean_distance(g)
+                             )
+                   )
+
+dt.g.split <- cbind(dt.g[1:8], dt.g[9:16])
+
+kable(dt.g.split,
+      digits = 2,
+      format.args = list(big.mark = ","),
+      format = "latex",
+      booktabs = TRUE,
+      longtable = TRUE)
+
+
+```
 
 
 
