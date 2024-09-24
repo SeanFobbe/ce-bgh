@@ -41,6 +41,7 @@ tar_load(dt.bgh.final)
 tar_load(files.html)
 tar_load(files.pdf)
 tar_load(files.txt)
+tar_load(igraph.citations.cleaned)
 
 ```
 
