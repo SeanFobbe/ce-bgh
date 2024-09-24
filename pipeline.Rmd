@@ -158,6 +158,7 @@ tar_option_set(packages = c("tarchetypes",
                             "kableExtra",   # Verbesserte Kable Tabellen
                             "pdftools",     # Verarbeitung von PDF-Dateien
                             "ggplot2",      # Datenvisualisierung
+							"igraph",       # Verarbeitung von Graphen
 							"ggraph",       # Visualisierung von Graphen
                             "scales",       # Skalierung von Diagrammen
                             "data.table",   # Fortgeschrittene Datenverarbeitung
