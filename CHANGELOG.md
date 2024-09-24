@@ -21,6 +21,9 @@
 - Erweiterung der automatischen Korrektur der Aktenzeichen
 - Extraktion von PDFs ignoriert fehlerhafte PDFs
 - Fix für Segmentation Fault bei Zählung von Types bei leeren Dokumenten
+- Fix für gitconfig-Problem
+
+
 
 ## Version 2023-03-10
 
