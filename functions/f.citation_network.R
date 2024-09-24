@@ -260,16 +260,16 @@ f.citation_network_bgh <- function(dt.bgh.final,
 
 
     ## Delete incorrect Registerzeichen Nodes
-    ## regz.final <- igraph::vertex_attr(g, "registerzeichen")
-    ## regz.correct <- regz.final %in% az.brd$zeichen_original
-    ## g <- igraph::delete_vertices(g, !regz.correct)
+    regz.final <- igraph::vertex_attr(g, "registerzeichen")
+    regz.correct <- regz.final %in% c(az.brd$zeichen_original, NA)
+    g <- igraph::delete_vertices(g, !regz.correct)
 
-    ## if (sum(!regz.correct) > 0){
-    ##     warning(paste("Warnung!",
-    ##                   sum(!regz.correct),
-    ##                   "Nodes entfernt, weil Registerzeichen fehlerhaft."))
+    if (sum(!regz.correct) > 0){
+        warning(paste("Warnung!",
+                      sum(!regz.correct),
+                      "Nodes entfernt, weil Registerzeichen fehlerhaft."))
 
-    ## }
+    }
 
     
     return(g)
