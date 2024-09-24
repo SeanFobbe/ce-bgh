@@ -784,6 +784,90 @@ kable(dt.g.split,
 
 
 
+
+## Methodik Aktenzeichen
+
+Dieser Datensatz enthält sowohl zitierte Aktenzeichen (Aktenzeichen-zu-Aktenzeichen-Zitate) und Zitate von Aktenzeichen zu BGHZ- und BGHSt-Entscheidungen (Aktenzeichen-zu-Sammlung). 
+
+Aktenzeichen sind verhältnismäßig einfach zu erfassen, beim BGH aber mit der Besonderheit, dass die Struktur zwischen nummerierten Senate (Zivil- und Strafsenate) und Spezielsenaten abweicht. Bei nummerierten Senaten steht am Anfang des Aktenzeichens die Senatsnummer (z.B XIII~ZB~21/20). Bei Spezialsenaten entfällt diese und das Registerzeichen identifiziert den Senat zweifelsfrei (z.B. AnwZ~(B)~12/99). Die Funktion *f.citation_network.R* erstellt daher für jeden der beiden Fälle in mehreren Schritten eine komplexe REGEX, die jeweils die relevanten Registerzeichen in die Suche aufnimmt und arabische/römische Ziffern bei den nummerierten Senaten voranstellt. Der Source Code ist zu komplex um ihn hier im Detail zu besprechen, sehen Sie sich bei Interesse bitte die Funktion genauer an.
+
+Um konkrete Entscheidungen zu zitieren müsste zusätzlich zum Aktenzeichen noch das Datum berücksichtigt werden. Weil dies die REGEX deutlich komplizierter macht, ist dieser Schritt noch in Arbeit. Im Datensatz sind allerdings `r round(uniqueN(dt.bgh.meta$aktenzeichen)/dt.bgh.meta[,.N] * 100, digits = 2)` % aller ausgehenden Aktenzeichen einzigartig (unabhängig vom Datum), sodass das Aktenzeichen eine gute Näherung darstellt.
+
+
+
+## Methodik BGHZ und BGHSt
+
+Die Zitate zu den amtlichen Sammlungen BGHZ und BGHSt werden aus dem Volltext in einem Zwei-Stufen-Verfahren extrahiert, ähnlich wie in Coupette, *Juristische Netzwerkforschung* (Mohr Siebeck 2019), S. 241--244.
+
+### Erste Stufe
+
+In der **ersten Stufe** werden die Zitierblöcke lokalisiert und aus dem Volltext gesammelt. Es wird die starke Annahme getroffen, dass Zitierblöcke mit \enquote{BGHZ} oder \enquote{BGHSt} (ignoriert Groß- und Kleinschreibung) eingeleitet werden und nur Whitespace, Zahlen, gewisse Sonderzeichen und gewisse Buchstaben enthalten. 
+
+Zitierblöcke enden in der Regel mit einer runden Klammer, die in der REGEX nicht enthalten ist, um sie als Grenzzeichen zu nutzen. Auch Gleichheitszeichen (=) sind nicht enthalten, damit die REGEX vor einem Hinweis auf einen alternative Abdruck abbricht.
+
+Die konkreten regular expressions (REGEX) sind die folgenden:
+
+```{r echo = TRUE}
+"BGHZ[\\s\\d\\[\\];,\\.<>Rnfu-]+" # BGHZ
+"BGHSt[\\s\\d\\[\\];,\\.<>Rnfu-]+" # BGHSt
+```
+
+Ein gefundener Zitierblock sieht beispielsweise so aus:
+
+> BGHZ 133, 254, 259 ff.; 152, 331, 337; 159, 280, 287 f.; 167, 252, 256
+
+
+### Zweite Stufe
+
+In der **zweiten Stufe** werden aus allen Zitierblöcken die einzelnen Zitate extrahiert, standardisiert und mit der Ausgangsentscheidung verbunden. Die Extraktion trifft die starke Annahme, dass eine Entscheidung der amtlichen Sammlungen entweder mit \enquote{BGHZ} bzw. \enquote{BGHSt} oder bei einem Mehrfachzitat in einem Zitierblock mit einem Semikolon eingeleitet wird. Folgende REGEX kommen dabei zum Einsatz:
+
+
+```{r echo = TRUE}
+# BGHZ
+regex.cite <- paste0("(BGHZ|;)\\s*", # hooks
+                     "\\d{1,3},\\s*", # Volume
+                     "\\d{1,3}") # Page
+
+print(regex.cite)
+
+                                        # BGHSt
+regex.cite <- paste0("(BGHSt|;)\\s*", # hooks
+                     "\\d{1,3},\\s*", # Volume
+                     "\\d{1,3}") # Page
+
+print(regex.cite)
+
+
+```
+
+Damit findet man zwei Varianten von Einzelzitaten:
+
+- \enquote{BGHZ 133, 254}
+- \enquote{; 152, 331}
+
+Die Einzelzitate werden anschließend bereinigt und standardisiert. Zum Ende hin werden Selbstzitate entfernt und Metadaten hinzugefügt.
+
+
+
+### Grenzen
+
+Die Extraktion mit regulären Ausdrücken hat Grenzen. Insbesondere folgende Probleme führen zur Nichterkennung von Zitaten:
+
+- Tippfehler (außer Groß- und Kleinschreibung)
+- Unregelmäßge Zitierweise
+- Verkürzte Schreibweisen, beispielsweise BVerfGE 60, 162: \enquote{BVerfGE 3, 19 (27), 383 (394); 4, 375 (381 f.);} --- das Beispiel stammt aus Coupette (2019: 246)
+- Einfügung von Entscheidungsnamen wie in BVerfGE 42, 143: \enquote{BVerfGE 7, 198 (205ff) - Lüth -; 18, 85 (92f); 30, 173 (187f, 196f) - Mephisto -; 32, 311 (316)}  --- das Beispiel stammt aus Coupette (2019: 246)
+
+
+
+
+
+
+
+
+
+
+
 ```{r, CE-BGH_15_Zitate_Graph_karmesinrot, fig.width = 28, fig.height = 16, fig.pos = "p", dpi = 150, dev = "png", fig.cap = "Das interne Zitationsnetzwerk (Aktenzeichen) des 11. Zivilsenats des Bundesgerichthofs (Sugiyama Layout)"}
 
 # Options: sugiyama best, kk very nice, lgl, drl, gfr; gem veeeery slow; fr not nice; sugiyama 20 width 16 height
