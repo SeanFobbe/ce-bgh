@@ -1108,10 +1108,7 @@ ggraph(g,
 
 
 
-# Pipeline: Analyse
-
-
-## Gesamte Liste
+# Liste aller Targets
 
 Die vollständige Liste aller Targets, inklusive ihres Types und ihrer Größe. Targets die auf Dateien verweisen (z.B. alle PDF-Dateien) geben die Gesamtgröße der Dateien auf der Festplatte an.
 
@@ -1138,10 +1135,8 @@ kable(meta[order(type, name)],
 
 
 
-\newpage
-## Timing
 
-### Gesamte Laufzeit
+# Gesamte Laufzeit
 
 ```{r, pipeline-runtime}
 meta <- tar_meta(fields = c("time", "seconds"), complete_only = TRUE)
@@ -1163,7 +1158,7 @@ runtime.sum / 3600
 
 
 
-### Laufzeit einzelner Targets
+# Laufzeit aller Targets
 
 Der Zeitpunkt an dem die Targets berechnet wurden und ihre jeweilige Laufzeit in Sekunden.
 
@@ -1181,7 +1176,7 @@ kable(meta[order(-seconds)],
 
 
 \newpage
-## Warnungen
+# Warnungen
 
 
 
@@ -1211,7 +1206,7 @@ if (meta[,.N > 0]){
 
 
 \newpage
-## Fehlermeldungen
+# Fehlermeldungen
 
 ```{r, pipeline-errors}
 
