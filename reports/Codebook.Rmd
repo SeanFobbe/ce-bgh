@@ -876,7 +876,7 @@ g <- igraph::subgraph(igraph.citations.cleaned, index)
 ggraph(g, "sugiyama") + 
     geom_edge_diagonal(width = 0.05,
                        colour = "black")+
-    geom_node_point(size = 0.1,
+    geom_node_point(size = 0.5,
                     color = "black")+
     theme_void()+
     labs(
