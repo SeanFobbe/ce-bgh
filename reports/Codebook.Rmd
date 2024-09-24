@@ -709,6 +709,8 @@ ggplot(data = dt.bgh.meta)+
 
 # Zitationsnetzwerk des Bundesgerichtshofs (Beta)
 
+## Überblick
+
 Der Datensatz enthält zusätzlich eine spezialisierte Variante, die Zitate des BGH aus den Entscheidungstexten zu seiner eigenen Rechtsprechung extrahiert und in strukturierter Form aufbereitet.
 
 Diese Variante ist noch in der Beta-Testphase. Folgende Rechtsprechungszitate sind enthalten:
@@ -723,15 +725,15 @@ Zitate unter Angabe des Aktenzeichens sind weniger genau als Zitate zu konkreten
 
 Eingehende BGHZ- und BGHSt-Zitate können exakt einer eingehenden Entscheidung zugeordnet werden. Die Quell-Dokumente sind jedoch nur mit dem Aktenzeichen hinterlegt, um eine Konkordanz mit dem Rest des Datensatzes herzustellen. Die Auflösung von Quell-Dokumenten nach BGHZ/BGHSt ist mir leider nicht möglich, da ich aktuell keine Entsprechungstabelle zwischen amtlichen Sammlungen und Aktenzeichen/Datum-Zitaten habe.
 
+## Technische Hinweise
+
+Das Zitationsnetzwerk wird als GraphML-Datei angeboten und kann z.B. einfach in graphische Software wie Gephi\footnote{\url{https://gephi.github.io/}} importiert und ohne Programmierkenntnisse genutzt werden. Formal handelt sich um einen gewichteten, gerichteten Graphen (Digraph). Die Anzahl der Knoten gibt die Anzahl der BGHZ-Entscheidungen, BGHSt-Entscheidungen und Aktenzeichen mit eingehenden und/oder ausgehenden Zitaten an. Die Anzahl der Kanten gibt die Anzahl der Knoten-Paare mit mindestens einem Zitat an. Die Gewichte der Kanten geben die Anzahl der Zitate zwischen Knoten an. Die Ausgangsstärke gibt die Summe aller einfachen Zitate an.
 
 Beachten Sie auch bitte folgende Punkte:
 
 - Das gesamte Netzwerk ist sehr groß und die Analyse ist daher ohne weitere Einschränkungen rechenintensiv und anspruchsvoll. In der Regel sollten Sie das Netzwerk auf die für Sie interessanten Teile reduzieren.
 - Zur Reduktion des Netzwerks auf eine handliche Größe stelle ich zwei Variablen bereit: den Senat und das Registerzeichen. Sie könnten beispielsweise über das Registerzeichen nur die Strafsenate betrachten oder über die Senatsangabe nur den Zivilsenat mit der für Sie interessanten Spezialmaterie
 - Die Extraktion mit *regular expressions* ist nicht perfekt. Es kann daher sein, dass Zitate fehlen, wenn sie nicht als solche erkannt wurden, wegen Tippfehlern, ungewöhnlichem Textumfeld etc. Es ist aktuell unklar wieviele Zitate fehlen könnten, weil es keinen Goldstandard zum Abgleich gibt. Wenn Ihnen größere Fehlbestände auffallen, melden Sie sich bitte.
-
-Das Zitationsnetzwerk wird als GraphML-Datei angeboten und kann z.B. einfach in graphische Software wie Gephi\footnote{\url{https://gephi.github.io/}} importiert und ohne Programmierkenntnisse genutzt werden. Formal handelt sich um einen gewichteten, gerichteten Graphen (Digraph). Die Anzahl der Knoten gibt die Anzahl der BGHZ-Entscheidungen, BGHSt-Entscheidungen und Aktenzeichen mit eingehenden und/oder ausgehenden Zitaten an. Die Anzahl der Kanten gibt die Anzahl der Knoten-Paare mit mindestens einem Zitat an. Die Gewichte der Kanten geben die Anzahl der Zitate zwischen Knoten an. Die Ausgangsstärke gibt die Summe aller einfachen Zitate an.
-
 
 
 \bigskip
@@ -782,14 +784,11 @@ kable(dt.g.split,
 ```
 
 
-
-
-
 ## Methodik Aktenzeichen
 
 Dieser Datensatz enthält sowohl zitierte Aktenzeichen (Aktenzeichen-zu-Aktenzeichen-Zitate) und Zitate von Aktenzeichen zu BGHZ- und BGHSt-Entscheidungen (Aktenzeichen-zu-Sammlung). 
 
-Aktenzeichen sind verhältnismäßig einfach zu erfassen, beim BGH aber mit der Besonderheit, dass die Struktur zwischen nummerierten Senate (Zivil- und Strafsenate) und Spezielsenaten abweicht. Bei nummerierten Senaten steht am Anfang des Aktenzeichens die Senatsnummer (z.B XIII~ZB~21/20). Bei Spezialsenaten entfällt diese und das Registerzeichen identifiziert den Senat zweifelsfrei (z.B. AnwZ~(B)~12/99). Die Funktion *f.citation_network.R* erstellt daher für jeden der beiden Fälle in mehreren Schritten eine komplexe REGEX, die jeweils die relevanten Registerzeichen in die Suche aufnimmt und arabische/römische Ziffern bei den nummerierten Senaten voranstellt. Der Source Code ist zu komplex um ihn hier im Detail zu besprechen, sehen Sie sich bei Interesse bitte die Funktion genauer an.
+Aktenzeichen sind verhältnismäßig einfach zu erfassen, beim BGH aber mit der Besonderheit, dass die Struktur zwischen nummerierten Senate (Zivil- und Strafsenate) und Spezielsenaten abweicht. Bei nummerierten Senaten steht am Anfang des Aktenzeichens die Senatsnummer (z.B XIII ZB 21/20). Bei Spezialsenaten entfällt diese und das Registerzeichen identifiziert den Senat zweifelsfrei (z.B. AnwZ (B) 12/99). Die Funktion *f.citation_network.R* erstellt daher für jeden der beiden Fälle in mehreren Schritten eine komplexe REGEX, die jeweils die relevanten Registerzeichen in die Suche aufnimmt und arabische/römische Ziffern bei den nummerierten Senaten voranstellt. Der Source Code ist zu komplex um ihn hier im Detail zu besprechen, sehen Sie sich bei Interesse bitte die Funktion genauer an.
 
 Um konkrete Entscheidungen zu zitieren müsste zusätzlich zum Aktenzeichen noch das Datum berücksichtigt werden. Weil dies die REGEX deutlich komplizierter macht, ist dieser Schritt noch in Arbeit. Im Datensatz sind allerdings `r round(uniqueN(dt.bgh.meta$aktenzeichen)/dt.bgh.meta[,.N] * 100, digits = 2)` % aller ausgehenden Aktenzeichen einzigartig (unabhängig vom Datum), sodass das Aktenzeichen eine gute Näherung darstellt.
 
@@ -807,7 +806,7 @@ Zitierblöcke enden in der Regel mit einer runden Klammer, die in der REGEX nich
 
 Die konkreten regular expressions (REGEX) sind die folgenden:
 
-```{r echo = TRUE}
+```{r echo = TRUE, eval = FALSE}
 "BGHZ[\\s\\d\\[\\];,\\.<>Rnfu-]+" # BGHZ
 "BGHSt[\\s\\d\\[\\];,\\.<>Rnfu-]+" # BGHSt
 ```
@@ -830,7 +829,7 @@ regex.cite <- paste0("(BGHZ|;)\\s*", # hooks
 
 print(regex.cite)
 
-                                        # BGHSt
+# BGHSt
 regex.cite <- paste0("(BGHSt|;)\\s*", # hooks
                      "\\d{1,3},\\s*", # Volume
                      "\\d{1,3}") # Page
