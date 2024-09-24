@@ -207,6 +207,8 @@ setdiff(dt.download.final$doc_id,
 
 ## Konvertierung: Fehlende TXT-Dateien
 
+Bei den fehlerhaften PDF-Dateien handelt es sich scheinbar um HTML-Dateien, die von der Datenbank wie PDF-Dateien ausgeliefert werden. Es ist vor dem Download nicht erkennbar, ob es sich um eine solche HTML-Datei handelt. 
+
 ```{r}
 setdiff(tools::file_path_sans_ext(basename(files.pdf)),
         tools::file_path_sans_ext(basename(files.txt)))
