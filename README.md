@@ -23,6 +23,7 @@ Primäre Endprodukte des Skripts sind folgende ZIP-Archive:
 - Nur Leitsatz-Entscheidungen im PDF-Format
 - Nur benannte Entscheidungen im PDF-Format
 - Platzhalter-Dokumente im PDF-Format
+- Zitationsnetzwerk im GraphML-Format
 - Alle Analyse-Ergebnisse (Tabellen als CSV, Grafiken als PDF und PNG)
 
 
@@ -34,7 +35,7 @@ Alle Ergebnisse werden im Ordner `output` abgelegt. Zusätzlich werden für alle
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
-- 8 GB Speicherplatz auf Festplatte
+- 24 GB Speicherplatz auf Festplatte
 - Multi-core CPU empfohlen (8 cores/16 threads für die Referenzdatensätze). 
 
 
@@ -133,22 +134,20 @@ Die folgende Struktur erläutert die wichtigsten Bestandteile des Projekts. Wäh
 .
 ├── buttons                    # Buttons (nur optische Bedeutung)
 ├── CHANGELOG.md               # Alle Änderungen
-├── compose.yaml               # Konfiguration für Docker
 ├── config.toml                # Zentrale Konfigurations-Datei
 ├── data                       # Datensätze, auf denen die Pipeline aufbaut
 ├── delete_all_data.R          # Löscht den Datensatz und Zwischenschritte
 ├── docker-build-image.sh      # Docker Image erstellen
+├── docker-compose.yaml        # Konfiguration für Docker
 ├── Dockerfile                 # Definition des Docker Images
 ├── docker-run-project.sh      # Docker Image und Datensatz kompilieren
+├── etc                        # Zusätzliche Konfigurationsdateien
 ├── functions                  # Wichtige Schritte der Pipeline
 ├── gpg                        # Persönlicher Public GPG-Key für Seán Fobbe
 ├── old                        # Alter Code aus früheren Versionen
 ├── pipeline.Rmd               # Zentrale Definition der Pipeline
 ├── README.md                  # Bedienungsanleitung
 ├── reports                    # Markdown-Dateien
-├── requirements-python.txt    # Benötigte Python packages
-├── requirements-R.R           # Benötigte R packages
-├── requirements-system.txt    # Benötigte system dependencies
 ├── run_project.R              # Kompiliert den gesamten Datensatz
 └── tex                        # LaTeX-Templates
 
