@@ -889,9 +889,9 @@ ggraph(g, "sugiyama") +
     theme(
         plot.title = element_text(size = 14,
                                   face = "bold",
-                                  color = "white"),                        
-        plot.background = element_rect(fill = "black"),
-        plot.caption = element_text(color = "white"),
+                                  color = "black"),                        
+        plot.background = element_rect(fill = "white"),
+        plot.caption = element_text(color = "black"),
         plot.margin = margin(10, 20, 10, 10)
     )
 
