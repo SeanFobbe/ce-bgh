@@ -7,5 +7,6 @@ services:
     tty: true
     volumes:
       - .:/ce-bgh
+      - ./etc/gitconfig:/etc/gitconfig
     environment:
       - TZ=Europe/Berlin
