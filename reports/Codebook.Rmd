@@ -709,7 +709,7 @@ ggplot(data = dt.bgh.meta)+
 
 # Zitationsnetzwerk des Bundesgerichtshofs (Beta)
 
-Der Datensatz enthält zusätzlich eine spezialisierte Variante, die Zitate des BVerfG aus den Entscheidungstexten zu seiner eigenen Rechtsprechung extrahiert und in strukturierter Form aufbereitet.
+Der Datensatz enthält zusätzlich eine spezialisierte Variante, die Zitate des BGH aus den Entscheidungstexten zu seiner eigenen Rechtsprechung extrahiert und in strukturierter Form aufbereitet.
 
 Diese Variante ist noch in der Beta-Testphase. Folgende Rechtsprechungszitate sind enthalten:
 
