@@ -5,7 +5,7 @@
 
 - Vollständige Aktualisierung der Daten
 - LIZENZÄNDERUNG: Source Code jetzt unter GNU General Public License Version 3 (GPLv3) oder später lizenziert
-- NEU: Zitationsnetzwerk Aktenzeichen-zu-BGHZ und Aktenzeichen zu BGHSt
+- NEU: Zitationsnetzwerk Aktenzeichen-zu-BGHZ und Aktenzeichen-zu-BGHSt
 - NEU: Variable für BGHZ
 - Extraktion von Zitaten für Aktenzeichen-zu-Aktenzeichen komplett überarbeitet
 - R-Version auf 4.4.0 aktualisiert (wegen CVE-2024-27322)
