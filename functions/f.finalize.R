@@ -1,6 +1,6 @@
 #' Datensatz finalisieren
 #'
-#' Der Datensatz wird mit dieser Funktion um bereits berechnete Variablen angereichert und in Reihenfolge der Variablen-Dokumentation des Codebooks sortiert..
+#' Der Datensatz wird mit dieser Funktion um bereits berechnete Variablen angereichert und in Reihenfolge der Variablen-Dokumentation des Codebooks sortiert.
 
 #' @param x Data.table. Der nach Datum sortierte und im Text bereinigte Datensatz.
 #' @param downlod.table Data.table. Die Tabelle mit den Informationen zum Download. Wird mit dem Hauptdatensatz vereinigt.
