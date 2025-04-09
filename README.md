@@ -1,3 +1,7 @@
+# ACHTUNG: Weiterentwicklung ab sofort auf Codeberg
+
+Die Weiterentwicklung dieses Projekts findet ab sofort auf Codeberg statt: https://codeberg.org/seanfobbe/ce-bgh Das GitHub repository ist nur noch als Archivfassung verfügbar.
+
 # Corpus der Entscheidungen des Bundesgerichtshofs (CE-BGH)
 
 
